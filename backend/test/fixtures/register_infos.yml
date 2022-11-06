@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  register_date: 2022-11-06 17:54:44
+  status: 1
+  user: one
+  course: one
+
+two:
+  register_date: 2022-11-06 17:54:44
+  status: 1
+  user: two
+  course: two
