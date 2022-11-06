@@ -1,2 +1,3 @@
-- Run command: bundle install
-               rake db:migrate
+- Run command: 
++ bundle install
++ rake db:migrate
