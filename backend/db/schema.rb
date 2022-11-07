@@ -41,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_105553) do
   end
 
   create_table "progresses", force: :cascade do |t|
-    t.string "progress_now"
+    t.float "progress_now"
     t.integer "user_id", null: false
     t.integer "course_id", null: false
     t.datetime "created_at", null: false
