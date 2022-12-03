@@ -6,6 +6,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: [:index, :show, :create, :update]
+      get "/courses", to: "courses#getAllCourses"
+      get "/courses/:id", to: "courses#getCourse"
+      get "/courses/details/:id", to: "courses#getCourseDetails"
+      post "/courses", to: "courses#postCourse"
+      post "/courses/details/:id", to: "courses#postCourseDetail"
+      delete "/courses/:id", to: "courses#deleteCourse"
     end
   end
 end
