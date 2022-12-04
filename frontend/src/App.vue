@@ -8,6 +8,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/signup">Sign In</RouterLink>
+        <RouterLink to="/createcourse">Create Course</RouterLink>
     </nav>
   </header>
 
@@ -27,9 +28,10 @@ header {
 
 nav {
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 nav a.router-link-exact-active {

@@ -1,18 +1,22 @@
+
+
 <template>
-<div class="container" id="container">
-	<div class="form-container sign-up-container">
+<div :class="[isSignUp ? 'right-panel-active' : ''] + ' container'" id="container">
+	<div :class="' form-container sign-up-container'">
 		<form action="#">
-			<h1>Create Account</h1>
-			<div class="social-container">
+			<h1 class="">Create Account</h1>
+			<!-- <div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
-			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
+			<span>or use your email for registration</span> -->
+			<input v-model="account" type="text" placeholder="Username" />
+			<input v-model="password" type="password" placeholder="Password" />
+			<input v-model="name" type="text" placeholder="Full Name" />
+			<input v-model="email" type="email" placeholder="Email" />
+            <Datepicker class="mt-1" v-model="birthday" :enable-time-picker="false"/>
+			<button @click.prevent="signUp()" class="mt-4">Sign Up</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
@@ -35,25 +39,95 @@
 			<div class="overlay-panel overlay-left">
 				<h1>Welcome Back!</h1>
 				<p>To keep connected with us please login with your personal info</p>
-				<button class="ghost" id="signIn">Sign In</button>
+				<button @click="switchForm" class="ghost" id="signIn">Sign In</button>
 			</div>
 			<div class="overlay-panel overlay-right">
 				<h1>Hello, Friend!</h1>
 				<p>Enter your personal details and start journey with us</p>
-				<button class="ghost" id="signUp">Sign Up</button>
+				<button @click="switchForm" class="ghost" id="signUp">Sign Up</button>
 			</div>
 		</div>
 	</div>
 </div>
 </template>
 
-<script>
+
+<script setup>
+import { reactive, ref, toRef, toRefs } from 'vue';
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import axios from 'axios';
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
+
+const router = useRouter()
+const route = useRoute()
+
+let isSignUp = ref(false);
+
+// form data
+const date = ref();
+
+const signUpData = reactive({
+    name: '',
+    account: '',
+    email: '',
+    role: 0,
+    password: '',
+    birthday: '',
+})
+
+const {name, account, email, role, password, birthday } = toRefs(signUpData)
+
+function switchForm() {
+    isSignUp.value = !isSignUp.value;
+    console.log(isSignUp.value)
+}
+
+function signUp() {
+    console.log(signUpData);
+    axios.post('http://127.0.0.1:3000/api/v1/users', {
+        ...signUpData
+    })
+    .then(function (response) {
+        console.log(response);
+        if (response.status == 200) {
+			sessionStorage.setItem("id", id);
+            sessionStorage.setItem("name", name);
+            // let username = sessionStorage.getItem("name");
+            router.push('/home');
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+router.beforeEach(async (to, from) => {
+    // const username = sessionStorage.getItem("name")
+	let username = true;
+    console.log(username);
+  if (
+    // make sure the user is authenticated
+    !username &&
+    // ❗️ Avoid an infinite redirect
+    to.name !== 'signin' && to.name !== 'home'
+  ) {
+    // redirect the user to the login page
+    return { name: 'signin' }
+  }
+})
 
 </script>
 
 <style scoped>
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+
+.dp__theme_light {
+    --dp-background-color: #eee;
+}
 
 * {
 	box-sizing: border-box;
@@ -132,6 +206,10 @@ input {
 	width: 100%;
 }
 
+.dp__main {
+    width: 100%;
+}
+
 .container {
 	background-color: #fff;
 	border-radius: 10px;
@@ -142,6 +220,7 @@ input {
 	width: 768px;
 	max-width: 100%;
 	min-height: 480px;
+    margin: 0 auto;
 }
 
 .form-container {
@@ -269,28 +348,4 @@ input {
 	width: 40px;
 }
 
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
-}
 </style>

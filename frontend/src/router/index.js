@@ -6,6 +6,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'n',
+      component: HomeView
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView
     },
@@ -21,8 +26,18 @@ const router = createRouter({
       path: '/signup',
       name: 'signup',
       component: () => import('../views/User/SignInView.vue')
-
-    }
+    },
+    {
+      path: '/createcourse',
+      name: 'createcourse',
+      component: () => import('../views/Course/CreateCourseView.vue')
+    },
+    { 
+      path: '/course/:id',
+      name: 'coursedetail',
+      props: true,
+      component: () => import('../views/Course/CourseDetailView.vue')
+    },
   ]
 })
 
