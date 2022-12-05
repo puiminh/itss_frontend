@@ -16,22 +16,91 @@
 	      	<form class="modal-wrap">
 
 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Card Name</label>
-<input v-model="name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+<input v-model="word" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
 
-<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+<label for="mean" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Definition</label>
+<textarea id="mean" v-model="mean" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+
+
+<label class="block my-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
 <input @change="getFile" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
-<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+<!-- <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p> -->
 
-<button @click.prevent="submitFile" type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+<button @click.prevent="createCard" type="submit" class="inline-flex items-center my-5 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
        Save
 </button>
-            </form>			          		
+          </form>			          		
       	</div>	
+        </div>
+    </div>
 </div>
+
+<div class="grid grid-cols-4 gap-4">
+  <div  v-for="card in cardDatas" class="w-full max-w-md my-10 p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+   <div class="flow-root">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <img class="w-8 h-8 rounded-full" :src="card.image? card.image : 'https://play-lh.googleusercontent.com/tyoM-deIvgvga9-D_zQHid4eHlT9-WVyzTEomSu6L6BgaLp6lRGRqtgOzP1paGC8Krs'"  alt="Neil image">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-2xl font-medium text-gray-900 truncate dark:text-white">
+                            {{card.word}}
+                        </p>
+                        <!-- <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                            {{card.mean}}
+                        </p> -->
+                    </div>
+                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                        {{card.mean}}
+                    </div>
+                </div>
 
     </div>
 </div>
+</div>
+
+<div id="animation-carousel" class="relative" data-carousel="static">
+    <!-- Carousel wrapper -->
+    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+         <!-- Item 1 -->
+        <div class="hidden duration-200 ease-linear" data-carousel-item>
+            <img src="/docs/images/carousel/carousel-1.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+        <!-- Item 2 -->
+        <div class="hidden duration-200 ease-linear" data-carousel-item>
+            <img src="/docs/images/carousel/carousel-2.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+        <!-- Item 3 -->
+        <div class="hidden duration-200 ease-linear" data-carousel-item="active">
+            <img src="/docs/images/carousel/carousel-3.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+        <!-- Item 4 -->
+        <div class="hidden duration-200 ease-linear" data-carousel-item>
+            <img src="/docs/images/carousel/carousel-4.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+        <!-- Item 5 -->
+        <div class="hidden duration-200 ease-linear" data-carousel-item>
+            <img src="/docs/images/carousel/carousel-5.svg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+    </div>
+    <!-- Slider controls -->
+    <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            <span class="sr-only">Previous</span>
+        </span>
+    </button>
+    <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            <span class="sr-only">Next</span>
+        </span>
+    </button>
+</div>
+
+
+
 </template>
 
 <script setup>
@@ -39,10 +108,14 @@ import axios from 'axios';
 import { reactive, ref, toRefs } from 'vue';
 import "@/services/firebase.js";
 import { getStorage, ref as refb, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps(['id'])
 const courseData = ref();
 const authorData = ref();
+const cardDatas = ref();
 
 const cardData = reactive({
     word: '',
@@ -61,10 +134,11 @@ const {word, mean, video, image} = toRefs(cardData)
 const {file, preview, isPic} = toRefs(FileI)
 
 
-axios.get('http://127.0.0.1:3000/api/v1/courses/'+props.id)
+axios.get('http://127.0.0.1:3000/api/v1/courses/details/'+props.id)
   .then((res)=>{
     console.log(res);
     courseData.value = res.data.course;
+    cardDatas.value = res.data.details;
 })
 .then((res)=> {
     axios.get('http://127.0.0.1:3000/api/v1/users/'+courseData.value.author)
@@ -77,14 +151,31 @@ axios.get('http://127.0.0.1:3000/api/v1/courses/'+props.id)
         console.log(error);
     });
 
+function createCard() {
+    axios.post('http://127.0.0.1:3000/api/v1/courses/details/'+props.id, {
+        ...cardData
+    })
+    .then(function (response) {
+        console.log(response);
+        if (response.status == 200) {
+            sessionStorage.setItem("createdCourse", name);
+            // let username = sessionStorage.getItem("name");
+            router.go();
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
 function getFile(event) {
         FileI.file = event.target.files[0];
         console.log(FileI.file)
+        submitFile();
 }
 
 function submitFile() {
         const metadata = {
-          contentType: 'image/jpeg'
         };
         console.log(FileI.file);
         const storage = getStorage();
@@ -130,6 +221,7 @@ function submitFile() {
     // Upload completed successfully, now we can get the download URL
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
       console.log('File available at', downloadURL);
+      cardData.image = downloadURL;
     });
   }
 );

@@ -91,7 +91,6 @@ function signUp() {
     .then(function (response) {
         console.log(response);
         if (response.status == 200) {
-			sessionStorage.setItem("id", id);
             sessionStorage.setItem("name", name);
             // let username = sessionStorage.getItem("name");
             router.push('/home');
