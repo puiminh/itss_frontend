@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import FlipCard from '../components/card/FlipCard.vue';
+import QNA from '../components/Q&A/QNA.vue';
 const courseDatas = ref();
 axios.get('http://127.0.0.1:3000/api/v1/courses')
   .then((res)=>{
@@ -24,6 +25,8 @@ axios.get('http://127.0.0.1:3000/api/v1/courses')
     </RouterLink>
   </div>
 </div>
-<FlipCard></FlipCard>
+<FlipCard :vertical="true"></FlipCard>
+<FlipCard :vertical="false"></FlipCard>
 
+<QNA :answers="['Minh','Bui','Hong','2001']"></QNA>
 </template>

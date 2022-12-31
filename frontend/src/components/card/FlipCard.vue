@@ -1,79 +1,40 @@
-<script setup>
-import { onMounted } from 'vue';
+<script>
+export default {
+   props: ['vertical'],
 
-onMounted(()=>{
-    let flashCards = document.getElementsByClassName("flip"); for (let card of flashCards) {
-        card.addEventListener("click", function () {
-        // card.getElementsByClassName("front")[0].style.transform = "rotateY(180deg)"; 
-        card.querySelector(".front").classList.toggle("frontHover");
-        card.querySelector(".back").classList.toggle("frontHover");
-        })    
-        console.log(card);
-    }
-});
+   data() {
+      return {
+         flip: false, 
+         flipClass: ["",""],
+      }
+   },
+
+   computed: {
+      flipClassComputed() {
+         if (!this.vertical) {
+         this.flipClass = ["frontFlip","backFlip"];
+         } else {
+            this.flipClass = ["frontFlipvertical", "backFlipvertical"];
+         }
+         return this.flip ? this.flipClass : ["",""];
+      }
+   },
+
+   methods: {
+      flipCard() {
+         this.flip = !this.flip;
+         console.log("a");
+      },
+   }
+}
 </script>
 
 <template>
- <!-- horizontal -->
-
-<h4>Horizontal Flip</h4>
-<div class="flip">
-    <div class="front" style="background-image: url(https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
+<div :class="['flip', vertical? ' flip-vertical': '']" v-on:click="flipCard">
+    <div :class="['front ', flipClassComputed[0]]" style="background-image: url(https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
        <h1 class="text-shadow">MOUNTAIN</h1>
     </div>
-    <div class="back">
-       <h2>Angular</h2>
-       <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
-    </div>
-</div>
-<div class="flip">
-    <div class="front" style="background-image: url(https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
-       <h1 class="text-shadow">LAKE</h1>
-    </div>
-    <div class="back">
-       <h2>Angular</h2>
-       <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
-    </div>
-</div>
-<div class="flip">
-    <div class="front" style="background-image: url(https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
-       <h1 class="text-shadow">OCEAN</h1>
-    </div>
-    <div class="back">
-       <h2>Angular</h2>
-       <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
-    </div>
-</div>
-
-<br>
-<br>
-
-<!-- vertical -->
-  
-<h4>Vertical Flip</h4>
-<div class="flip flip-vertical">
-    <div class="front" style="background-image: url(https://images.pexels.com/photos/38136/pexels-photo-38136.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
-       <h1 class="text-shadow">FOREST</h1>
-    </div>
-    <div class="back">
-       <h2>Angular</h2>
-       <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
-    </div>
-</div>
-<div class="flip flip-vertical">
-    <div class="front" style="background-image: url(https://images.pexels.com/photos/34950/pexels-photo.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
-       <h1 class="text-shadow">TRACK</h1>
-    </div>
-    <div class="back">
-       <h2>Angular</h2>
-       <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
-    </div>
-</div>
-<div class="flip flip-vertical">
-    <div class="front" style="background-image: url(https://images.pexels.com/photos/34546/sunset-lake-landscape-summer.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
-       <h1 class="text-shadow">SWAMP</h1>
-    </div>
-    <div class="back">
+    <div :class="['back ', flipClassComputed[1]]">
        <h2>Angular</h2>
        <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
     </div>
@@ -149,13 +110,24 @@ body {
 	 color: #999;
 }
 
-.frontHover {
+.frontFlip {
   transform: rotateY(180deg) !important;
 }
 
-.backHover {
-   opacity: 1;
+.backFlip {
+   opacity: 1!important;
 	 transform: rotateY(0deg) !important;
 }
+
+.frontFlipvertical {
+  transform: rotateX(180deg) !important;
+}
+
+.backFlipvertical {
+   opacity: 1!important;
+	 transform: rotateX(0deg) !important;
+}
+
+
  
 </style>
