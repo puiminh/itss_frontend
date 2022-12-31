@@ -73,6 +73,7 @@ import "@/services/firebase.js";
 import { getStorage, ref as refb, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useRouter } from 'vue-router';
 import FlashCardView from './FlashCardView.vue';
+import FlipCard from '../../components/card/FlipCard.vue';
 
 const router = useRouter();
 
