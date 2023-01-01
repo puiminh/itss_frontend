@@ -1,15 +1,41 @@
-<script setup>
+<script>
 import axios from 'axios';
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import FlipCard from '../components/card/FlipCard.vue';
+import QuillForm from '../components/Form/QuillForm.vue';
 import QNA from '../components/Q&A/QNA.vue';
-const courseDatas = ref();
-axios.get('http://127.0.0.1:3000/api/v1/courses')
-  .then((res)=>{
-    console.log(res);
-    courseDatas.value = res.data.courses;
-})
+
+export default {
+  components: {
+    FlipCard: FlipCard,
+    QNA: QNA,
+    QuillForm
+},
+  data() {
+    return {
+      courseDatas: [],
+      content: "",
+    }
+  },
+  methods: {
+    log() {
+      console.log("Log from father: ",this.content)
+    },
+    handleChangeContent(data) {
+      console.log("Data from father has been changed",data)
+      this.content = data
+    }
+  },
+  mounted() {
+    axios.get('http://127.0.0.1:3000/api/v1/courses')
+      .then((res)=>{
+        console.log(res);
+        this.courseDatas = res.data.courses;
+    })
+  }
+}
+
 </script>
 
 <template>
@@ -28,5 +54,18 @@ axios.get('http://127.0.0.1:3000/api/v1/courses')
 <FlipCard :vertical="true"></FlipCard>
 <FlipCard :vertical="false"></FlipCard>
 
+<QuillForm @changecontent="handleChangeContent"></QuillForm>
+
+<button @click="log">Father Log</button>
+
+<div v-html="content">
+
+</div>
+
+
+
 <QNA :answers="['Minh','Bui','Hong','2001']"></QNA>
+
+<p></p>
+
 </template>
