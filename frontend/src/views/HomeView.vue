@@ -5,6 +5,8 @@ import { RouterLink } from 'vue-router';
 import FlipCard from '../components/card/FlipCard.vue';
 import QuillForm from '../components/Form/QuillForm.vue';
 import QNA from '../components/Q&A/QNA.vue';
+import { mapActions, mapState } from 'pinia'
+import { useCounterStoreT } from '../stores/counter'
 
 export default {
   components: {
@@ -25,7 +27,8 @@ export default {
     handleChangeContent(data) {
       console.log("Data from father has been changed",data)
       this.content = data
-    }
+    },
+    ...mapActions(useCounterStoreT, ['increment'])
   },
   mounted() {
     axios.get('http://127.0.0.1:3000/api/v1/courses')
@@ -33,7 +36,15 @@ export default {
         console.log(res);
         this.courseDatas = res.data.courses;
     })
-  }
+  },
+  computed: {
+    ...mapState(useCounterStoreT, ['count']),
+    ...mapState(useCounterStoreT, {
+      doubleRename: 'doubleCount',
+      // you can also write a function that gets access to the store
+      doubleCustom: (store) => store.doubleCount+1,
+    }),
+  },
 }
 
 </script>
@@ -62,7 +73,11 @@ export default {
 
 </div>
 
+<p>{{ count }}</p>
+<p>{{ doubleCustom }}</p>
+<p>{{ doubleRename }}</p>
 
+<button @click="increment">++++</button>
 
 <QNA :answers="['Minh','Bui','Hong','2001']"></QNA>
 
