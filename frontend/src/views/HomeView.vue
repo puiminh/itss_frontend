@@ -7,17 +7,20 @@ import QuillForm from '../components/Form/QuillForm.vue';
 import QNA from '../components/Q&A/QNA.vue';
 import { mapActions, mapState } from 'pinia'
 import { useCounterStoreT } from '../stores/counter'
+import Record from '../components/Record/Record.vue';
 
 export default {
   components: {
     FlipCard: FlipCard,
     QNA: QNA,
-    QuillForm
+    QuillForm,
+    Record
 },
   data() {
     return {
       courseDatas: [],
       content: "",
+      start: false,
     }
   },
   methods: {
@@ -28,7 +31,10 @@ export default {
       console.log("Data from father has been changed",data)
       this.content = data
     },
-    ...mapActions(useCounterStoreT, ['increment'])
+    ...mapActions(useCounterStoreT, ['increment']),
+    startStatusChange() {
+      this.start = !this.start
+    }
   },
   mounted() {
     axios.get('http://127.0.0.1:3000/api/v1/courses')
@@ -81,6 +87,6 @@ export default {
 
 <QNA :answers="['Minh','Bui','Hong','2001']"></QNA>
 
-<p></p>
+<Record :start="start"></Record>
 
 </template>
