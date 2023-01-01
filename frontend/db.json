@@ -1,0 +1,76 @@
+{
+  "vocabulary": [
+    {
+      "vocabulary_id": 1,
+      "word": "Hello",
+      "define": "xin chao",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 2,
+      "word": "Wow",
+      "define": "O! (bat ngo)",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 3,
+      "word": "Name",
+      "define": "Ten",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 4,
+      "word": "Age",
+      "define": "Tuoi",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 5,
+      "word": "Year",
+      "define": "Nam",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 6,
+      "word": "Store",
+      "define": "Cua hang",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 7,
+      "word": "Close",
+      "define": "Dong",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 8,
+      "word": "Open",
+      "define": "Mo",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    },
+    {
+      "vocabulary_id": 9,
+      "word": "Happy",
+      "define": "Vui",
+      "link": "",
+      "type": 0,
+      "course_id": 1
+    }
+  ]
+}

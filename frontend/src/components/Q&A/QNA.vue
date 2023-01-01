@@ -3,12 +3,77 @@
 export default {
     props: {
         answers: Array,
+        question: String,
+        right: Number,
     },
     data() {
         return {
-
+            shuffleArray: [],
         }
     },
+    computed: {
+    },
+    methods: {
+        choose(data) {
+            console.log(data,"The shuffle: ",this.shuffleArray,"The original: ",this.answers);
+            if (this.shuffleArray[data].vocabulary_id == this.right) {
+                console.log("Correct!");
+            } else {
+                console.log("Incorrect!");
+
+            this.$refs.answerElements[data].style.backgroundColor="#f8d4d5";
+            this.$refs.answerElements[data].style.boxShadow= "#e7696b 0px 0.5rem 0px";
+            this.$refs.answerElements[data].style.borderColor= "#e7696b";
+            this.$refs.answerElements[data].querySelector(".answerNumber").style.backgroundColor="#e7696b"
+            }
+
+            const found = this.shuffleArray.findIndex(element => element.vocabulary_id == this.right);
+
+            this.$refs.answerElements[found].style.backgroundColor="#9de3d3";
+            this.$refs.answerElements[found].style.boxShadow= "#00a57a 0px 0.5rem 0px";
+            this.$refs.answerElements[found].style.borderColor= "#00a57a";
+            this.$refs.answerElements[found].querySelector(".answerNumber").style.backgroundColor="#00a57a";
+            this.$refs.answerElements[found].focus();
+
+            this.$refs.answerElements.forEach(element => {
+                element.disabled = true;
+            });
+        },
+        shuffle(array) {
+            let currentIndex = array.length,  randomIndex;
+            // While there remain elements to shuffle.
+            while (currentIndex != 0) {
+
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+            }
+
+            this.shuffleArray = array;
+        },
+        resetColor() {
+            this.$refs.answerElements.forEach(element => {
+                element.style.backgroundColor="initial";
+                element.style.boxShadow= "rgb(188 194 207) 0px 4px 0px";
+                element.style.border= "2px solid rgb(188, 194, 207)";
+                element.querySelector(".answerNumber").style.backgroundColor="rgb(41, 42, 46)";
+                element.disabled = false;
+            });
+        }
+    }, 
+    watch: {
+        answers(newValue, oldValue) {
+            console.log("Answer props have update");
+            this.shuffle(this.answers.slice());
+        }
+    },
+    mounted() {
+        this.shuffle(this.answers.slice());
+    }
 }
 
 </script>
@@ -16,13 +81,13 @@ export default {
 <template>
 <div class="mb-12">
     <div class="questionWrap">
-        <h2 class="questionText">Hello</h2>
+        <h2 class="questionText">{{question }}</h2>
     </div>
     <div class="answerWrap">
-        <div v-for="(answer,index) in answers" class="answerBlock">
-            <button type="button" class="answerButton">
+        <div v-for="(answer,index) in shuffleArray" class="answerBlock">
+            <button type="button" class="answerButton" @click="choose(index)" ref="answerElements">
                 <div class="answerNumber">{{index+1}}</div>
-                <div class="answerText">{{answer}}</div>
+                <div class="answerText">{{answer.word}}</div>
             </button>
         </div>
     </div>

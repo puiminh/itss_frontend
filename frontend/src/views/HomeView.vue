@@ -85,8 +85,6 @@ export default {
 
 <button @click="increment">++++</button>
 
-<QNA :answers="['Minh','Bui','Hong','2001']"></QNA>
-
 <Record :start="start"></Record>
 
 </template>

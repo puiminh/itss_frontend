@@ -38,6 +38,11 @@ const router = createRouter({
       props: true,
       component: () => import('../views/Course/CourseDetailView.vue')
     },
+    {
+      path: '/test/:id',
+      component: () => import('../views/Course/TestView.vue'),
+      props: true,
+    }
   ]
 })
 
