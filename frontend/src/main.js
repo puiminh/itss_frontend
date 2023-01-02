@@ -6,7 +6,6 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 import App from './App.vue'
 import router from './router'
-import 'flowbite';
 
 import './assets/main.css'
 
