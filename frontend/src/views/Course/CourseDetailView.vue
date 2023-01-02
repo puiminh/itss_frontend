@@ -8,31 +8,12 @@ import { useRouter } from 'vue-router';
 import FlashCardView from './FlashCardView.vue';
 import FlipCard from '../../components/card/FlipCard.vue';
 import UploadFirebase from '../../components/uploadFirebase/UploadFirebase.vue';
-// import SerpApi from 'google-search-results-nodejs'
 
-// console.log(SerpApi);
-// const search = new SerpApi.GoogleSearch("8fcbde7917072a20411a4c156a9d4cabbc2be088e56a67141b6078850e398165");
-// console.log(search);
+//f6f8f286d4cbdd1
 
-// const params = {
-//   q: "Coffee",
-//   location: "Austin, Texas, United States",
-//   hl: "en",
-//   gl: "us",
-//   google_domain: "google.com"
-// };
+//7ad73a529f16d19cc53cf2b30cafb85652678489
 
-// const callback = function(data) {
-//   console.log(data);
-// };
-
-// // Show result as JSON
-// search.json(params, callback);
-
-// axios.get('https://serpapi.com/search.json?q=Coffee&location=Austin,+Texas,+United+States&hl=en&gl=us&google_domain=google.com&api_key=8fcbde7917072a20411a4c156a9d4cabbc2be088e56a67141b6078850e398165')
-// .then((e)=>{
-//   console.log(e);
-// })
+const images = ref('');
 
 const router = useRouter();
 
@@ -58,6 +39,32 @@ function uploadDone(data) {
             cardData.link = data;
             upload.value = false;
             console.log("From parent get the link",data,link.value)
+}
+
+function recommendImg(keyWord) {
+    var config = {
+    method: 'get',
+    url: `https://api.imgur.com/3/gallery/search/time/all?q=${keyWord}&q_type=jpg`,
+    headers: { 
+      'Authorization': 'Client-ID f6f8f286d4cbdd1', 
+    },
+  };
+
+  axios(config)
+  .then(function (response) {
+    console.log(response.data.data);
+    images.value = response.data.data.map((e)=>{
+      if (e.images) {
+        console.log(e.images[0].link);
+        return e.images[0].link
+      } else {
+        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTKS8sgnBMSLmsUMhsuoKM94dLEb61aboXs6wc0zwu&s"
+      }
+      
+    });
+  })
+  .catch(function (error) {
+    console.log(error)})
 }
 
 onMounted(()=> {
@@ -120,6 +127,7 @@ function getFile(event) {
 
 
 <template>
+
 <UploadFirebase :file="file" :upload="upload" @uploadDone="uploadDone"></UploadFirebase>
 <div class="w-full p-4 text-center bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
     <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{courseData.title}}</h5>
@@ -138,8 +146,8 @@ function getFile(event) {
 
 <form class="modal-wrap">
 
-<label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Word</label>
-<input v-model="word" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+<label for="word" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Word</label>
+<input v-model="word" type="text" id="word" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
 
 <label for="define" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Definition</label>
@@ -149,6 +157,12 @@ function getFile(event) {
 <label class="block my-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
 <input @change="getFile" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
 <!-- <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p> -->
+
+<button class="py-4" @click.prevent="recommendImg(word)">Recommend</button>
+
+<div class="flex">
+  <img v-for="i in images.slice(0,10)" :src="i" referrerpolicy="no-referrer" style="width: 100px"/>
+</div>
 
 <button @click.prevent="createCard" type="submit" class="inline-flex items-center my-5 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
        Save
