@@ -33,7 +33,7 @@ export default {
                 console.log("Now uploadting...",this.file)
                 const metadata = {};
                 const storage = getStorage();
-                const storageRef = ref(storage, 'images/' + this.file.name);
+                const storageRef = ref(storage, 'web/' + Math.round(Date.now() / 1000));
                 const uploadTask = uploadBytesResumable(storageRef, this.file, metadata);
         //       uploadBytes(storageRef, this.File).then((snapshot) => {
         //     console.log('Uploaded a blob or file!');
@@ -75,7 +75,7 @@ export default {
                     // Upload completed successfully, now we can get the download URL
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log('File available at', downloadURL);
-                        this.$emit("uploadDone");
+                        this.$emit("uploadDone", downloadURL);
                     });
                     }
             );

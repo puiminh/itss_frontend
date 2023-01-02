@@ -1,5 +1,5 @@
 {
-  "vocabulary": [
+  "vocabularys": [
     {
       "vocabulary_id": 1,
       "word": "Hello",
@@ -71,6 +71,94 @@
       "link": "",
       "type": 0,
       "course_id": 1
+    },
+    {
+      "word": "You",
+      "define": "Ban",
+      "link": "",
+      "id": 1672628333,
+      "vocabulary_id": 1672628333,
+      "type": 2,
+      "course_id": "1"
+    },
+    {
+      "word": "Her",
+      "define": "Co ay",
+      "link": "",
+      "id": 1672628433,
+      "vocabulary_id": 1672628433,
+      "type": 2,
+      "course_id": "1"
+    },
+    {
+      "word": "Him",
+      "define": "Anh ay",
+      "link": "https://firebasestorage.googleapis.com/v0/b/uploadfiletofirebase-ae63f.appspot.com/o/web%2F1672628996?alt=media&token=c434565a-cfb7-49a3-a3e0-831b42b4ce7a",
+      "id": 1672629005,
+      "vocabulary_id": 1672629005,
+      "type": 2,
+      "course_id": "1"
+    },
+    {
+      "word": "Me",
+      "define": "Toi",
+      "link": "",
+      "id": 1672629045,
+      "vocabulary_id": 1672629045,
+      "type": 2,
+      "course_id": "1"
+    }
+  ],
+  "courses": [
+    {
+      "course_id": 1,
+      "title": "Basic English",
+      "desc": "Basic English for Beginner",
+      "author_id": 1,
+      "class_id": null
+    },
+    {
+      "course_id": 2,
+      "title": "Basic Japanese",
+      "desc": "Basic English for Beginner",
+      "author_id": 1,
+      "class_id": null
+    },
+    {
+      "course_id": 3,
+      "title": "Advance Japanese",
+      "desc": "Basic English for Beginner",
+      "author_id": 1,
+      "class_id": null
+    }
+  ],
+  "users": [
+    {
+      "user_id": 1,
+      "username": "puiminh",
+      "password": "123456",
+      "role": 0,
+      "first_name": "Bùi",
+      "last_name": "Minh",
+      "email": "volmicrolab@gmail.com"
+    },
+    {
+      "user_id": 2,
+      "username": "puiminh",
+      "password": "123456",
+      "role": 0,
+      "first_name": "Quân",
+      "last_name": "Trần",
+      "email": "volmicrolab@gmail.com"
+    },
+    {
+      "user_id": 3,
+      "username": "puiminh",
+      "password": "123456",
+      "role": 0,
+      "first_name": "Linh",
+      "last_name": "Nguyễn",
+      "email": "volmicrolab@gmail.com"
     }
   ]
 }

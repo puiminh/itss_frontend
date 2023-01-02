@@ -1,7 +1,129 @@
+
+<script setup>
+import axios from 'axios';
+import { reactive, ref, toRefs, onMounted , onBeforeMount   } from 'vue';
+import "@/services/firebase.js";
+import { getStorage, ref as refb, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { useRouter } from 'vue-router';
+import FlashCardView from './FlashCardView.vue';
+import FlipCard from '../../components/card/FlipCard.vue';
+import UploadFirebase from '../../components/uploadFirebase/UploadFirebase.vue';
+// import SerpApi from 'google-search-results-nodejs'
+
+// console.log(SerpApi);
+// const search = new SerpApi.GoogleSearch("8fcbde7917072a20411a4c156a9d4cabbc2be088e56a67141b6078850e398165");
+// console.log(search);
+
+// const params = {
+//   q: "Coffee",
+//   location: "Austin, Texas, United States",
+//   hl: "en",
+//   gl: "us",
+//   google_domain: "google.com"
+// };
+
+// const callback = function(data) {
+//   console.log(data);
+// };
+
+// // Show result as JSON
+// search.json(params, callback);
+
+// axios.get('https://serpapi.com/search.json?q=Coffee&location=Austin,+Texas,+United+States&hl=en&gl=us&google_domain=google.com&api_key=8fcbde7917072a20411a4c156a9d4cabbc2be088e56a67141b6078850e398165')
+// .then((e)=>{
+//   console.log(e);
+// })
+
+const router = useRouter();
+
+const props = defineProps(['id'])
+const courseData = ref({});
+const authorData = ref({});
+const cardDatas = ref([]);
+const file = ref('');
+const upload = ref('');
+
+const cardData = reactive({
+    word: '',
+    define: '',
+    link: '',
+})
+const {word, define, link} = toRefs(cardData)
+
+function uploadExcute() {
+            console.log("Upload from parent")
+            upload.value = true;
+        }
+function uploadDone(data) {
+            cardData.link = data;
+            upload.value = false;
+            console.log("From parent get the link",data,link.value)
+}
+
+onMounted(()=> {
+  console.log("Get calling");
+  axios.get('http://localhost:3000/courses?course_id='+props.id)
+    .then((res)=>{
+      console.log("Course res: ",res);
+      // courseData.value = res.data.courses;
+      courseData.value = res.data[0];
+      // cardDatas.value = res.data.details;
+  })
+  .then((res)=> {
+      axios.get('http://127.0.0.1:3000/users?user_id='+courseData.value.author_id)
+      .then((res)=>{
+          console.log("Author res: ",res);
+          // authorData.value = res.data.users;
+          authorData.value = res.data[0];
+      })
+  })
+  .then((res)=> {
+      axios.get('http://localhost:3000/vocabularys?course_id='+props.id)
+      .then((res)=>{
+          console.log("Vocab res: ",res);
+          // cardDatas.value = res.data.vocabularys;
+          cardDatas.value = res.data;
+      })
+  })
+  .catch(function (error) {
+          console.log(error);
+      });
+})
+
+function createCard() {
+    axios.post('http://localhost:3000/vocabularys', {
+      ...cardData,
+        "id": Math.round(Date.now() / 1000),
+        "vocabulary_id": Math.round(Date.now() / 1000),
+        "type": 2,
+        "course_id": props.id
+    })
+    .then(function (response) {
+        console.log(response);
+        if (response.status == 200) {
+            sessionStorage.setItem("createdCourse", name);
+            // let username = sessionStorage.getItem("name");
+            router.go();
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+function getFile(event) {
+        file.value = event.target.files[0];
+        console.log(file.value)
+        uploadExcute();
+}
+</script>
+
+
 <template>
+<UploadFirebase :file="file" :upload="upload" @uploadDone="uploadDone"></UploadFirebase>
 <div class="w-full p-4 text-center bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-    <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{courseData.name}}</h5>
-    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{courseData.description}}</p>
+    <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{courseData.title}}</h5>
+    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{courseData.define}}</p>
     <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
         <a href="#" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
             <div class="text-left">
@@ -13,14 +135,15 @@
       	<input class="modal-btn" type="checkbox" id="modal-btn" name="modal-btn"/>
       	<label for="modal-btn">Add card</label> 		
       	<div class="modal">		
-	      	<form class="modal-wrap">
 
-<label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Card Name</label>
+<form class="modal-wrap">
+
+<label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Word</label>
 <input v-model="word" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
 
-<label for="mean" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Definition</label>
-<textarea id="mean" v-model="mean" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+<label for="define" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Definition</label>
+<textarea id="define" v-model="define" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
 
 
 <label class="block my-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
@@ -41,7 +164,7 @@
    <div class="flow-root">
                 <div class="flex items-center space-x-4">
                     <div class="flex-shrink-0">
-                        <img class="w-8 h-8 rounded-full" :src="card.image? card.image : 'https://play-lh.googleusercontent.com/tyoM-deIvgvga9-D_zQHid4eHlT9-WVyzTEomSu6L6BgaLp6lRGRqtgOzP1paGC8Krs'"  alt="Neil image">
+                        <img class="w-8 h-8 rounded-full" :src="card.link? card.link : 'https://play-lh.googleusercontent.com/tyoM-deIvgvga9-D_zQHid4eHlT9-WVyzTEomSu6L6BgaLp6lRGRqtgOzP1paGC8Krs'"  alt="Neil image">
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-2xl font-medium text-gray-900 truncate dark:text-white">
@@ -52,7 +175,7 @@
                         </p> -->
                     </div>
                     <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                        {{card.mean}}
+                        {{card.define}}
                     </div>
                 </div>
 
@@ -65,134 +188,6 @@
 
 
 </template>
-
-<script setup>
-import axios from 'axios';
-import { reactive, ref, toRefs } from 'vue';
-import "@/services/firebase.js";
-import { getStorage, ref as refb, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useRouter } from 'vue-router';
-import FlashCardView from './FlashCardView.vue';
-import FlipCard from '../../components/card/FlipCard.vue';
-
-const router = useRouter();
-
-const props = defineProps(['id'])
-const courseData = ref();
-const authorData = ref();
-const cardDatas = ref();
-
-const cardData = reactive({
-    word: '',
-    mean: '',
-    video: '',
-    image: '',
-})
-
-const FileI = reactive({
-    file: '',
-    preview: '',
-    isPic: '',
-});
-
-const {word, mean, video, image} = toRefs(cardData)
-const {file, preview, isPic} = toRefs(FileI)
-
-
-axios.get('http://127.0.0.1:3000/api/v1/courses/details/'+props.id)
-  .then((res)=>{
-    console.log(res);
-    courseData.value = res.data.course;
-    cardDatas.value = res.data.details;
-})
-.then((res)=> {
-    axios.get('http://127.0.0.1:3000/api/v1/users/'+courseData.value.author)
-    .then((res)=>{
-        console.log(res);
-        authorData.value = res.data.user;
-    })
-})
-.catch(function (error) {
-        console.log(error);
-    });
-
-function createCard() {
-    axios.post('http://127.0.0.1:3000/api/v1/courses/details/'+props.id, {
-        ...cardData
-    })
-    .then(function (response) {
-        console.log(response);
-        if (response.status == 200) {
-            sessionStorage.setItem("createdCourse", name);
-            // let username = sessionStorage.getItem("name");
-            router.go();
-        }
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-}
-
-function getFile(event) {
-        FileI.file = event.target.files[0];
-        console.log(FileI.file)
-        submitFile();
-}
-
-function submitFile() {
-        const metadata = {
-        };
-        console.log(FileI.file);
-        const storage = getStorage();
-        const storageRef = refb(storage, 'images/' + FileI.file.name);
-        const uploadTask = uploadBytesResumable(storageRef, FileI.file, metadata);
-  //       uploadBytes(storageRef, this.File).then((snapshot) => {
-  //     console.log('Uploaded a blob or file!');
-  // });
-
-    uploadTask.on('state_changed',
-    (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case 'paused':
-          console.log('Upload is paused');
-          break;
-        case 'running':
-          console.log('Upload is running');
-          break;
-      }
-    }, 
-    (error) => {
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-      switch (error.code) {
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
-
-        // ...
-
-        case 'storage/unknown':
-          // Unknown error occurred, inspect error.serverResponse
-          break;
-      }
-    }, 
-    () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
-        cardData.image = downloadURL;
-      });
-    }
-  );
-
-}
-</script>
 
 <style scoped>
 
