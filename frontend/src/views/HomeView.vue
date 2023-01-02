@@ -8,19 +8,25 @@ import QNA from '../components/Q&A/QNA.vue';
 import { mapActions, mapState } from 'pinia'
 import { useCounterStoreT } from '../stores/counter'
 import Record from '../components/Record/Record.vue';
+import Modal from '../components/modal/Modal.vue';
+import Search from '../components/search/Search.vue';
+
 
 export default {
   components: {
     FlipCard: FlipCard,
     QNA: QNA,
     QuillForm,
-    Record
+    Record,
+    Modal,
+    Search
 },
   data() {
     return {
       courseDatas: [],
       content: "",
       start: false,
+      showModal: false,
     }
   },
   methods: {
@@ -87,5 +93,7 @@ export default {
 <button @click="increment">++++</button>
 
 <Record :start="start"></Record>
+
+<Search></Search>
 
 </template>
