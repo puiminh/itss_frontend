@@ -22,7 +22,7 @@ import Sidebar from './components/sidebar/Sidebar.vue'
 
   <Sidebar>
 
-    <RouterView />
+    <RouterView class="mt-12"/>
 
   </Sidebar>
 
