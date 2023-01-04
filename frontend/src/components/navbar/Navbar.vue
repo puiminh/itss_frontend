@@ -1,7 +1,7 @@
 <template>
 
 
-<nav class="flex justify-between px-10 pt-8 pb-6 items-center bg-white border-b-2 border-gray-300">
+<nav class="flex justify-between px-10 pt-8 pb-6 items-center bg-white">
     <div class="flex justify-around gap-28">
       <div class="flex justify-between">
         <h1 class="text-5xl text-gray-800 font-bold logoText">LABA</h1>

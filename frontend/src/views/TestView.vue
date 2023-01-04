@@ -10,6 +10,7 @@ import { useCounterStoreT } from '../stores/counter'
 import Record from '../components/Record/Record.vue';
 import Modal from '../components/modal/Modal.vue';
 import Search from '../components/search/Search.vue';
+import CourseFolder from '../components/folder/CourseFolder.vue'
 
 
 export default {
@@ -19,7 +20,8 @@ export default {
     QuillForm,
     Record,
     Modal,
-    Search
+    Search,
+    CourseFolder,
 },
   data() {
     return {
@@ -95,5 +97,8 @@ export default {
 <Record :start="start"></Record>
 
 <Search></Search>
+
+<CourseFolder class="m-5" title="English Cooking" authorName="Minh Bui Hong" numberVocab="20" progress="10" time="1h23m"></CourseFolder>
+
 
 </template>

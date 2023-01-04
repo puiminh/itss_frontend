@@ -1,13 +1,25 @@
 <template>
 <div class="flex">
-	<div class="fixed flex flex-col items-center w-60 h-full overflow-hidden text-gray-700 border-r border-gray-200">
-		<!-- <a class="flex items-center w-full px-3 mt-3" href="#">
-			<svg class="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-				<path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
-			</svg>
-			<span class="ml-2 text-sm font-bold">The App</span>
-		</a> -->
-		<div class="w-full px-2">
+	<div class="fixed flex flex-col items-center w-60 h-full overflow-hidden text-gray-700 bg-white mx-7">
+		<div class="profile_progress_wrap rounded-3xl grayBG px-4 py-4">
+			<div class="avatar flex w-52 items-center gap-5 px-2">
+				<img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+				<div class="flex gap-1">
+					<img class="h-7 w-7" src="../../assets/icons8-fire-48.png" alt="">
+					<p class="font-semibold text-sm pt-1">48 days</p>
+				</div>
+			</div>
+			<div class="some_bar py-4">
+				<ProgressBar key="1" name="English Cooking" progress="78" color="red"></ProgressBar>
+				<ProgressBar key="2" name="2000 Basic Words" progress="33" color="green"></ProgressBar>
+				<ProgressBar key="3" name="English Animal" progress="28" color="blue"></ProgressBar>
+			</div>
+			<div class="px-2 justify-center text-center">
+				<span class="font-bold text-md text-gray-800">My progress</span>
+				<span class="font-black oswald"> > </span>
+			</div>
+		</div>
+		<div class="w-full">
 			<div class="flex flex-col items-center w-full mt-3">
 				<a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300" href="#">
 					<svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -20,12 +32,6 @@
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 					</svg>
 					<span class="ml-2 text-sm font-medium">Search</span>
-				</a>
-				<a class="flex items-center w-full h-12 px-3 mt-2 bg-gray-300 rounded" href="#">
-					<svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-					</svg>
-					<span class="ml-2 text-sm font-medium">Insights</span>
 				</a>
 				<a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-300" href="#">
 					<svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,8 +69,28 @@
 			<span class="ml-2 text-sm font-medium">Account</span>
 		</a>
 	</div>
-  <div class="" style="margin-left: 300px">
+  <div class="grayBG rounded-tl-3xl minWH" style="margin-left: 300px">
     <slot></slot>
   </div>
 </div>
 </template>
+
+<style scoped>
+
+.minWH {
+	min-width: calc(100vw - 300px);
+	min-height: calc(100vh - 120px);
+}
+
+</style>
+
+<script>
+import ProgressBar from '../progress/ProgressBar.vue';
+
+export default {
+	components: {
+		ProgressBar
+	}
+}
+
+</script>
