@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import FlipCard from '../components/card/FlipCard.vue';
-import QuillForm from '../components/Form/QuillForm.vue';
+import QuillForm from '../components/form/QuillForm.vue';
 import QNA from '../components/Q&A/QNA.vue';
 import { mapActions, mapState } from 'pinia'
 import { useCounterStoreT } from '../stores/counter'
