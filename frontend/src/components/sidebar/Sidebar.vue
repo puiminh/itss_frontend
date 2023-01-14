@@ -4,9 +4,15 @@
 		<div class="profile_progress_wrap rounded-3xl grayBG px-4 py-4">
 			<div class="avatar flex w-52 items-center gap-5 px-2">
 				<img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-				<div class="flex gap-1">
-					<img class="h-7 w-7" src="../../assets/icons8-fire-48.png" alt="">
-					<p class="font-semibold text-sm pt-1">48 days</p>
+				<div class="flex gap-1 relative">
+					<img class="h-7 w-7 fire" src="../../assets/icons8-fire-48.png" alt="">
+					<p class="font-semibold text-sm pt-1">
+						<Transition appear @before-enter="beforeCounting" @enter="enterCounting">
+							<span class="font-semibold text-base"></span> 
+						</Transition> 
+				        days
+					</p>
+					<!-- <Celebrate v-if="tweenedDone" class="absolute h-20 w-20 left-24 -top-3"></Celebrate> -->
 				</div>
 			</div>
 			<div class="some_bar py-4">
@@ -78,19 +84,63 @@
 <style scoped>
 
 .minWH {
-	min-width: calc(100vw - 300px);
+	width: calc(100vw - 300px);
 	min-height: calc(100vh - 120px);
 }
 
 </style>
 
 <script>
+import gsap from 'gsap';
 import ProgressBar from '../progress/ProgressBar.vue';
+import Celebrate from '../celebrate/Celebrate.vue'
 
 export default {
 	components: {
-		ProgressBar
+		ProgressBar,
+		Celebrate
+	},
+	data() {
+		return {
+		}
+	},
+	methods: {
+		beforeCounting(el) {
+            el.innerText = '0';
+        },
+        enterCounting(el, done) {
+            gsap.to(el, 
+            { 
+              innerText: 30, 
+              duration: 2,
+              delay: 0.5,
+              snap: {
+                    innerText:1
+              }, 
+			  onComplete: ()=>{ //make the firepop
+				gsap.to(".fire", {
+					duration: 0.3,
+					scale: 1.4,
+					ease: "ease-in"
+				});
+				gsap.to(".fire", {
+					duration: 0.2,
+					scale: 1,
+					ease: "ease-out",
+					delay: 0.3,
+				});
+
+			  }
+            });
+        }
 	}
 }
 
 </script>
+
+<!-- 					onComplete: ()=>{
+						setTimeout(() => { 						
+							this.tweenedDone = false
+						}, 3000);					
+					} 
+-->

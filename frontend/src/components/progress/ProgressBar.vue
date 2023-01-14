@@ -2,10 +2,14 @@
     <div class="my-2">
         <div class="flex justify-between mb-1">
             <span :class="['text-sm font-medium dark:text-white ',textColor]">{{name}}</span>
-            <span :class="['text-sm font-medium dark:text-white ',textColor  ]">{{progress}}%</span>
+            <Transition appear @before-enter="beforeCounting" @enter="enterCounting">
+                <span :class="['text-sm font-medium dark:text-white ',textColor  ]"></span>
+            </Transition>
         </div>
             <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
-            <div :class="['h-1.5 rounded-full ',bgColor]" :style="['width: '+progress+'%']"></div>
+            <Transition appear @before-enter="beforeRuning" @enter="enterRuning">
+                <div :class="['h-1.5 rounded-full ',bgColor]"></div>
+            </Transition>
         </div>
     </div>
 
@@ -15,6 +19,8 @@
 </template>
 
 <script>
+import gsap from 'gsap';
+
 
 export default {
     props: {
@@ -26,6 +32,7 @@ export default {
     }, 
     data() {
         return {
+            progressRender: 0,
         }
     },
     mounted() {
@@ -37,6 +44,36 @@ export default {
         },
         bgColor() {
             return 'bg-'+this.color+'-700';
+        }
+    },
+    methods: {
+        beforeRuning(el) {
+            el.style.width = 0
+
+        },
+        enterRuning(el, done) {
+          gsap.to(el, {
+          width: this.progress,
+          duration: 2,
+          ease: 'ease-in',
+          onComplete: done,
+          delay: 0.5
+          }
+        )
+        },
+        beforeCounting(el) {
+            el.innerText = '0%';
+        },
+        enterCounting(el, done) {
+            gsap.to(el, 
+            { 
+              innerText: this.progress+'%', 
+              duration: 2,
+              delay: 0.5,
+              snap: {
+                    innerText:2
+              } 
+            });
         }
     }
 }
