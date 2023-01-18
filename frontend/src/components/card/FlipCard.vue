@@ -1,6 +1,16 @@
 <script>
 export default {
-   props: ['vertical'],
+   props: {
+	vertical: {
+		default: false,
+	},
+	width: {
+		default: '400px'
+	},
+	height: {
+		default: '220px'
+	}
+   },
 
    data() {
       return {
@@ -17,7 +27,10 @@ export default {
             this.flipClass = ["frontFlipvertical", "backFlipvertical"];
          }
          return this.flip ? this.flipClass : ["",""];
-      }
+      },
+	  styleCard() {
+		return `background-color: white; color: black; width: ${this.width}; height: ${this.height}`
+	  }
    },
 
    methods: {
@@ -31,7 +44,7 @@ export default {
 
 <template>
 <div :class="['flip', vertical? ' flip-vertical': '']" v-on:click="flipCard">
-    <div :class="['front ', flipClassComputed[0]]" style="background-image: url(https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)">
+    <div :class="['front ', flipClassComputed[0]]" :style="styleCard">
        <h1 class="text-shadow">MOUNTAIN</h1>
     </div>
     <div :class="['back ', flipClassComputed[1]]">
@@ -76,8 +89,8 @@ body {
 	 opacity: 0;
 	 top: 0px;
 	 left: 0px;
-	 width: 100%;
-	 height: 100%;
+	 width: 100%!important;
+	 height: 100%!important;
 	 transform: rotateY(-180deg);
 }
 
@@ -91,15 +104,15 @@ body {
 	 display: inline-block;
 	 margin-right: 2px;
 	 margin-bottom: 1em;
-	 width: 400px;
 }
  .flip > .front, .flip > .back {
 	 display: block;
 	 color: white;
 	 width: inherit;
+	 height: inherit;
 	 background-size: cover !important;
 	 background-position: center !important;
-	 height: 220px;
+	 
 	 padding: 1em 2em;
 	 background: #313131;
 	 border-radius: 10px;

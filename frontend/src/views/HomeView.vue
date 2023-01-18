@@ -65,13 +65,15 @@ export default {
       <transition-group 
         appear
         tag="div"
-        class="grid 2xl:grid-cols-6 gap-4 pt-5 md:grid-cols-3"
+        class="grid 2xl:grid-cols-4 gap-4 pt-5 md:grid-cols-3 xl:grid-cols-6"
       >
 
           <CourseFolder data-index="1" key="1" showProgress="true"></CourseFolder>
           <CourseFolder data-index="2" key="2" showProgress="true"></CourseFolder>
           <CourseFolder data-index="3" key="3" showProgress="true"></CourseFolder>
           <CourseFolder data-index="4" key="4" showProgress="true"></CourseFolder>
+          <CourseFolder data-index="5" key="5" showProgress="true"></CourseFolder>
+          <CourseFolder data-index="6" key="6" showProgress="true"></CourseFolder>
           <CourseFolder data-index="5" key="5" showProgress="true"></CourseFolder>
           <CourseFolder data-index="6" key="6" showProgress="true"></CourseFolder>
       </transition-group>
@@ -87,7 +89,7 @@ export default {
     <transition-group
       appear @before-enter="beforeEnterSlideIn" @enter="enterSlideIn"
       tag="div"
-      class="flex gap-8 2xl:flex-row md:flex-col "
+      class="flex gap-8 2xl:grid 2xl:grid-cols-2 xl:flex-row md:flex-col "
     >
       <Block key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap rounded-3xl moreGrayBG p-4 mt-12 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
         <div class="grid grid-cols-2 gap-4 pt-5">

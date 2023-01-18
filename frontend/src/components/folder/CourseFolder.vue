@@ -1,5 +1,5 @@
 <template>
-<div class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-3xl shadow-md bg-white">
+<RouterLink :to="'/course/'+id" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-3xl shadow-md bg-white">
     <div class="flex justify-between">
         <p class="font-bold text-base">{{title}}</p>
         <div v-if="showStar=='true'" class="flex">
@@ -30,13 +30,16 @@
             <div class="bg-blue-600 h-1 rounded-full" :style="`width: ${progress/numberVocab * 100}%`"></div>
         </div>
     </div>
-</div>
+</RouterLink>
 </template>
 
 <script>
 
 export default {
     props: {
+        id: {
+            default: 1,
+        },
         authorName: {
             default: 'Max Miliam',
         },
