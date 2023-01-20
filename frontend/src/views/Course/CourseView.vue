@@ -2,19 +2,15 @@
 <div class="ml-3 mt-4 rounded-2xl flex flex-col content-center py-12">
     <h1 class="font-black text-4xl">English Cooking</h1>
     <div class="flex w-full mt-5 gap-8">
-        <div class="flex">
-            <svg  class="mt-0.5 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="15px" width="15px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
-
-    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-
-    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-
-    <g id="SVGRepo_iconCarrier"> <path style="fill:#FFB74A;" d="M256.001,283.145c-116.3,0-212.338,86.751-226.935,199.072c-0.979,7.532,1.336,15.119,6.352,20.822 c5.016,5.703,12.246,8.96,19.841,8.96h401.485c7.589,0,14.807-3.271,19.819-8.969c5.012-5.699,7.352-13.287,6.374-20.813 C468.339,369.896,372.301,283.145,256.001,283.145z"/> <path style="fill:#FFC56E;" d="M256,283.146c-116.299,0-212.337,86.751-226.934,199.072c-0.979,7.532,1.336,15.119,6.352,20.821 c5.016,5.703,12.246,8.96,19.841,8.96H256V283.146z"/> <path style="fill:#FFDBAC;" d="M364.161,310.313c-32.213-17.312-69.029-27.167-108.16-27.167s-75.947,9.856-108.16,27.167 c25.411,37.761,64.406,61.96,108.16,61.96C299.755,372.273,338.751,348.074,364.161,310.313z"/> <ellipse style="fill:#FFDBAC;" cx="256" cy="165.379" rx="138.644" ry="165.379"/> <path style="fill:#FFEED9;" d="M256,0c-76.573,0-138.648,74.042-138.648,165.377S179.426,330.754,256,330.754V0z"/> <path style="fill:#FFDBAC;" d="M316.549,252.575H195.451v-31.237c0-10.366,8.403-18.771,18.771-18.771h83.558 c10.366,0,18.771,8.403,18.771,18.771v31.237H316.549z"/> <path style="fill:#FFEED9;" d="M256,202.569h-41.778c-10.366,0-18.771,8.403-18.771,18.769v31.237H256V202.569z"/> </g>
-
-            </svg>
-            <p class="font-semibold text-gray-600">
-                20 people rating
-            </p>
+        <div class="logo_lessons flex gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="16px" width="16px" version="1.1" id="Layer_1" viewBox="0 0 309.267 309.267" xml:space="preserve">
+                <g>
+                    <path style="fill:#D0994B;" d="M260.944,43.491H125.64c0,0-18.324-28.994-28.994-28.994H48.323c-10.67,0-19.329,8.65-19.329,19.329   v222.286c0,10.67,8.659,19.329,19.329,19.329h212.621c10.67,0,19.329-8.659,19.329-19.329V62.82   C280.273,52.15,271.614,43.491,260.944,43.491z"/>
+                    <path style="fill:#E4E7E7;" d="M28.994,72.484h251.279v77.317H28.994V72.484z"/>
+                    <path style="fill:#F4B459;" d="M19.329,91.814h270.609c10.67,0,19.329,8.65,19.329,19.329l-19.329,164.298   c0,10.67-8.659,19.329-19.329,19.329H38.658c-10.67,0-19.329-8.659-19.329-19.329L0,111.143C0,100.463,8.659,91.814,19.329,91.814z   "/>
+                </g>
+                </svg>
+                <p class="text-slate-500 text-sm font-semibold">30 Courses</p>
         </div>
         <div class="flex">
             <svg class="h-5" fill="#FFDF00" stroke="#FDCC0D" stroke-width="0.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

@@ -53,7 +53,7 @@ export default {
         },
         enterRuning(el, done) {
           gsap.to(el, {
-          width: this.progress,
+          width: this.progress + '%',
           duration: 2,
           ease: 'ease-in',
           onComplete: done,
