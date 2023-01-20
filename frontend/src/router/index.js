@@ -53,7 +53,13 @@ const router = createRouter({
       path: '/test/:id',
       component: () => import('../views/Course/TestView.vue'),
       props: true,
-    }
+    },
+    {
+      path: '/user/me',
+      component: () => import('../views/User/Profile.vue'),
+      props: true,
+    },
+
   ]
 })
 

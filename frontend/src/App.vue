@@ -22,7 +22,7 @@ import Sidebar from './components/sidebar/Sidebar.vue'
 
   <Sidebar>
 
-    <RouterView class="pt-8 pl-16"/>
+    <RouterView class="pt-8 pl-16 overflow-hidden"/>
 
   </Sidebar>
 
@@ -35,7 +35,6 @@ import Sidebar from './components/sidebar/Sidebar.vue'
   font-family: "Sagata";
   src: url('~@/assets/fonts/SagataNormalSansRegular.ttf');
 }
-
 
 
 </style>

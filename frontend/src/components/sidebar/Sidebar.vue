@@ -43,7 +43,7 @@
 						<path style="fill:#FFFFFF;" d="M332.8,189.6c-1.6-4-4.8-7.2-9.6-8l-44.8-6.4l-20-40.8c-2.4-4-6.4-6.4-10.4-6.4s-8,2.4-10.4,6.4  l-20,40.8l-44.8,6.4c-4,0.8-8,4-9.6,8s0,8.8,3.2,12l32.8,32l-8,44.8c-0.8,4,0.8,8.8,4.8,11.2c3.2,2.4,8,3.2,12,0.8l40-20.8l40,20.8  c1.6,0.8,3.2,1.6,5.6,1.6s4.8-0.8,6.4-2.4c3.2-2.4,5.6-7.2,4.8-11.2l-8-44.8l32.8-32C332.8,198.4,334.4,193.6,332.8,189.6z"/>
 					</svg>					
 				</RouterLink>
-				<RouterLink to="/account">
+				<RouterLink to="/user/me">
 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="30px" width="30px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
 
 					<g id="SVGRepo_bgCarrier" stroke-width="0"/>
@@ -84,7 +84,7 @@
 
 .minWH {
 	width: calc(100vw - 300px);
-	min-height: calc(100vh - 120px);
+	min-height: calc(100vh - 100px);
 }
 
 </style>
