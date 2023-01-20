@@ -8,13 +8,15 @@
         <div class="text-3xl mx-4 pt-0.5">|</div>
         <p class="logoDescText pt-3"> FLASHCARD <br> LEARNING</p>
       </RouterLink>
-      <div class="flex text-base statusRouterBar pt-2">
+      <!-- <div class="flex text-base statusRouterBar pt-2">
         <p> Home </p>
         <p class="text-sm mx-3 pt-0.5 oswald"> > </p>
         <p> English Class </p>
         <p class="text-sm mx-3 pt-0.5 oswald"> > </p>
         <p> English Course </p>
-      </div>
+      </div> -->
+
+      <Breadcumbs></Breadcumbs>
     </div>
     <div class="flex items-center">
       <ul class="flex items-center space-x-8">
@@ -68,12 +70,14 @@
 </style>
 
 <script>
+import Breadcumbs from '../breadcumbs/Breadcumbs.vue';
 import SearchButton from '../searchbutton/SearchButton.vue';
 
 export default {
  components: {
-  SearchButton
- }
+    SearchButton,
+    Breadcumbs
+}
 }
 
 </script>
