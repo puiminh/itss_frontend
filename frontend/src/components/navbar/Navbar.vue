@@ -3,11 +3,11 @@
 
 <nav class="flex justify-between px-10 py-4 items-center bg-white">
     <div class="flex justify-around gap-28">
-      <div class="flex justify-between">
+      <RouterLink to="/" class="flex justify-between">
         <h1 class="text-5xl text-gray-800 font-bold logoText">LABA</h1>
         <div class="text-3xl mx-4 pt-0.5">|</div>
         <p class="logoDescText pt-3"> FLASHCARD <br> LEARNING</p>
-      </div>
+      </RouterLink>
       <div class="flex text-base statusRouterBar pt-2">
         <p> Home </p>
         <p class="text-sm mx-3 pt-0.5 oswald"> > </p>

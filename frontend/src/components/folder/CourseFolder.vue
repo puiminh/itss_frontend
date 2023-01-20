@@ -1,5 +1,5 @@
 <template>
-<RouterLink :to="'/course/'+id" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-3xl shadow-md bg-white">
+<RouterLink :to="'/course/'+id" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-3xl shadow-md bg-white" draggable="true" @dragstart="drag" id="drag1">
     <div class="flex justify-between">
         <p class="font-bold text-base">{{title}}</p>
         <div v-if="showStar=='true'" class="flex">
@@ -66,6 +66,15 @@ export default {
         showStar: {
             default: 'false'
         }
+    },
+    methods: {
+        allowDrop(ev) {
+            ev.preventDefault();
+        },
+
+        drag(ev) {
+            ev.dataTransfer.setData("id", ev.target.id);
+        },
     }
 }
 
