@@ -4,12 +4,6 @@ export default {
 	vertical: {
 		default: false,
 	},
-	width: {
-		default: '400px'
-	},
-	height: {
-		default: '220px'
-	}
    },
 
    data() {
@@ -29,7 +23,7 @@ export default {
          return this.flip ? this.flipClass : ["",""];
       },
 	  styleCard() {
-		return `background-color: white; color: black; width: ${this.width}; height: ${this.height}`
+		return `background-color: white; color: black;`
 	  }
    },
 
@@ -44,10 +38,10 @@ export default {
 
 <template>
 <div :class="['flip', vertical? ' flip-vertical': '']" v-on:click="flipCard">
-    <div :class="['front ', flipClassComputed[0]]" :style="styleCard">
+    <div :class="['front shadow-md', flipClassComputed[0]]" :style="styleCard">
        <h1 class="text-shadow">MOUNTAIN</h1>
     </div>
-    <div :class="['back ', flipClassComputed[1]]">
+    <div :class="['back shadow-md', flipClassComputed[1]]">
        <h2>Angular</h2>
        <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
     </div>
@@ -74,6 +68,8 @@ body {
 }
  .flip {
 	 position: relative;
+	 width: 100%;
+	 height: 100%;
 }
  .flip > .front, .flip > .back {
 	 display: block;

@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import 'https://kit.fontawesome.com/5ea815c1d0.js'
+// import 'https://kit.fontawesome.com/5ea815c1d0.js'
 export default {
     components: {
     }

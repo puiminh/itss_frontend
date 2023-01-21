@@ -6,7 +6,10 @@ import StackImage from '../../components/stackimage/StackImage.vue';
     <div class="flex gap-6 w-fit">
         <img class="w-1/6 rounded-md border-2 border-black " src="https://static.memrise.com/img/400sqf/from/uploads/immersion/JA0.jpg" alt="">
         <div class="w-3/6 pt-3">
-            <h1 class="font-bold text-3xl">English Cooking</h1>
+            <div class="flex gap-2">
+                <h1 class="font-bold text-3xl">English Cooking</h1>
+                <BookmarkButton class="mt-2"></BookmarkButton>
+            </div>
 
             <div class="flex w-full mt-5 gap-8">
                 <div class="logo_lessons flex gap-1">
@@ -55,13 +58,14 @@ import StackImage from '../../components/stackimage/StackImage.vue';
 
 <script>
 import Block from '../../components/block/Block.vue';
+import BookmarkButton from '../../components/button/BookmarkButton.vue';
 import CourseFolder from '../../components/folder/CourseFolder.vue';
 import ProgressBar from '../../components/progress/ProgressBar.vue';
 import StackImage from '../../components/stackimage/StackImage.vue';
 
 
 export default {
-    components: { StackImage, ProgressBar, CourseFolder, Block }
+    components: { StackImage, ProgressBar, CourseFolder, Block, BookmarkButton }
 }
 
 </script>

@@ -44,16 +44,16 @@
 
 <div class="flex flex-col">
     <Block key="2" data-index="2" data-direct="vertical" class="recommendClassWrap rounded-3xl moreGrayBG p-4 mt-8 w-fit pb-8" title="CLASS CREATED BY Mike Thompson" explain="We base on your recent learning and bookmark">
-        <div class="grid grid-cols-2 gap-4 pt-5 h-52 overflow-y-scroll">
-            <ClassFolder></ClassFolder>
-            <ClassFolder></ClassFolder>
-            <ClassFolder></ClassFolder>
-            <ClassFolder></ClassFolder>
+        <div class="grid grid-cols-2 gap-4 pt-5 h-52 pr-2 overflow-y-scroll">
+            <CollectionFolder></CollectionFolder>
+            <CollectionFolder></CollectionFolder>
+            <CollectionFolder></CollectionFolder>
+            <CollectionFolder></CollectionFolder>
         </div>
     </Block>
 
     <Block key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap rounded-3xl moreGrayBG p-4 mt-4 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
-        <div class="grid grid-cols-2 gap-4 pt-5 h-36 overflow-y-scroll">
+        <div class="grid grid-cols-2 gap-4 pt-5 h-36 pr-2 overflow-y-scroll">
           <CourseFolder showStar="true"></CourseFolder>
           <CourseFolder showStar="true"></CourseFolder>
           <CourseFolder showStar="true"></CourseFolder>
@@ -71,12 +71,12 @@
 
 <script>
 import Block from '../../components/block/Block.vue';
-import ClassFolder from '../../components/folder/ClassFolder.vue';
+import CollectionFolder from '../../components/folder/CollectionFolder.vue';
 import CourseFolder from '../../components/folder/CourseFolder.vue';
 
 
 export default {
-    components: { Block, ClassFolder, CourseFolder }
+    components: { Block, CollectionFolder, CourseFolder }
 }
 
 </script>

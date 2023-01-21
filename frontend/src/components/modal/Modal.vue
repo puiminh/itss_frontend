@@ -4,12 +4,6 @@
           <div class="modal-wrapper">
             <div class="modal-container">
 
-              <div class="modal-header">
-                <slot name="header">
-                  default header
-                </slot>
-              </div>
-
               <div class="modal-body">
                 <slot name="body">
                   default body
@@ -18,7 +12,6 @@
 
               <div class="modal-footer">
                 <slot name="footer">
-                  default footer
                   <button class="modal-default-button" @click="$emit('close')">
                     OK
                   </button>
@@ -37,14 +30,14 @@
 <style scoped>
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 9999;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
   display: table;
   transition: opacity 0.3s ease;
+  overflow: scroll;
 }
 
 .modal-wrapper {
@@ -53,8 +46,9 @@
 }
 
 .modal-container {
-  width: auto;
-  height: auto;
+  width: fit-content;
+  height: 500px;
+  overflow-y: scroll;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

@@ -1,5 +1,5 @@
 <script>
-import ClassFolder from '../components/folder/ClassFolder.vue';
+import CollectionFolder from '../components/folder/CollectionFolder.vue';
 import CourseFolder from '../components/folder/CourseFolder.vue';
 import StackImage from '../components/stackimage/StackImage.vue';
 import Block from '../components/block/Block.vue';
@@ -12,7 +12,7 @@ import gsap from 'gsap'
 export default {
   components: {
     CourseFolder,
-    ClassFolder,
+    CollectionFolder,
     StackImage,
     Block,
     Modal,
@@ -104,10 +104,10 @@ export default {
 
       <Block key="2" data-index="2" data-direct="vertical" class="recommendClassWrap rounded-3xl moreGrayBG p-4 mt-12 w-fit pb-8" title="OR TAKE A LOOK AT SOME CLASS" explain="We base on your recent learning and bookmark">
         <div class="grid grid-cols-2 gap-4 pt-5">
-            <ClassFolder></ClassFolder>
-            <ClassFolder></ClassFolder>
-            <ClassFolder></ClassFolder>
-            <ClassFolder></ClassFolder>
+            <CollectionFolder></CollectionFolder>
+            <CollectionFolder></CollectionFolder>
+            <CollectionFolder></CollectionFolder>
+            <CollectionFolder></CollectionFolder>
         </div>
       </Block>
 

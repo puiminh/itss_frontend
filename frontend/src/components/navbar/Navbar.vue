@@ -8,13 +8,6 @@
         <div class="text-3xl mx-4 pt-0.5">|</div>
         <p class="logoDescText pt-3"> FLASHCARD <br> LEARNING</p>
       </RouterLink>
-      <!-- <div class="flex text-base statusRouterBar pt-2">
-        <p> Home </p>
-        <p class="text-sm mx-3 pt-0.5 oswald"> > </p>
-        <p> English Class </p>
-        <p class="text-sm mx-3 pt-0.5 oswald"> > </p>
-        <p> English Course </p>
-      </div> -->
 
       <Breadcumbs></Breadcumbs>
     </div>

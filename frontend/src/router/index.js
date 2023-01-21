@@ -44,10 +44,10 @@ const router = createRouter({
       component: () => import('../views/Course/CourseView.vue')
     },
     { 
-      path: '/class/:id',
-      name: 'classview',
+      path: '/collection/:id',
+      name: 'collectionview',
       props: true,
-      component: () => import('../views/Class/ClassView.vue')
+      component: () => import('../views/Collection/CollectionView.vue')
     },
     {
       path: '/test/:id',
@@ -59,7 +59,10 @@ const router = createRouter({
       component: () => import('../views/User/Profile.vue'),
       props: true,
     },
-
+    {
+      path: '/manager',
+      component: ()=> import('../views/Manager/ManagerView.vue')
+    }
   ]
 })
 

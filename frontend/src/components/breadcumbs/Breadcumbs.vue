@@ -26,8 +26,8 @@ export default {
     data() {
         return {
             routers: [
-                {name: 'English Basic Class', addr: '/class/1'}, 
-                {name: 'English Cooking', addr: '/class/1/course/1'}]
+                {name: 'English Basic Collection', addr: '/collection/1'}, 
+                {name: 'English Cooking', addr: '/course/1'}]
         }
     }
 }
