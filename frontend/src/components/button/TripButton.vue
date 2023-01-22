@@ -8,7 +8,7 @@
   <button class="button" id="course"><span>      Manager</span></button>
   </RouterLink>
 
-  <RouterLink to="bookmark">
+  <RouterLink to="/bookmark">
   <button class="button rounded-r-md" id="bookmark"><span>      Bookmark</span></button>
   </RouterLink>
 
@@ -21,7 +21,10 @@
   border: 1px solid rgba(232, 232, 232, 0.8);
   border-radius: 14px;
   padding: 7px;
-    place-items: center;
+  place-items: center;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
 }
 
 #account {

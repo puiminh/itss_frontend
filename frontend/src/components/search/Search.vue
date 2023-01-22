@@ -1,29 +1,17 @@
 <template>
 
-<button id="show-modal" @click="showModal = true">Show Modal</button>
+<div class="w-64 h-64 bg-white">
 
-<Modal v-if="showModal" @close="showModal = false">
-  <template v-slot:header>
-    asdasd
-  </template>
-  <template v-slot:body>
-    asdasd
-  </template>
-</Modal>
+</div>
 
 </template>
 
 <script>
-
-import Modal from '../modal/Modal.vue'
-
 export default {
     components: {
-        Modal,
     },
     data() {
         return {
-            showModal: false,
         }
     }
 }

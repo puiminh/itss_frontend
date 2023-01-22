@@ -13,7 +13,6 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import SmartTable from 'vuejs-smart-table'
 
-
 const options = {
     // You can set your default options here
 };

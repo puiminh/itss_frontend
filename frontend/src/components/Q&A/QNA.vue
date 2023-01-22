@@ -130,7 +130,7 @@ export default {
 
 .answerBlock {
     flex-basis: 100%;
-    z-index: 100;
+
     position: relative;
 }
 
@@ -164,7 +164,7 @@ export default {
 .answerButton {
     -webkit-box-align: center;
     align-items: center;
-    background: none;
+    background: white;
     border-radius: 0.5rem;
     color: rgb(41, 42, 46);
     cursor: pointer;
@@ -185,7 +185,6 @@ export default {
     transition: opacity 200ms cubic-bezier(0, 1, 0.75, 1) 0s, color 0.2s ease-in-out 0.1s;
     width: 100%;
     height: auto;
-    z-index: 300;
     border: 2px solid rgb(188, 194, 207);
     box-shadow: rgb(188 194 207) 0px 4px 0px;
     font-weight: 600;

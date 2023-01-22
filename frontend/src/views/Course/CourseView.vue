@@ -50,7 +50,7 @@
         </div>
 
         <div class="flex mt-8 gap-10">
-            <div class="shadow-md-gray-50 rounded-2xl bg-white w-64 h-20 flex items-center justify-center gap-3 shadow-md">
+            <RouterLink to="/course/1/flashcard" class="shadow-md-gray-50 rounded-2xl bg-white w-64 h-20 flex items-center justify-center gap-3 shadow-md">
                 <svg class="" width="32px" height="32px" viewBox="0 -3 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
                     <path d="M28 12V4L8 14V42L20 36" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
@@ -59,7 +59,7 @@
                 <p class="font-bold text-lg">
                     Flashcard
                 </p>
-            </div>
+            </RouterLink>
             <div class="shadow-md-gray-50 rounded-2xl bg-white w-64 h-20 flex items-center justify-center gap-3 shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="0 0 512 512" aria-hidden="true" role="img" class="iconify iconify--fxemoji" preserveAspectRatio="xMidYMid meet"><path fill="#FF6F1F" d="M55.187 73h83.541v104.705H55.187z"/><circle fill="#FF6F1F" cx="129.088" cy="77.691" r="73.9"/><path fill="#FF6F1F" d="M439.814 427.451H142.152c-20.544 0-37.199-16.654-37.199-37.199V41.24c0-20.544 1.004-37.199 21.549-37.199h301.431c27.106 0 49.08 21.974 49.08 49.08v337.131c0 20.545-16.655 37.199-37.199 37.199z"/><path fill="#DCE2E2" d="M455.931 67.945c0-21.992-20.75-39.972-46.96-41.336v-.093H129.088c-20.407 0-36.95 12.668-36.95 28.294s16.543 28.294 36.95 28.294v.485H331.89v390.972l73.882 8.673c28.693 0 50.159-56.776 50.159-84.813V69.915h-.06c.037-.653.06-1.309.06-1.97z"/><path fill="#F2A74E" d="M390.578 507H91.857c-20.252 0-36.669-16.417-36.669-36.669V120.259c0-20.252 53.649-36.669 73.9-36.669h261.49c20.252 0 36.669 16.417 36.669 36.669V470.33c0 20.253-16.417 36.67-36.669 36.67z"/><path fill="#FF6F1F" d="M131.234 507H90.601c-19.558 0-35.414-15.855-35.414-35.414V83.59h76.046V507z"/><path fill="#2B3B47" d="M333.49 240.399H200.546c-7.953 0-14.4-6.447-14.4-14.4v-50.115c0-7.953 6.447-14.4 14.4-14.4H333.49c7.953 0 14.4 6.447 14.4 14.4v50.115c0 7.953-6.447 14.4-14.4 14.4z"/></svg>
                 <p class="font-bold text-lg">
@@ -142,27 +142,10 @@
         </div>
         <div class="flex mt-8 h-96 gap-5">
             <div class="relative w-4/5">
-                <FlipCard class="" width="100%" height="500px"></FlipCard>
+                <FlipCard review-component="false" class="" width="100%" height="500px"></FlipCard>
             </div>
             <div class="w-1/5 flex items-end pb-6">
-                <div class="flex flex-col gap-1">
-                    <GameButton class="border border-gray-300" aria-label="Next" data-cooltipz-dir="right">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-                        </svg>
-                    </GameButton>
-                    <GameButton class="border border-gray-300" aria-label="Back" data-cooltipz-dir="right">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"></path>
-                        </svg>
-                    </GameButton>
-                    <GameButton class="border border-gray-300" aria-label="Random" data-cooltipz-dir="right">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke-width="3" class="w-5 h-5">
-                            <path d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"   />
-                        </svg>
-
-                    </GameButton>
-                </div>
+                <FlashcardButton></FlashcardButton>
 
             </div>
         </div>
@@ -211,6 +194,7 @@ import Modal from '../../components/modal/Modal.vue'
 import gsap from 'gsap';
 import GameButton from '../../components/button/GameButton.vue';
 import BookmarkButton from '../../components/button/BookmarkButton.vue';
+import FlashcardButton from '../../components/button/FlashcardButton.vue';
 
 export default {
     components: {
@@ -220,7 +204,8 @@ export default {
     CommentSection,
     Modal,
     GameButton,
-    BookmarkButton
+    BookmarkButton,
+    FlashcardButton
 },
     data() {
         return {

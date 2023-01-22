@@ -44,6 +44,12 @@ const router = createRouter({
       component: () => import('../views/Course/CourseView.vue')
     },
     { 
+      path: '/course/:id/flashcard',
+      name: 'flashcardview',
+      props: true,
+      component: () => import('../views/Course/FlashCardView.vue')
+    },
+    { 
       path: '/collection/:id',
       name: 'collectionview',
       props: true,
@@ -62,7 +68,12 @@ const router = createRouter({
     {
       path: '/manager',
       component: ()=> import('../views/Manager/ManagerView.vue')
+    },
+    {
+      path: '/course/1/learnword1',
+      component: ()=> import('../views/Course/LearnWord1.vue')
     }
+
   ]
 })
 

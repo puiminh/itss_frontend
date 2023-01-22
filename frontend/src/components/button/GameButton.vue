@@ -19,7 +19,6 @@ export default {
     text-align: center;
 	display: inline-block;
 	margin:5px;
-    font-weight: bold;
     padding: 10px 10px 10px 10px ;
     background-color: white;
     color: rgb(21, 15, 15);
