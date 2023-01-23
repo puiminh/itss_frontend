@@ -14,19 +14,33 @@
             bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
     </div>
 
-    <p class="text-md font-semibold text-blue-500 mt-4">
-        Course that match your search:
-    </p>
-
-    <div class="grid grid-cols-2 gap-2 mt-2">
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
+    <div class="flex justify-between pr-4">
+        <p class="text-md font-semibold text-blue-500 mt-4">
+            {{searchObj}} that match your search:
+        </p>
+        <SwitchButton @handleSwitch="handleSwitchP"></SwitchButton>
     </div>
 
+
+    <div v-if="!isLoading" class="grid grid-cols-2 gap-2 mt-2">
+        <CourseFolder></CourseFolder>
+        <CourseFolder></CourseFolder>
+        <CourseFolder></CourseFolder>
+        <CourseFolder></CourseFolder>
+        <CourseFolder></CourseFolder>
+        <CourseFolder></CourseFolder>
+    </div>    
+    <div v-else class="grid grid-cols-2 gap-2 mt-2 animate-pulse">
+        <SkeletonCourseFolder></SkeletonCourseFolder>
+        <SkeletonCourseFolder></SkeletonCourseFolder>
+        <SkeletonCourseFolder></SkeletonCourseFolder>
+        <SkeletonCourseFolder></SkeletonCourseFolder>
+        <SkeletonCourseFolder></SkeletonCourseFolder>
+        <SkeletonCourseFolder></SkeletonCourseFolder>
+
+    </div>
+
+    {{ testData }}
     <!-- <p class="text-md font-semibold text-blue-500 mt-4">
         Class that match your search:
     </p>
@@ -43,20 +57,30 @@
 <script>
 import CourseFolder from '../folder/CourseFolder.vue'
 import CollectionFolder from '../folder/CollectionFolder.vue'
+import SwitchButton from '../button/SwitchButton.vue'
+import SkeletonCourseFolder from '../folder/SkeletonCourseFolder.vue'
+import axios from 'axios';
+
 
 export default {
     components: {
-        CourseFolder,
-        CollectionFolder
-    },
+    CourseFolder,
+    CollectionFolder,
+    SwitchButton,
+    SkeletonCourseFolder
+},
     data() {
         return {
             timeOut: null,
+            searchObj: 'Course',
+            isLoading: false,
+            testData: ''
         }
     },
     methods: {
         handleInput() {
             console.log('Handle input');
+            this.isLoading = true;
             clearTimeout(this.timeOut);
 
             this.timeOut = setTimeout(() => {
@@ -65,6 +89,17 @@ export default {
         },
         callAPI() {
             console.log('call');
+            axios.get('https://www.superheroapi.com/api.php/3264999407146167/'+ Math.floor(Math.random() * 100)).then((res)=>{
+                console.log(res.data.name);
+                this.testData = res.data.name;
+                this.isLoading = false;
+            })
+        },
+        handleSwitchP(value) {
+            this.searchObj = this.capitalizeFirstLetter(value);
+        },
+        capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
         }
     }
 }
