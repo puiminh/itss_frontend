@@ -92,7 +92,7 @@ import QuestionView from './QuestionView.vue';
 export default {
     data() {
         return {
-            learnmode: false,
+            learnmode: true,
         }
     },
     components: { ProgressBar, GameButton, VideoPlayer, QuestionView },
@@ -101,7 +101,6 @@ export default {
       if(sound) {
         var foo = new p5.Speech(); // speech synthesis object
         foo.speak('hi there'); // say something
-        foo.speak('Hello')
       }
     }
   }

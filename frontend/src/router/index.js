@@ -33,7 +33,12 @@ const router = createRouter({
       component: () => import('../views/User/SignInView.vue')
     },
     {
-      path: '/createcourse',
+      path: '/create/course',
+      name: 'createcourse',
+      component: () => import('../views/Course/CreateCourseView.vue')
+    },
+    {
+      path: '/create/collection',
       name: 'createcourse',
       component: () => import('../views/Course/CreateCourseView.vue')
     },

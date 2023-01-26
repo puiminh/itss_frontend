@@ -1,9 +1,7 @@
 <template>
 
 <div class="multi-button shadow-lg">
-  <RouterLink to="/user/me">
-    <button class="button rounded-l-md" id="account"><span>      Account</span></button>
-  </RouterLink>
+    <button class="button rounded-l-md" id="create" @click="openModalMethod"><span>      Create</span></button>
   <RouterLink to="/manager">
   <button class="button" id="course"><span>      Manager</span></button>
   </RouterLink>
@@ -27,13 +25,13 @@
   width: fit-content;
 }
 
-#account {
+#create {
   background-color: rgb(85,131,241);
   border: 1px solid rgb(85,131,241);
   
 }
 
-#account {
+#create {
   background-color: rgb(85,131,241);
   border: 1px solid rgb(85,131,241);
   
@@ -82,9 +80,9 @@
   right: 0;
 }
 
-#account span:after {
+#create span:after {
   font-family: FontAwesome;
-  content: "\f007";
+  content: "\f055";
 }
 
 #course span:after {
@@ -100,5 +98,19 @@
 </style>
 
 <script>
+import { openModal, closeModal } from 'jenesius-vue-modal';
+import CreateOptionBox from '../box/CreateOptionBox.vue';
+
+
+export default {
+	methods: {
+		openModalMethod() {
+			openModal(CreateOptionBox)
+		},
+    closeModalMethod() {
+      closeModal()
+    }
+	}
+}
 
 </script>
