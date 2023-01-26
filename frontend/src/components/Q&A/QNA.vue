@@ -83,7 +83,7 @@ export default {
     <div class="questionWrap">
         <h2 class="questionText">{{question }}</h2>
     </div>
-    <div class="answerWrap">
+    <div class="answerWrap mt-8">
         <div v-for="(answer,index) in shuffleArray" class="answerBlock">
             <button type="button" class="answerButton" @click="choose(index)" ref="answerElements">
                 <div class="answerNumber">{{index+1}}</div>
@@ -125,7 +125,8 @@ export default {
 .questionText {
     color: rgb(41, 42, 46);
     font-family: "Open Sans", sans-serif;
-    font-size: 2.25rem;
+    font-size: 3.25rem;
+    font-weight: 700;
 }
 
 .answerBlock {
@@ -226,6 +227,7 @@ export default {
 .answerText {
     -webkit-box-flex: 1;
     flex-grow: 1;
+    font-weight: 500;
 }
 
 

@@ -45,12 +45,11 @@ export default {
 </script>
 
 <style>
-* {
-    user-select: none;
-}
  body input + div + div {
 	 width: fit-content;
 	 margin-top: 10px;
+    user-select: none;
+
 }
  body input + div + div label {
 	 display: block;

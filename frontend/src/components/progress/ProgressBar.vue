@@ -6,11 +6,21 @@
                 <span :class="['text-sm font-medium dark:text-white ',textColor  ]"></span>
             </Transition>
         </div>
-            <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
+            <div  v-if="thin=='true'" class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
+
             <Transition appear @before-enter="beforeRuning" @enter="enterRuning">
                 <div :class="['h-1.5 rounded-full ',bgColor]"></div>
             </Transition>
-        </div>
+
+            </div>
+
+            <div  v-else class="w-full bg-gray-200 rounded-sm h-6 dark:bg-gray-700">
+
+            <Transition appear @before-enter="beforeRuning" @enter="enterRuning">
+                <div :class="['h-6 rounded-sm ',bgColor]"></div>
+            </Transition>
+
+            </div>
     </div>
 
     <!-- Weird way to make dynamic class -->
@@ -25,10 +35,13 @@ import gsap from 'gsap';
 export default {
     props: {
         color: {
-            default: ''
+            default: 'gray'
         },
         name: '',
         progress: '',   
+        thin: {
+            default: 'true'
+        },
     }, 
     data() {
         return {

@@ -50,6 +50,12 @@ const router = createRouter({
       component: () => import('../views/Course/FlashCardView.vue')
     },
     { 
+      path: '/course/:id/test',
+      name: 'flashcardview',
+      props: true,
+      component: () => import('../views/Course/TestView.vue')
+    },
+    { 
       path: '/collection/:id',
       name: 'collectionview',
       props: true,
@@ -57,7 +63,7 @@ const router = createRouter({
     },
     {
       path: '/test/:id',
-      component: () => import('../views/Course/TestView.vue'),
+      component: () => import('../views/Course/QuestionView.vue'),
       props: true,
     },
     {
@@ -70,8 +76,8 @@ const router = createRouter({
       component: ()=> import('../views/Manager/ManagerView.vue')
     },
     {
-      path: '/course/1/learnword1',
-      component: ()=> import('../views/Course/LearnWord1.vue')
+      path: '/course/1/learnword',
+      component: ()=> import('../views/Course/LearnWord.vue')
     }
 
   ]

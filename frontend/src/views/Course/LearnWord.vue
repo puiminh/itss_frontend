@@ -1,31 +1,40 @@
 <template>
 
 <div class="p-12 ml-12 mt-3">
-    <ProgressBar class="pr-64" progress="80" color="yellow"></ProgressBar>
+    <ProgressBar class="pr-64" progress="80" color="yellow" thin="no"></ProgressBar>
 
     <div class="flex mt-8">
-        <div class="flex flex-col w-3/4 divide-y-4 divide-slate-400/2500 pr-8">
-            <div class="">
-                <p class="text-sm text-gray-600 font-medium ">TERM</p>
-                <p class="font-bold text-4xl mt-4">
-                    Hello
-                </p>
-                <p class="text-sm text-gray-500 font-medium mt-6">DEFINITION</p>
-                <p class="font-semibold text-lg mt-2 mb-4">
-                    Xin chào, chào bạn.
-                    <br>
-                    Xin chào, chào bạn.
-                    <br>
-                    <br>
-                    Xin chào, chào bạn.
-                    <br>
-                    Xin chào, chào bạn.
-                    <br>
-                    Xin chào, chào bạn.
 
-                </p>
+        <!-- LEARN WORD -->
+
+        <!-- <video controls autoplay class="bg-gray-200 rounded-lg w-2/5 mr-8">
+            <source src="https://firebasestorage.googleapis.com/v0/b/uploadfiletofirebase-ae63f.appspot.com/o/images%2Foceans.mp4?alt=media&token=d9e04362-2237-4d5d-96b6-00ce674ea654" type="video/mp4">
+        </video> -->
+        <!-- 2/5 or 4/5 -->
+        <div v-if="learnmode" class="flex flex-col divide-y-4 divide-slate-400/2500 pr-8 w-4/5">
+            <div class="flex">
+
+                <div class="select-text">
+                    <p class="text-sm text-gray-600 font-medium ">TERM</p>
+                    <p class="font-bold text-4xl mt-4">
+                        Hello
+                    </p>
+                    <p class="text-sm text-gray-500 font-medium mt-6">DEFINITION</p>
+                    <p class="font-semibold text-lg mt-2 mb-4">
+                        Xin chào, chào bạn.
+                        <br>
+                        Xin chào, chào bạn.
+                        <br>
+                        <br>
+                        Xin chào, chào bạn.
+                        <br>
+                        Xin chào, chào bạn.
+                        <br>
+                        Xin chào, chào bạn.
+
+                    </p>
+                </div>
             </div>
-
             <div class="">
                 <p class="text-xs text-gray-600 font-semibold mt-6">AUDIO</p>
                 <button class="bg-gray-300 w-fit p-2 rounded-xl mt-2" @click="playSound('http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3')">
@@ -34,8 +43,13 @@
                     </svg>
                 </button>
             </div>
-
         </div>
+
+        <!-- MINITEST -->
+
+        <QuestionView v-else class="pr-8 w-4/5 "></QuestionView>
+
+        <!-- BUTTON -->
 
         <div class="flex flex-col gap-2 pt-16">
             <GameButton class="!bg-yellow-300 !px-5 !py-4">
@@ -60,11 +74,7 @@
                     </svg>                  
                 </GameButton>
             </div>
-        </div>
-
-
-
-    
+        </div>   
     </div>
 </div>
 
@@ -74,11 +84,18 @@
 <script>
 import GameButton from '../../components/button/GameButton.vue';
 import ProgressBar from '../../components/progress/ProgressBar.vue';
-
+import { VideoPlayer } from '@videojs-player/vue'
+import 'video.js/dist/video-js.css'
+import QuestionView from './QuestionView.vue';
 
 
 export default {
-    components: { ProgressBar, GameButton },
+    data() {
+        return {
+            learnmode: false,
+        }
+    },
+    components: { ProgressBar, GameButton, VideoPlayer, QuestionView },
     methods: {
     playSound (sound) {
       if(sound) {
@@ -92,5 +109,25 @@ export default {
 </script>
 
 <style scoped>
+  .video-player {
+    background-color: black;
+    width: 100%;
+  }
 
+  /* Change all text and icon colors in the player. */
+.vjs-matrix.video-js {
+  color: #00ff00;
+}
+
+/* Change the border of the big play button. */
+.vjs-matrix .vjs-big-play-button {
+  border-color: #00ff00;
+}
+
+/* Change the color of various "bars". */
+.vjs-matrix .vjs-volume-level,
+.vjs-matrix .vjs-play-progress,
+.vjs-matrix .vjs-slider-bar {
+  background: #00ff00;
+}
 </style>
