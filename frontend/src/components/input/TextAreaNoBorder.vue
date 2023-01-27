@@ -49,7 +49,7 @@
                 this.log(this.content,this.modelValue)
                 this.$refs.label.classList.remove('focus_label_class')
                 this.$refs.editor.classList.remove('focus_field_class')   
-                if (this.content != '') {
+                if (this.content != '' && this.content!='<p><br></p>') {
                     this.$refs.label.classList.add('have_some_text')
                     console.log('have some text');
                 } else {
