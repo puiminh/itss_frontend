@@ -1,5 +1,5 @@
 <template>
-    <div class="form__group field form__field z-50" ref="editor">
+    <div class="form__group field form__field" ref="editor">
       <quill-editor 
         type="input" 
         name="name" 
