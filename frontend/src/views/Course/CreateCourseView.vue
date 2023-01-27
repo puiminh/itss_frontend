@@ -5,7 +5,7 @@
     <div class="flex gap-5">
         <div class="w-4/5">
             <InputNoBorder title="TITLE" class="mt-8"/>
-            <InputNoBorder title="DESCRIPTION" class="mt-4"/>
+            <TextAreaNoBorder title="DESCRIPTION" class="mt-8" v-model="desc"></TextAreaNoBorder>
         </div>
         <div class="place-self-end">
             <GameButton class="!bg-blue-600 !px-3 !py-2">
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="mr-32 mt-12 flex flex-col gap-8">
+    <div class="mr-32 mt-12 flex flex-col gap-8 pt-10">
         <AddTermCard></AddTermCard>
         <AddTermCard></AddTermCard>
         <AddTermCard></AddTermCard>
@@ -32,18 +32,19 @@ import GameButton from '../../components/button/GameButton.vue';
 import AddNewCard from '../../components/card/AddNewCard.vue';
 import AddTermCard from '../../components/card/AddTermCard.vue';
 import InputNoBorder from '../../components/input/InputNoBorder.vue';
+import TextAreaNoBorder from '../../components/input/TextAreaNoBorder.vue';
 
 
 export default {
-    components: { InputNoBorder, GameButton, AddTermCard, AddNewCard },
+    components: { InputNoBorder, GameButton, AddTermCard, AddNewCard, TextAreaNoBorder },
     data() {
         return {
-            content: '',
+            desc: '',
         }
     },
     methods: {
         log() {
-            console.log(this.content);
+            console.log(this.desc);
         }
     }
 }

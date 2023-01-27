@@ -11,9 +11,9 @@
             </div>
         </div>
 
-        <div class="flex p-8 gap-6">
+        <div class="flex p-8 gap-6 items-center">
             <InputNoBorder class="w-2/3 !text-gray-400" title="TERM"></InputNoBorder>
-            <InputNoBorder class="w-2/3" title="DEFINITION"></InputNoBorder>
+            <TextAreaNoBorder class="w-2/3" title="DEFINITION" placeholder="none"></TextAreaNoBorder>
             <div class="flex items-center justify-center">
                 <label for="dropzone-file" class="flex flex-col items-center w-16 h-16 justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:text-blue-600">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -35,9 +35,10 @@
 
 <script>
 import InputNoBorder from '../input/InputNoBorder.vue';
+import TextAreaNoBorder from '../input/TextAreaNoBorder.vue';
 
 
 export default {
-    components: { InputNoBorder }
+    components: { InputNoBorder, TextAreaNoBorder }
 }
 </script>

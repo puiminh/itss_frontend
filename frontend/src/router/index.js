@@ -39,7 +39,7 @@ const router = createRouter({
     },
     {
       path: '/create/collection',
-      name: 'createcourse',
+      name: 'createcollection',
       component: () => import('../views/Course/CreateCourseView.vue')
     },
     { 
