@@ -24,9 +24,14 @@
             </div> 
             <div class="flex items-center justify-center">
                 <div @click="openRecordModal" class="flex flex-col items-center w-16 h-16 justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:text-red-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg v-if="!recordLink" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"></path>
                     </svg>
+                    <button v-else class="rounded-full p-3 text-white bg-blue-500 flex justify-center items-center">
+                        <svg class="w-3 h-3 absolute" fill="currentColor" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"></path>
+                        </svg>
+                    </button>
                 </div>
             </div> 
         </div>
@@ -55,20 +60,26 @@ export default {
     data() {
         return {
             imageLink: '',
+            recordLink: '',
         }
     },
     methods: {
         async openImageModal() {
-            const modal = await openModal(ImageModal)
+            const modal = await openModal(ImageModal, {imagePropLink: this.imageLink})
 
             modal.on('passImageLink', link => {
                 console.log(link);
                 this.imageLink = link;
             }) 
         },
-        openRecordModal() {
-            openModal(RecordModal)
-        }
+        async openRecordModal() {
+            const modal = await openModal(RecordModal, {recordPropLink: this.recordLink} )
+
+            modal.on('passRecordLink', link => {
+                console.log(link);
+                this.recordLink = link;
+            }) 
+        },
     },
 }
 </script>

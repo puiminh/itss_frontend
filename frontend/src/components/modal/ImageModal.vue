@@ -70,6 +70,9 @@ import InputNoBorder from '../input/InputNoBorder.vue';
 import UploadFirebase from '../uploadFirebase/UploadFirebase.vue';
 
 export default {
+    props: {
+      imagePropLink: '',
+    },
     data() {
         return {
             imageLink: "",
@@ -82,6 +85,12 @@ export default {
             upload: false,
         };
     },
+    watch: {
+      imageLink() {
+        this.passImageLinkMethod()
+      }
+    }
+    ,
     methods: {
 
         uploadExcute() {
@@ -185,6 +194,12 @@ export default {
         }
     },
     mounted() {
+      console.log(this.imagePropLink);
+      if (this.imagePropLink) {
+        this.fileName = 'file.png';
+        this.imageLink = this.imagePropLink;
+        this.active = true;
+      }
     },
     components: { UploadFirebase, InputNoBorder }
 }
