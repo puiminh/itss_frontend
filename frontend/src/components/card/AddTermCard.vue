@@ -40,6 +40,7 @@
                     <input id="dropzone-file" type="file" class="hidden" />
                 </label>
             </div>  -->
+            
 </template>
 
 <script>
@@ -47,9 +48,10 @@ import InputNoBorder from '../input/InputNoBorder.vue';
 import TextAreaNoBorder from '../input/TextAreaNoBorder.vue';
 import ImageModal from '../../components/modal/ImageModal.vue'
 import { openModal } from 'jenesius-vue-modal';
+import RecordModal from '../modal/RecordModal.vue';
 
 export default {
-    components: { InputNoBorder, TextAreaNoBorder, ImageModal },
+    components: { InputNoBorder, TextAreaNoBorder, ImageModal, RecordModal },
     data() {
         return {
             imageLink: '',
@@ -65,7 +67,7 @@ export default {
             }) 
         },
         openRecordModal() {
-            openModal()
+            openModal(RecordModal)
         }
     },
 }
