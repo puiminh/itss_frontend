@@ -11,7 +11,7 @@
         toolbar="minimal"      
         @focus="focusMethod"  
         @blur="blurMethod"
-        class="pt-3 font-sans font-semibold text-md -mb-2"
+        class="pt-3 font-sans font-semibold text-md -mb-2 -ml-3"
         ></quill-editor>
       <label :for="title" class="form__label" ref="label">{{ title }}</label>
     </div>

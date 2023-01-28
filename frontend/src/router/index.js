@@ -56,7 +56,7 @@ const router = createRouter({
     },
     { 
       path: '/course/:id/test',
-      name: 'flashcardview',
+      name: 'testview',
       props: true,
       component: () => import('../views/Course/TestView.vue')
     },

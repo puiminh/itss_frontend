@@ -3,13 +3,13 @@
         <div class="flex justify-between mb-1">
             <span :class="['text-sm font-medium dark:text-white ',textColor]">{{name}}</span>
             <Transition appear @before-enter="beforeCounting" @enter="enterCounting">
-                <span :class="['text-sm font-medium dark:text-white ',textColor  ]"></span>
+                <span :class="['text-sm font-medium dark:text-white ',textColor  ]" ref="processNumber"></span>
             </Transition>
         </div>
             <div  v-if="thin=='true'" class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
 
             <Transition appear @before-enter="beforeRuning" @enter="enterRuning">
-                <div :class="['h-1.5 rounded-full ',bgColor]"></div>
+                <div :class="['h-1.5 rounded-full ',bgColor]" ref="process" class="process"></div>
             </Transition>
 
             </div>
@@ -38,7 +38,9 @@ export default {
             default: 'gray'
         },
         name: '',
-        progress: '',   
+        progress: {
+            default: 0,
+        },   
         thin: {
             default: 'true'
         },
@@ -83,6 +85,28 @@ export default {
               innerText: this.progress+'%', 
               duration: 2,
               delay: 0.5,
+              snap: {
+                    innerText:2
+              } 
+            });
+        }
+    },
+    watch: {
+        progress() {
+            console.log('progress change', this.$refs.process);
+            
+            gsap.to(this.$refs.process, {
+                width: this.progress + '%',
+                duration: 0.5,
+                ease: 'ease-in',
+                 
+            })
+
+            gsap.to(this.$refs.processNumber,             
+            { 
+              innerText: this.progress+'%', 
+              duration: 0.5,
+              
               snap: {
                     innerText:2
               } 

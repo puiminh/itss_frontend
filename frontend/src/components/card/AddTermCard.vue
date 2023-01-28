@@ -16,9 +16,10 @@
             <TextAreaNoBorder class="w-2/3" title="DEFINITION" placeholder="none"></TextAreaNoBorder>
             <div class="flex items-center justify-center">
                 <div @click="openImageModal" for="dropzone-file" class="flex flex-col items-center w-16 h-16 justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:text-blue-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg v-if="!imageLink" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path>
                     </svg>
+                    <img v-else :src="imageLink" alt="" class="w-full h-full object-cover">
                 </div>
             </div> 
             <div class="flex items-center justify-center">
@@ -49,9 +50,19 @@ import { openModal } from 'jenesius-vue-modal';
 
 export default {
     components: { InputNoBorder, TextAreaNoBorder, ImageModal },
+    data() {
+        return {
+            imageLink: '',
+        }
+    },
     methods: {
-        openImageModal() {
-            openModal(ImageModal)
+        async openImageModal() {
+            const modal = await openModal(ImageModal)
+
+            modal.on('passImageLink', link => {
+                console.log(link);
+                this.imageLink = link;
+            }) 
         },
         openRecordModal() {
             openModal()

@@ -1,10 +1,9 @@
 <template>
 <div class="form__group field">
-  <input type="input" class="form__field" placeholder="Name" name="name" :id="title" required 
+  <input type="input" :class="['form__field ', customInput]" placeholder="Name" name="name" :id="title" required 
     :value="modelValue" 
     @input="$emit('update:modelValue', $event.target.value)" />
-<p v-html="modelValue"></p>
-  <label :for="title" class="form__label">{{ title }}</label>
+  <label :for="title" :class="['form__label ', customInput]">{{ title }}</label>
 </div>
 </template>
 
@@ -23,6 +22,9 @@ export default {
         title: {
             default: 'Input'
         },
+		customInput: {
+			default: ''
+		}
     }
 }
 </script>
@@ -44,6 +46,12 @@ export default {
 	 background: transparent;
 	 transition: border-color 0.2s;
 }
+
+.form__field.small {
+	font-size: 0.8rem;
+	padding: 3px 0;
+}
+
  .form__field::placeholder {
 	 color: transparent;
 }
@@ -60,6 +68,10 @@ export default {
      font-weight: 600;
 	 color: #484848;
      user-select: none;
+}
+
+.form__label.small {
+	top: -8px!important;
 }
  .form__field:focus {
 	 padding-bottom: 6px;
