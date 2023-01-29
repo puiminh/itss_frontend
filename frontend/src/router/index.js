@@ -81,6 +81,10 @@ const router = createRouter({
       component: ()=> import('../views/Manager/ManagerView.vue')
     },
     {
+      path: '/bookmark',
+      component: ()=> import('../views/Bookmark/BookmarkView.vue')
+    },
+    {
       path: '/course/1/learnword',
       component: ()=> import('../views/Course/LearnWord.vue')
     }

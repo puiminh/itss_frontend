@@ -18,23 +18,21 @@
         </div>
         <div class="flex w-full mt-5 gap-8">
             <div class="logo_lessons flex gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="16px" width="16px" version="1.1" id="Layer_1" viewBox="0 0 309.267 309.267" xml:space="preserve">
-                    <g>
-                        <path style="fill:#D0994B;" d="M260.944,43.491H125.64c0,0-18.324-28.994-28.994-28.994H48.323c-10.67,0-19.329,8.65-19.329,19.329   v222.286c0,10.67,8.659,19.329,19.329,19.329h212.621c10.67,0,19.329-8.659,19.329-19.329V62.82   C280.273,52.15,271.614,43.491,260.944,43.491z"/>
-                        <path style="fill:#E4E7E7;" d="M28.994,72.484h251.279v77.317H28.994V72.484z"/>
-                        <path style="fill:#F4B459;" d="M19.329,91.814h270.609c10.67,0,19.329,8.65,19.329,19.329l-19.329,164.298   c0,10.67-8.659,19.329-19.329,19.329H38.658c-10.67,0-19.329-8.659-19.329-19.329L0,111.143C0,100.463,8.659,91.814,19.329,91.814z   "/>
-                    </g>
-                    </svg>
-                    <p class="text-slate-500 text-sm font-semibold">30 courses</p>
+                <svg class="" width="16px" height="16px" viewBox="0 -3 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
+                <path d="M28 12V4L8 14V42L20 36" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M20 16L40 6V34L20 44V16Z" fill="#2F88FF" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
+                </svg>
+                    <p class="text-slate-500 text-sm font-semibold">30 terms</p>
             </div>
-            <div class="flex cursor-pointer hover:underline underline-offset-2">
+            <div class="flex cursor-pointer hover:underline underline-offset-2" @click="openRatingSectionMethod">
                 <svg class="h-5" fill="#FFDF00" stroke="#FDCC0D" stroke-width="0.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                 </svg>
                 <p class="font-black text-gray-600">4.5</p>
                 <p class="font-bold  text-gray-300">/5</p>
             </div>
-            <div class="flex gap-1 cursor-pointer" @click="showCommentMethod">
+            <div class="flex gap-1 cursor-pointer" @click="openCommentSectionMethod">
                 <svg class="h-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" enable-background="new 0 0 32 32" version="1.1" xml:space="preserve" fill="#000000">
 
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
@@ -169,17 +167,15 @@
 
         <div class="comment_section_wrap absolute top-0 left-0 opacity-0 hidden">
             <div class="flex justify-end mb-4">
-                <div class="bg-white shadow-md rounded-full p-2 cursor-pointer" @click="closeCommentSectionMethod">
+                <div class="bg-white shadow-md rounded-full p-2 cursor-pointer">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </div>
             </div>
-            <CommentSection class="p-8 rounded-2xl shadow-lg"></CommentSection>
         </div>
     </div>
 </div>
-
 
 </template>
 
@@ -190,11 +186,13 @@ import CommentSection from '../../components/comment/CommentSection.vue';
 import FlipCard from '../../components/card/FlipCard.vue';
 import ProgressBar from '../../components/progress/ProgressBar.vue';
 
-import Modal from '../../components/modal/Modal.vue'
 import gsap from 'gsap';
 import GameButton from '../../components/button/GameButton.vue';
 import BookmarkButton from '../../components/button/BookmarkButton.vue';
 import FlashcardButton from '../../components/button/FlashcardButton.vue';
+import Rating from '../../components/rating/Rating.vue'
+import { closeModal, openModal } from 'jenesius-vue-modal';
+
 
 export default {
     components: {
@@ -202,37 +200,20 @@ export default {
     ProgressBar,
     Block,
     CommentSection,
-    Modal,
     GameButton,
     BookmarkButton,
     FlashcardButton
 },
     data() {
         return {
-            showComment: false,
         }
     },
     methods: {
-        showCommentMethod() {
-            gsap.to('.comment_section_wrap', {
-                y: '1000px'
-            })
-            gsap.to('.comment_section_wrap', {
-                y: 0,
-                duration: 0.5,
-                opacity: 1,
-                display: 'block',
-                ease: 'ease-in'
-            })
+        openCommentSectionMethod() {
+            openModal(CommentSection)
         },
-        closeCommentSectionMethod() {
-            gsap.to('.comment_section_wrap', {
-                y: '1000px',
-                duration: 0.5,
-                opacity: 0,
-                display: 'none',
-                ease: 'ease-in'
-            })
+        openRatingSectionMethod() {
+            openModal(Rating);
         }
     }
 }

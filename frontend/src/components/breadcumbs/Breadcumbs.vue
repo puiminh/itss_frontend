@@ -29,6 +29,13 @@ export default {
                 {name: 'English Basic Collection', addr: '/collection/1'}, 
                 {name: 'English Cooking', addr: '/course/1'}]
         }
+    },
+    watch: {
+      // '$route'(toAddr, fromAddr) {
+      //   console.log('Watch route',toAddr.fullPath.split('/'))
+        
+        
+      // },
     }
 }
 

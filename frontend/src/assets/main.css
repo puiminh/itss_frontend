@@ -64,20 +64,31 @@ a.green {
   /* Firefox */
   * {
     scrollbar-width: none;
-    scrollbar-color: #c69595 #ffffff;
+    scrollbar-color: #a8a8a8 #ffffff;
   }
 
   /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 11px;
+  ::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+    height: 20px;
   }
 
-  *::-webkit-scrollbar-track {
-    background: #ffffff;
+  ::-webkit-scrollbar-track {
+    background: inherit;
   }
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #c69595;
+  ::-webkit-scrollbar-thumb {
+    background-color: #a8a8a8;
     border-radius: 10px;
-    border: 3px solid #ffffff;
+    border: 2px solid #ffffff;
   }
+
+  /* ::-webkit-scrollbar              { }
+  ::-webkit-scrollbar-button       { }
+  ::-webkit-scrollbar-track        { }
+  ::-webkit-scrollbar-track-piece  { }
+  ::-webkit-scrollbar-thumb        { }
+  ::-webkit-scrollbar-corner       { }
+  ::-webkit-resizer                { } */
+
