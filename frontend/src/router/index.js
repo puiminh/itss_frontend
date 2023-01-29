@@ -40,7 +40,7 @@ const router = createRouter({
     {
       path: '/create/collection',
       name: 'createcollection',
-      component: () => import('../views/Course/CreateCourseView.vue')
+      component: () => import('../views/Collection/CreateCollectionView.vue')
     },
     { 
       path: '/course/:id',

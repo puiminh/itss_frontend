@@ -1,0 +1,78 @@
+<template>
+    <div>
+      <VueMultiselect
+        v-model="taggingSelected"
+        :options="taggingOptions"
+        :multiple="true"
+        :taggable="true"
+        @tag="addTag"
+        tag-placeholder="Add this as new tag"
+        placeholder="Type to search or add courses"
+        label="name"
+        track-by="code">
+      </VueMultiselect>
+    </div>
+  </template>
+  
+  <script>
+  import VueMultiselect from 'vue-multiselect'
+  export default {
+    components: { VueMultiselect },
+    data () {
+      return {
+        taggingSelected: null,
+        taggingOptions: [
+        { name: 'Vue.js', code: 'vu' },
+        { name: 'Javascript', code: 'js' },
+        { name: 'Open Source', code: 'os' },
+        { name: 'Open Source1', code: 'os1' },
+        { name: 'Open Source2', code: 'os2' },
+
+      ]
+      }
+    },
+    methods: {
+        addTag (newTag) {
+            const tag = {
+                name: newTag,
+                code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+            }
+            this.taggingOptions.push(tag)
+            this.taggingSelected.push(tag)
+        },
+    }
+  }
+  </script>
+  
+  <style src="vue-multiselect/dist/vue-multiselect.css"></style>
+
+  <style scoped>
+    ::v-deep(.multiselect__tag) {
+        width: 100%;
+        height: 50px;
+        background: #fff;
+
+        border-radius: 10px;
+        color:rgb(107, 107, 107);
+
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        
+    }
+
+    ::v-deep(.multiselect__tag span) {
+        font-weight: 600;
+        font-family: sans-serif;
+
+    }
+
+    ::v-deep(.multiselect__tag-icon::after) {
+        color: red;
+        font-weight: 900;
+    }
+
+    ::v-deep(.multiselect__tags) {
+        background: var(--bg-more-gray);
+        padding: 8px 12px 0 8px;
+
+    }
+  </style>
