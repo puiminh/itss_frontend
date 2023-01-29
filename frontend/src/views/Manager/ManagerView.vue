@@ -1,183 +1,127 @@
 <template>
   <table-lite
-    :has-checkbox="true"
-    :is-loading="table.isLoading"
-    :is-re-search="table.isReSearch"
+    :is-static-mode="true"
+    :grouping-key="table.groupingKey"
     :columns="table.columns"
     :rows="table.rows"
     :total="table.totalRecordCount"
     :sortable="table.sortable"
-    :messages="table.messages"
-    @do-search="doSearch"
-    @is-finished="tableLoadingFinish"
-    @return-checked-rows="updateCheckedRows"
+
+    class="!p-0 !m-6 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
   ></table-lite>
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, computed } from "vue";
 import TableLite from 'vue3-table-lite'
-
-// Fake Data for 'asc' sortable
-const sampleData1 = (offst, limit) => {
-  offst = offst + 1;
-  let data = [];
-  for (let i = offst; i <= limit; i++) {
-    data.push({
-      id: i,
-      name: "TEST" + i,
-      email: "test" + i + "@example.com",
-    });
-  }
-  return data;
-};
-// Fake Data for 'desc' sortable
-const sampleData2 = (offst, limit) => {
-  let data = [];
-  for (let i = limit; i > offst; i--) {
-    data.push({
-      id: i,
-      name: "TEST" + i,
-      email: "test" + i + "@example.com",
-    });
-  }
-  return data;
-};
 export default defineComponent({
   name: "App",
   components: { TableLite },
   setup() {
+    // Fake data
+    const data = reactive([]);
+    for (let i = 1; i < 126; i++) {
+      data.push({
+        id: i,
+        name: "TEST" + i,
+        email: "test" + i + "@example.com",
+      });
+    }
+    data.push({
+      id: 126,
+      name: "TEST1",
+      email: "test111@example.com",
+    });
+    data.push({
+      id: 127,
+      name: "TEST1",
+      email: "test111111@example.com",
+    });
+    data.push({
+      id: 128,
+      name: "TEST2",
+      email: "test222@example.com",
+    });
     // Table config
     const table = reactive({
-      isLoading: false,
-      isReSearch: false,
       columns: [
         {
           label: "ID",
-          headerClasses: ["color-red", "!bg-blue-800"],
-          columnClasses: ["!bg-gray-800", "!text-white"],
           field: "id",
           width: "3%",
           sortable: true,
           isKey: true,
         },
         {
-          label: "Name",
-          columnStyles: { background: "gold" },
+          label: "Course name",
           field: "name",
           width: "10%",
           sortable: true,
-          display: function (row) {
-            return (
-              '<a href="#" data-id="' +
-              row.id +
-              '" class="is-rows-el name-btn">' +
-              row.name +
-              "</a>"
-            );
-          },
         },
         {
           label: "Email",
-          headerStyles: { background: "gray" },
-          columnStyles: { background: "gold" },
           field: "email",
           width: "15%",
           sortable: true,
         },
         {
-          label: "",
+          label: "Control",
           headerClasses: ["bg-gold"],
           columnClasses: ["bg-gray"],
-          columnStyles: { background: "gray" },
           field: "quick",
-          width: "10%",
+          width: "3%",
           display: function (row) {
             return (
-              '<button type="button" data-id="' +
-              row.id +
-              '" class="is-rows-el quick-btn">Button</button>'
+              `
+              <div class="flex gap-4 ml-2">
+                <button type="button" data-id="' + row.id + '" class="hover:text-green-500">
+                  <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                  </svg>
+                </button>
+
+                <button type="button" data-id="' + row.id + '" class="hover:text-yellow-400">
+                  <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75" />
+                  </svg>
+
+                </button>
+
+                <button type="button" data-id="' + row.id + '" class="hover:text-red-500">
+                  <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                  </svg>
+
+                </button>                
+              </div>
+              `
+
             );
           },
         },
       ],
-      rows: [],
-      totalRecordCount: 0,
+      rows: data,
+      totalRecordCount: computed(() => {
+        return table.rows.length;
+      }),
       sortable: {
         order: "id",
         sort: "asc",
       },
-      messages: {
-        pagingInfo: "Showing {0}-{1} of {2}",
-        pageSizeChangeLabel: "Row count:",
-        gotoPageLabel: "Go to page:",
-        noDataAvailable: "No data",
-      },
     });
-    /**
-     * Search Event
-     */
-    const doSearch = (offset, limit, order, sort) => {
-      table.isLoading = true;
-      setTimeout(() => {
-        table.isReSearch = offset == undefined ? true : false;
-        if (offset >= 10 || limit >= 20) {
-          limit = 20;
-        }
-        if (sort == "asc") {
-          table.rows = sampleData1(offset, limit);
-        } else {
-          table.rows = sampleData2(offset, limit);
-        }
-        table.totalRecordCount = 20;
-        table.sortable.order = order;
-        table.sortable.sort = sort;
-      }, 600);
-    };
-    /**
-     * Loading finish event
-     */
-    const tableLoadingFinish = (elements) => {
-      table.isLoading = false;
-      Array.prototype.forEach.call(elements, function (element) {
-        if (element.classList.contains("name-btn")) {
-          element.addEventListener("click", function () {
-            console.log(this.dataset.id + " name-btn click!!");
-          });
-        }
-        if (element.classList.contains("quick-btn")) {
-          element.addEventListener("click", function () {
-            console.log(this.dataset.id + " quick-btn click!!");
-          });
-        }
-      });
-    };
-    /**
-     * Row checked event
-     */
-    const updateCheckedRows = (rowsKey) => {
-      console.log(rowsKey);
-    };
-    // First get data
-    doSearch(0, 10, "id", "asc");
     return {
       table,
-      doSearch,
-      tableLoadingFinish,
-      updateCheckedRows,
     };
   },
 });
 </script>
 
-<style scope>
-.bg-gold {
-  background: gold !important;
+<style scoped>
+::v-deep(.vtl-paging-count-dropdown) {
+  width: 50px;
 }
-.bg-gray {
-  background: gray !important;
-}
-.color-red {
-  color: red !important;
+
+::v-deep(.vtl-paging-page-dropdown) {
+  width: 50px;
 }
 </style>

@@ -53,11 +53,11 @@ a.green {
 }
 
 .grayBG, .routerViewContent {
-  background-color: var(--bg-gray);
+  background-color: var(--bg-gray)!important;
 }
 
 .moreGrayBG {
-  background-color: var(--bg-more-gray);
+  background-color: var(--bg-more-gray)!important;
 }
 
 /* ===== Scrollbar CSS ===== */
