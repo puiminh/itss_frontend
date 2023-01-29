@@ -1,7 +1,7 @@
 <template>
 
 
-<nav class="flex justify-between px-10 py-4 items-center bg-white">
+<nav class="flex justify-between px-10 py-4 items-center bg-white" >
     <div class="flex justify-around gap-28">
       <RouterLink to="/" class="flex justify-between">
         <h1 class="text-5xl text-gray-800 font-bold logoText">LABA</h1>
@@ -134,6 +134,8 @@ export default {
       openNotifi: false,
       openPersonal: false,
     }
+  },
+  mounted() {
   }
 }
 

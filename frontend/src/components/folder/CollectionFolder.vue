@@ -35,7 +35,7 @@
                 <div class="bg-blue-600 h-1 rounded-full" :style="`width: ${progress/numberVocab * 100}%`"></div>
             </div>
         </div>
-        <div class="flex gap-1.5 mt-1">
+        <div v-if="showBookmark=='true'" class="flex gap-1.5 mt-1">
             <StackImage></StackImage>
             <span class="pt-1.5 text-sm font-semibold">has <a class="font-bold text-red-700 cursor-pointer">bookmark</a> this class</span>
         </div>
@@ -72,6 +72,9 @@ import StackImage from '../stackimage/StackImage.vue';
             default: "false"
         },
         showStar: {
+            default: "false"
+        },
+        showBookmark: {
             default: "false"
         }
     },

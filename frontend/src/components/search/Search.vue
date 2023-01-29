@@ -8,37 +8,34 @@
 		    </svg>
         </div>
         <input 
+            ref="searchinput"
+            v-model="keyword"
+            autocomplete="off"
             @keyup="handleInput"
             type="text" id="simple-search" 
             class=" font-mono text-md text-gray-500
             bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
     </div>
 
-    <div class="flex justify-between pr-4">
-        <p class="text-md font-semibold text-blue-500 mt-4">
-            {{searchObj}} that match your search:
-        </p>
-        <SwitchButton @handleSwitch="handleSwitchP"></SwitchButton>
+    <div class="hidden opacity-0" ref="searchresult">
+        <div class="flex justify-between pr-4">
+            <p class="text-md font-semibold text-blue-500 mt-4">
+                {{searchObj}} that match your search:
+            </p>
+            <SwitchButton @handleSwitch="handleSwitchP"></SwitchButton>
+        </div>
+
+
+        <div v-if="!isLoading" class="grid grid-cols-2 gap-2 mt-2">
+            <CourseFolder v-if="searchObj=='Course'" v-for="i in 6"></CourseFolder>
+            <CollectionFolder v-else v-for="i in 4"></CollectionFolder>
+        </div>    
+        <div v-else class="grid grid-cols-2 gap-2 mt-2 animate-pulse">
+            <SkeletonCourseFolder v-if="searchObj=='Course'" v-for="i in 6"></SkeletonCourseFolder>
+            <SkeletonCollectionFolder v-else v-for="i in 4"></SkeletonCollectionFolder>
+        </div>
     </div>
 
-
-    <div v-if="!isLoading" class="grid grid-cols-2 gap-2 mt-2">
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-        <CourseFolder></CourseFolder>
-    </div>    
-    <div v-else class="grid grid-cols-2 gap-2 mt-2 animate-pulse">
-        <SkeletonCourseFolder></SkeletonCourseFolder>
-        <SkeletonCourseFolder></SkeletonCourseFolder>
-        <SkeletonCourseFolder></SkeletonCourseFolder>
-        <SkeletonCourseFolder></SkeletonCourseFolder>
-        <SkeletonCourseFolder></SkeletonCourseFolder>
-        <SkeletonCourseFolder></SkeletonCourseFolder>
-
-    </div>
 
     {{ testData }}
     <!-- <p class="text-md font-semibold text-blue-500 mt-4">
@@ -46,9 +43,7 @@
     </p>
 
     <div class="grid grid-cols-2 gap-2 mt-2">
-        <CollectionFolder class=""></CollectionFolder>
-        <CollectionFolder class=""></CollectionFolder>
-
+        <CollectionFolder v-for="i in 4" class=""></CollectionFolder>
     </div> -->
 </div>
 
@@ -59,7 +54,10 @@ import CourseFolder from '../folder/CourseFolder.vue'
 import CollectionFolder from '../folder/CollectionFolder.vue'
 import SwitchButton from '../button/SwitchButton.vue'
 import SkeletonCourseFolder from '../folder/SkeletonCourseFolder.vue'
+import SkeletonCollectionFolder from '../folder/SkeletonCollectionFolder.vue'
+
 import axios from 'axios';
+import gsap from 'gsap';
 
 
 export default {
@@ -67,25 +65,43 @@ export default {
     CourseFolder,
     CollectionFolder,
     SwitchButton,
-    SkeletonCourseFolder
+    SkeletonCourseFolder,
+    SkeletonCollectionFolder
 },
     data() {
         return {
             timeOut: null,
             searchObj: 'Course',
             isLoading: false,
-            testData: ''
+            testData: '',
+            searching: false,
+            keyword: '',
+        }
+    },
+
+    watch: {
+        searching(newSearch, oldSearch) {
+            if(newSearch == true) {
+                gsap.to(this.$refs.searchresult, {
+                    display: 'block',
+                    opacity: 1,
+                    duration: 1,
+                })
+            }
         }
     },
     methods: {
         handleInput() {
             console.log('Handle input');
-            this.isLoading = true;
-            clearTimeout(this.timeOut);
+            if (this.keyword) {
+                this.isLoading = true;
+                clearTimeout(this.timeOut);
 
-            this.timeOut = setTimeout(() => {
-                this.callAPI();
-            }, 500);
+                this.timeOut = setTimeout(() => {
+                    this.callAPI();
+                }, 500);
+                this.searching = true;
+            }
         },
         callAPI() {
             console.log('call');
@@ -97,10 +113,14 @@ export default {
         },
         handleSwitchP(value) {
             this.searchObj = this.capitalizeFirstLetter(value);
+            this.handleInput();
         },
         capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
+    },
+    mounted() {
+        this.$refs.searchinput.focus();
     }
 }
 

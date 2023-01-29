@@ -28,7 +28,7 @@
 </style>
 
 <script>
-import { openModal } from 'jenesius-vue-modal';
+import { closeModal, openModal } from 'jenesius-vue-modal';
 import Search from '../search/Search.vue';
 
 
@@ -37,6 +37,18 @@ export default {
 		openModalMethod() {
 			openModal(Search)
 		}
+	},
+	mounted() {
+		function KeyPress(e) {
+      var evtobj = window.event? event : e
+      if (evtobj.keyCode == 75 && evtobj.ctrlKey) {
+        e.preventDefault();
+		closeModal();
+        openModal(Search)
+      } 
+    }
+
+    document.onkeydown = KeyPress;
 	}
 }
 
