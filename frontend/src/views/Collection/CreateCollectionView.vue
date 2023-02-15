@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper px-20 mt-4">
+    <div class="wrapper px-20 mt-4 2xl:mt-12 w-full">
         <p class="font-bold text-2xl">Create a collection</p>
         <div class="flex gap-5">
             <div class="w-4/5">
@@ -14,12 +14,12 @@
                 </GameButton>
             </div>
         </div>
-        <div class="mt-8 flex mr-32">
-            <div class="w-1/2">
+        <div class="mt-8 flex gap-8">
+            <div class="w-fit">
                 <p class="text-gray-600 font-semibold text-sm uppercase">Collection Image</p>
-                <ImageModal class="!p-2 !w-fit mt-3 mb-8 !h-fit"></ImageModal>
+                <ImageModal class="!p-2 !w-full mt-3 mb-8 !h-fit"></ImageModal>
             </div>
-            <div class="w-1/4">
+            <div class="w-full mr-64">
                 <p class="text-gray-600 font-semibold text-sm uppercase">Add some courses</p>
                 <MultiSelect class="mt-3 w-full"></MultiSelect>
             </div>

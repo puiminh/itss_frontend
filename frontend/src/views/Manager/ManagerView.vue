@@ -1,5 +1,6 @@
 <template>
-  <table-lite
+  <div class="w-full">
+    <table-lite
     :is-static-mode="true"
     :grouping-key="table.groupingKey"
     :columns="table.columns"
@@ -9,6 +10,8 @@
 
     class="!p-0 !m-6 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
   ></table-lite>
+  </div>
+
 </template>
 
 <script>

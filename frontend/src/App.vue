@@ -12,7 +12,12 @@ export default {
           Navbar,
           Sidebar
         },
-        name: "App"
+        name: "App",
+        data() {
+          return {
+
+          }
+        }
 }
 
 
@@ -42,15 +47,16 @@ export default {
 
 
   <RouterView v-slot="{Component, route}">
-    <component v-if="route.name === 'Login'" :is="Component" />
-    <div v-else>
+    <!-- <component v-if="route.name === 'Login'" :is="Component" /> -->
+    <div v-if="route.name !== 'Login' && route.name !== 'Admin' && route.name !=='Landing' ">
           <Navbar></Navbar>
           <Sidebar>
-            <component :is="Component" class="pt-8 pl-16 overflow-hidden"/>
+            <component :is="Component" class="mt-8 mx-8"/>
             <widget-container-modal />
 
           </Sidebar>
     </div>
+    <component v-else :is="Component" />
   </RouterView>
 
 </template>

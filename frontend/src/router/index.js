@@ -87,6 +87,16 @@ const router = createRouter({
     {
       path: '/course/1/learnword',
       component: ()=> import('../views/Course/LearnWord.vue')
+    },
+    {
+      path: '/homepage',
+      name: 'Landing',
+      component: ()=> import('../views/Landing.vue')
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: ()=> import('../views/Admin/AdminView.vue')
     }
 
   ]

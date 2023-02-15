@@ -1,7 +1,7 @@
 <template>
 
-<div class="p-12 ml-12 mt-3">
-    <ProgressBar class="pr-64" progress="80" color="yellow" thin="no"></ProgressBar>
+<div class="py-8 px-24 w-full">
+    <ProgressBar class="" progress="80" color="yellow" thin="no"></ProgressBar>
 
     <div class="flex mt-8">
 
@@ -11,7 +11,7 @@
             <source src="https://firebasestorage.googleapis.com/v0/b/uploadfiletofirebase-ae63f.appspot.com/o/images%2Foceans.mp4?alt=media&token=d9e04362-2237-4d5d-96b6-00ce674ea654" type="video/mp4">
         </video> -->
         <!-- 2/5 or 4/5 -->
-        <div v-if="learnmode" class="flex flex-col divide-y-4 divide-slate-400/2500 pr-8 w-4/5">
+        <div v-if="learnmode" class="flex flex-col divide-y-4 divide-slate-400/2500 pr-8 w-full">
             <div class="flex">
 
                 <div class="select-text">
@@ -47,11 +47,11 @@
 
         <!-- MINITEST -->
 
-        <QuestionView v-else class="pr-8 w-4/5 "></QuestionView>
+        <QuestionView v-else class="pr-8 w-full "></QuestionView>
 
         <!-- BUTTON -->
 
-        <div class="flex flex-col gap-2 pt-16">
+        <div class="flex flex-col gap-2 pt-16 w-fit">
             <GameButton class="!bg-yellow-300 !px-5 !py-4">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
@@ -92,7 +92,7 @@ import QuestionView from './QuestionView.vue';
 export default {
     data() {
         return {
-            learnmode: true,
+            learnmode: false,
         }
     },
     components: { ProgressBar, GameButton, VideoPlayer, QuestionView },
