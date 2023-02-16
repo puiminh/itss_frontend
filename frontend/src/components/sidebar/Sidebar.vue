@@ -1,6 +1,6 @@
 <template>
-<div class="flex">
-	<div class="flex flex-col items-center w-60 h-full text-gray-700 bg-white mx-7">
+<div class="flex px-8 gap-8">
+	<div class="flex flex-col items-center w-60 h-full text-gray-700 bg-white px-7">
 		<div class="fixed">
 			<div class="profile_progress_wrap rounded-md grayBG px-4 py-5 shadow-md">
 				<div class="avatar flex w-52 items-center gap-3 px-3">
@@ -22,7 +22,7 @@
 					<ProgressBar key="3" name="English Animal" progress="28" color="blue"></ProgressBar>
 				</div>
 				<div class="px-2 justify-center text-center">
-					<span class="font-bold text-md text-gray-800">My progress</span>
+					<RouterLink to="/progress" class="font-bold text-md text-gray-800 hover:underline">My progress</RouterLink>
 					<span class="font-black oswald"> > </span>
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 		</div>
 
 	</div>
-	<div class="grayBG rounded-md minWH mr-6 mb-6 pb-8 flex justify-center">
+	<div class="grayBG rounded-md minWH pt-8 pb-8 flex justify-center">
 		<slot></slot>
 	</div>
 </div>
@@ -39,7 +39,7 @@
 <style scoped>
 
 .minWH {
-	width: calc(100vw - 300px);
+	width: calc(100vw - 21.5rem);
 	min-height: calc(100vh - 100px);
 }
 

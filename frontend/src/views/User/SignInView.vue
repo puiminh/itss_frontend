@@ -1,7 +1,8 @@
 
 
 <template>
-<div :class="[isSignUp ? 'right-panel-active' : ''] + ' container'" id="container">
+	<div class="flex justify-center items-center w-full h-full">
+		<div :class="[isSignUp ? 'right-panel-active' : ''] + ' container'" id="container">
 	<div :class="' form-container sign-up-container'">
 		<form action="#">
 			<h1 class="">Create Account</h1>
@@ -48,7 +49,9 @@
 			</div>
 		</div>
 	</div>
-</div>
+		</div>
+	</div>
+
 </template>
 
 

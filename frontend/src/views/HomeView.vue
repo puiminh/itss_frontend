@@ -78,14 +78,14 @@ export default {
       tag="div"
       class=" md:flex-col xl:flex xl:flex-row 2xl:flex-row 2xl:flex gap-8"
     >
-      <Block key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap rounded-md moreGrayBG p-4 mt-12 2xl:w-1/2 xl:w-full md:w-full h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
-        <div class="grid grid-cols-3 gap-4 pt-5">
+      <Block key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap rounded-md moreGrayBG p-4 mt-12 2xl:w-1/2 xl:w-full lg:w-full md:w-full h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
+        <div class="grid 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-3 gap-4 pt-5">
           <CourseFolder v-for="i in 6" showStar="true"></CourseFolder>
         </div>
       </Block>
 
-      <Block key="2" data-index="2" data-direct="vertical" class="recommendClassWrap rounded-md moreGrayBG p-4 mt-12 2xl:w-fit xl:w-fit md:w-fit pb-8" title="OR TAKE A LOOK AT SOME CLASS" explain="We base on your recent learning and bookmark">
-        <div class="grid grid-cols-2 gap-4 pt-5">
+      <Block key="2" data-index="2" data-direct="vertical" class="recommendClassWrap rounded-md moreGrayBG p-4 mt-12 2xl:w-fit xl:w-1/2 lg:w-fit md:w-fit pb-8" title="OR TAKE A LOOK AT SOME CLASS" explain="We base on your recent learning and bookmark">
+        <div class="grid 2xl:grid-cols-2 xl:grid-cols-1 lg:grid-cols-2  gap-4 pt-5">
             <CollectionFolder v-for="i in 4"></CollectionFolder>
         </div>
       </Block>

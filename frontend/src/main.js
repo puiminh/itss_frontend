@@ -15,8 +15,20 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import SmartTable from 'vuejs-smart-table'
 
+import VueProgressBar from "@aacassandra/vue3-progressbar";
+
 const options = {
-    // You can set your default options here
+  color: "#000",
+  failedColor: "#000",
+  thickness: "4px",
+  transition: {
+    speed: "1s",
+    opacity: "0.6s",
+    termination: 300,
+  },
+  autoRevert: true,
+  location: "top",
+  inverse: false,
 };
 
 const app = createApp(App)
@@ -25,6 +37,7 @@ app.use(createPinia())
 app.use(router)
 app.use(plugin, defaultConfig)
 app.use(Toast, options);
-app.use(SmartTable)
+app.use(SmartTable);
+app.use(VueProgressBar, options)
 app.component('QuillEditor', QuillEditor);
 app.mount('#app')

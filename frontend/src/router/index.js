@@ -12,7 +12,8 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+
     },
     {
       path: '/testview',
@@ -28,8 +29,8 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/signup',
-      name: 'signup',
+      path: '/login',
+      name: 'Login',
       component: () => import('../views/User/SignInView.vue')
     },
     {
@@ -85,6 +86,10 @@ const router = createRouter({
       component: ()=> import('../views/Bookmark/BookmarkView.vue')
     },
     {
+      path: '/progress',
+      component: ()=> import('../views/User/ProgressView.vue')
+    },
+    {
       path: '/course/1/learnword',
       component: ()=> import('../views/Course/LearnWord.vue')
     },
@@ -97,7 +102,7 @@ const router = createRouter({
       path: '/admin',
       name: 'Admin',
       component: ()=> import('../views/Admin/AdminView.vue')
-    }
+    },
 
   ]
 })
