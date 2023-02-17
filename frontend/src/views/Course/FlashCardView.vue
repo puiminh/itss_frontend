@@ -17,7 +17,12 @@ import FlashcardButton from '../../components/button/FlashcardButton.vue';
 import ProgressBar from '../../components/progress/ProgressBar.vue';
 
 export default {
-    components: { FlipCard, GameButton, FlashcardButton, ProgressBar }
+    components: { FlipCard, GameButton, FlashcardButton, ProgressBar },
+    data() {
+      return {
+        wordlists: []
+      }
+    }
 }
 
 </script>

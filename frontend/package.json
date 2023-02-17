@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "back": "json-server --watch db.json",
     "build": "vite build",
     "preview": "vite preview"
   },
