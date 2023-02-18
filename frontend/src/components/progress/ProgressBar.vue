@@ -17,7 +17,7 @@
             <div  v-else class="w-full bg-gray-200 rounded-sm h-6 dark:bg-gray-700">
 
             <Transition appear @before-enter="beforeRuning" @enter="enterRuning">
-                <div :class="['h-6 rounded-sm ',bgColor]"></div>
+                <div :class="['h-6 rounded-sm ',bgColor]" ref="process"></div>
             </Transition>
 
             </div>
@@ -92,9 +92,7 @@ export default {
         }
     },
     watch: {
-        progress() {
-            console.log('progress change', this.$refs.process);
-            
+        progress() {            
             gsap.to(this.$refs.process, {
                 width: this.progress + '%',
                 duration: 0.5,

@@ -9,6 +9,12 @@ export default {
         },
 		reviewComponent: {
 			default: true,
+		},
+		term: {
+			default: {
+				word: 'Hello',
+				define: 'Xin chào'
+			}
 		}
     },
     data() {
@@ -34,8 +40,10 @@ export default {
     methods: {
         flipCard() {
             this.flip = !this.flip;
-            console.log("a");
         },
+		flipDownCard() {
+			this.flip = false;
+		},
 		showReviewMethod() {
 			gsap.from('#review', {
 					y: '500px',
@@ -99,18 +107,18 @@ export default {
 <template>
 
 	<div :class="['flip', vertical? ' flip-vertical': '']" v-on:click="flipCard">
-		<div :class="['front shadow-md flex items-center justify-center', flipClassComputed[0]]" :style="styleCard">
+		<div :class="['front shadow-lg flex items-center justify-center', flipClassComputed[0]]" :style="styleCard">
 			<div>
 				<slot named="front">
-					<h1 class="text-shadow">MOUNTAIN</h1>
+					<h1 class="text-shadow">{{ term.word }}</h1>
 				</slot>
 			</div>
 		</div>
-		<div :class="['back shadow-md flex items-center justify-center', flipClassComputed[1]]">
+		<div :class="['back shadow-lg flex items-center justify-center', flipClassComputed[1]]">
 			<div>
 				<slot named="back">
-					<h2>Angular</h2>
-					<p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p>
+					<h1>{{ term.define }}</h1>
+					<!-- <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p> -->
 				</slot>
 			</div>
 		</div>
@@ -124,15 +132,21 @@ export default {
 				</div>
 
 				<div key="2" class="flex gap-5 justify-center">
-					<GameButton class="!bg-red-500 !text-white">
+					<GameButton 
+					@click="hideReviewMethod"
+					 class="!bg-red-500 !text-white">
 						<i class="fa fa-frown-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">BAD</p> 
 					</GameButton>
-					<GameButton class="!bg-yellow-400 !text-white">
+					<GameButton 
+					@click="hideReviewMethod"
+					 class="!bg-yellow-400 !text-white">
 						<i class="fa fa-meh-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">NOT REALLY</p> 
 					</GameButton>
-					<GameButton class="!bg-green-400 !text-white">
+					<GameButton 
+					@click="hideReviewMethod"
+					 class="!bg-green-400 !text-white">
 						<i class="fa fa-smile-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">GOOD</p> 
 

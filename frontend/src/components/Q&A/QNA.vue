@@ -57,7 +57,7 @@ export default {
         },
         resetColor() {
             this.$refs.answerElements.forEach(element => {
-                element.style.backgroundColor="initial";
+                element.style.backgroundColor="white";
                 element.style.boxShadow= "rgb(188 194 207) 0px 4px 0px";
                 element.style.border= "2px solid rgb(188, 194, 207)";
                 element.querySelector(".answerNumber").style.backgroundColor="rgb(41, 42, 46)";

@@ -5,23 +5,13 @@
             <div class="p-4 flex flex-col w-1/2">
                 <p class="text-gray-600 text-base h-12 font-medium">Term</p>
                 <p class="font-bold text-4xl">
-                    Hello
+                    {{ term.word }}
                 </p>
             </div>
             <div class="p-4 flex flex-col h-fit w-1/2">
                 <p class="text-gray-600 text-base h-12 font-medium">Definition</p>
                 <p class="font-semibold text-lg">
-                            Xin chào, chào bạn. Ban va toi
-                            <br>
-                            Xin chào, chào bạn.
-                            <br>
-                            <br>
-                            Xin chào, chào bạn.
-                            <br>
-                            Xin chào, chào bạn.
-                            <br>
-                            Xin chào, chào bạn.
-
+                    {{ answer.define }}
                 </p>
             </div>
         </div>
@@ -54,7 +44,21 @@ import GameButton from '../button/GameButton.vue';
 
 
 export default {
-    components: { GameButton }
+    components: { GameButton },
+    props: {
+        term: {
+            default: {
+                word: '',
+                define: '',
+            }
+        },
+        answer: {
+            default: {
+                word: '',
+                define: '',
+            }
+        }
+    }
 }
 
 </script>
