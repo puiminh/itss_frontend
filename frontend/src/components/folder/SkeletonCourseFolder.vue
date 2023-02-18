@@ -1,6 +1,6 @@
 <template>
 
-        <div class="w-56 h-18 bg-white shadow-md rounded-3xl pb-2 pt-6 px-4">
+        <div class="w-56 h-18 bg-white shadow-md rounded-md pb-2 pt-6 px-4">
             <div class="h-2.5 bg-slate-200 rounded w-4/6 mt-1"></div>
 
             <div class="flex justify-between mt-5">

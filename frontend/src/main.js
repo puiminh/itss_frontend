@@ -15,6 +15,9 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import SmartTable from 'vuejs-smart-table'
 
+//axios
+import './api-axios'
+
 import VueProgressBar from "@aacassandra/vue3-progressbar";
 
 const options = {

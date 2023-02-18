@@ -92,7 +92,7 @@ import QuestionView from './QuestionView.vue';
 export default {
     data() {
         return {
-            learnmode: false,
+            learnmode: true,
         }
     },
     components: { ProgressBar, GameButton, VideoPlayer, QuestionView },
