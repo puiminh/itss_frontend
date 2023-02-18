@@ -14,12 +14,12 @@
                 </GameButton>
             </div>
         </div>
-        <div class="mt-8 flex mr-32">
+        <div class="mt-8 flex">
             <div class="w-1/2">
                 <p class="text-gray-600 font-semibold text-sm uppercase">Collection Image</p>
-                <ImageModal class="!p-2 !w-fit mt-3 mb-8 !h-fit"></ImageModal>
+                <ImageModal class="!p-0 !w-fit mt-3 mb-8 !h-fit"></ImageModal>
             </div>
-            <div class="w-1/4">
+            <div class="w-1/2">
                 <p class="text-gray-600 font-semibold text-sm uppercase">Add some courses</p>
                 <MultiSelect class="mt-3 w-full"></MultiSelect>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-3xl shadow-md bg-white">
+    <div class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-sm shadow-md bg-white">
         <div class="flex justify-between">
             <p class="font-bold text-base">{{title}}</p>
             <div v-if="showStar=='true'" class="flex">
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="couse_image my-2">
-            <img class="w-56 h-28 rounded-xl" :src="courseImg" alt="">
+            <img class="w-56 h-28 rounded-sm" :src="courseImg" alt="">
         </div>
         <div class="flex lessons_time justify-between mt-1">
             <div class="logo_lessons flex gap-1">

@@ -3,6 +3,7 @@
 
 <nav class="flex justify-between px-10 py-4 items-center bg-white" >
     <div class="flex justify-around gap-28">
+
       <RouterLink to="/" class="flex justify-between">
         <h1 class="text-5xl text-gray-800 font-bold logoText">LABA</h1>
         <div class="text-3xl mx-4 pt-0.5">|</div>
@@ -75,6 +76,9 @@
       <li>
         <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
       </li>
+      <li>
+        <a @click="handleHideProgress" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ showProgress == 'Hide' ? 'Hide' : 'Show'}} progress</a>
+      </li>
     </ul>
     <div class="py-2">
       <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
@@ -130,9 +134,21 @@ export default {
     return {
       openNotifi: false,
       openPersonal: false,
+      showProgress: false,
+    }
+  },
+  methods: {
+    handleHideProgress() {
+      if (localStorage.getItem('progressHide') == 'Hide') {
+        localStorage.setItem('progressHide', 'Show');
+      } else {
+        localStorage.setItem('progressHide', 'Hide');
+      }
+      this.showProgress = localStorage.getItem('progressHide'); 
     }
   },
   mounted() {
+    this.showProgress = localStorage.getItem('progressHide');
   }
 }
 

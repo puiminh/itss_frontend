@@ -27,10 +27,10 @@
         <div class="text-center mt-2">
             <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1" :contenteditable="editing" @input="nameChange">Mike Thompson</h3>
             <div v-if="editing" class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase" aria-label="You can only edit your name, description and avatar" data-cooltipz-dir="bottom">
-                <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Paris, France
+                <i class="far fa-at mr-1"></i>volmicrolab@gmail.com
             </div>
             <div v-else class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase" >
-                <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Paris, France
+                <i class="far fa-at mr-1"></i>volmicrolab@gmail.com
             </div>
         </div>
         <div class="mt-6 py-6 border-t border-slate-200 text-center">
