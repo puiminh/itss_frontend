@@ -3,9 +3,9 @@ import StackImage from '../../components/stackimage/StackImage.vue';
 
 <template>
 <div class="pt-12">
-    <div class="flex gap-6 w-fit">
+    <div class="flex gap-6 w-fit px-8">
         <img class="w-1/6 rounded-md border-2 border-black " src="https://static.memrise.com/img/400sqf/from/uploads/immersion/JA0.jpg" alt="">
-        <div class="w-3/6 pt-3">
+        <div class="w-4/6 pt-3">
             <div class="flex gap-2">
                 <h1 class="font-bold text-3xl">English Cooking</h1>
                 <BookmarkButton class="mt-2"></BookmarkButton>
@@ -32,7 +32,7 @@ import StackImage from '../../components/stackimage/StackImage.vue';
 
             <p class="pt-4 text-base text-gray-800">An introduction to Japanese scripts – the symbols and characters that make up the written language – and how to read them.</p>
         </div>
-        <div class="w-2/6 flex gap-2 pt-4 flex-col">
+        <div class="w-1/6 flex gap-2 pt-4 flex-col">
             <div>
                 <p class="text-gray-500">Create by</p>
                 <p class="font-bold text-gray-600">Thomas John</p>
@@ -42,10 +42,10 @@ import StackImage from '../../components/stackimage/StackImage.vue';
     </div>
 
 
-    <div class="moreGrayBG -ml-8 p-6 rounded-2xl mr-4 mt-12">
+    <div class="moreGrayBG p-6 rounded-2xl mt-12">
         <Block title="All courses in this class" class="">
-            <div class="grid grid-cols-4 gap-3 py-4">
-                <CourseFolder class="mr-4" v-for="course in 20" showProgress="true"></CourseFolder>
+            <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-3 gap-3 py-4">
+                <CourseFolder class="mr-4" v-for="course in 24" showProgress="true"></CourseFolder>
 
             </div>
         </Block>

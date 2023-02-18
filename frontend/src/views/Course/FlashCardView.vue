@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full flex pb-16 gap-5">
+  <div class="h-full flex pb-16 gap-5 w-full">
     <div class="w-5/6 ">
      <ProgressBar class="px-8" progress="80" color="gray"></ProgressBar>
      <FlipCard class="w-full"></FlipCard>
@@ -17,7 +17,12 @@ import FlashcardButton from '../../components/button/FlashcardButton.vue';
 import ProgressBar from '../../components/progress/ProgressBar.vue';
 
 export default {
-    components: { FlipCard, GameButton, FlashcardButton, ProgressBar }
+    components: { FlipCard, GameButton, FlashcardButton, ProgressBar },
+    data() {
+      return {
+        wordlists: []
+      }
+    }
 }
 
 </script>

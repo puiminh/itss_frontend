@@ -1,5 +1,5 @@
 <template>
-    <div class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-sm shadow-md bg-white">
+    <RouterLink to="/collection/1" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-md shadow-md bg-white">
         <div class="flex justify-between">
             <p class="font-bold text-base">{{title}}</p>
             <div v-if="showStar=='true'" class="flex">
@@ -39,7 +39,7 @@
             <StackImage></StackImage>
             <span class="pt-1.5 text-sm font-semibold">has <a class="font-bold text-red-700 cursor-pointer">bookmark</a> this class</span>
         </div>
-    </div>
+    </RouterLink>
     </template>
     
     <script>

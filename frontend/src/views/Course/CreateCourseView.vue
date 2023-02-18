@@ -1,5 +1,5 @@
 <template>
-<div class="wrapper px-20 mt-4">
+<div class="wrapper px-20 mt-4 xl:mt-20 w-full">
     <p class="font-bold text-2xl">Create a course</p>
     <p class="font-medium text-sm text-gray-600 mt-2">Auto saved</p>
     <div class="flex gap-5">

@@ -56,8 +56,8 @@ import SwitchButton from '../button/SwitchButton.vue'
 import SkeletonCourseFolder from '../folder/SkeletonCourseFolder.vue'
 import SkeletonCollectionFolder from '../folder/SkeletonCollectionFolder.vue'
 
-import axios from 'axios';
 import gsap from 'gsap';
+import axios from 'axios'
 
 
 export default {
@@ -104,10 +104,13 @@ export default {
             }
         },
         callAPI() {
+            this.$Progress.start();
             console.log('call');
-            axios.get('https://www.superheroapi.com/api.php/3264999407146167/'+ Math.floor(Math.random() * 100)).then((res)=>{
-                console.log(res.data.name);
-                this.testData = res.data.name;
+            //'https://www.superheroapi.com/api.php/3264999407146167/'+ Math.floor(Math.random() * 100)
+            axios.get('courses').then((res)=>{
+                this.$Progress.finish();
+                console.log(res.data);
+                // this.testData = res.data.name;
                 this.isLoading = false;
             })
         },

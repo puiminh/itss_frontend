@@ -1,8 +1,8 @@
 <template>
-<div class="flex">
-	<div class="flex flex-col items-center w-60 h-full overflow-hidden text-gray-700 bg-white mx-7">
+<div class="flex px-8 gap-8">
+	<div class="flex flex-col items-center w-60 h-full text-gray-700 bg-white px-7">
 		<div class="fixed">
-			<div class="profile_progress_wrap rounded-3xl grayBG px-4 py-5 shadow-sm">
+			<div class="profile_progress_wrap rounded-md grayBG px-4 py-5 shadow-md">
 				<div class="avatar flex w-52 items-center gap-3 px-3">
 					<img class="inline-block h-8 w-8 rounded-full ring-2 ring-white shadow-md" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
 					<div class="flex gap-1 relative">
@@ -22,7 +22,7 @@
 					<ProgressBar key="3" name="English Animal" progress="28" color="blue"></ProgressBar>
 				</div>
 				<div class="px-2 justify-center text-center">
-					<span class="font-bold text-md text-gray-800">My progress</span>
+					<RouterLink to="/progress" class="font-bold text-md text-gray-800 hover:underline">My progress</RouterLink>
 					<span class="font-black oswald"> > </span>
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 		</div>
 
 	</div>
-	<div class="grayBG rounded-tl-3xl minWH shadow-md">
+	<div class="grayBG rounded-md minWH pt-8 pb-8 flex justify-center">
 		<slot></slot>
 	</div>
 </div>
@@ -39,7 +39,7 @@
 <style scoped>
 
 .minWH {
-	width: calc(100vw - 300px);
+	width: calc(100vw - 21.5rem);
 	min-height: calc(100vh - 100px);
 }
 

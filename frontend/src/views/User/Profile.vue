@@ -1,6 +1,6 @@
 <template>
-<div class="flex justify-center gap-12 -mt-8">
-<div class="relative break-words bg-white mb-6 rounded-3xl mt-20 w-1/3 h-fit">
+<div class="flex justify-center gap-12 w-full">
+<div class="relative break-words bg-white mb-6 rounded-md mt-20 w-1/3 h-fit shadow-md">
     <div class="px-6">
         <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center">
@@ -60,15 +60,15 @@
     </button>
 </div>
 
-<div class="flex flex-col mt-16">
-    <Block key="2" data-index="2" data-direct="vertical" class="recommendClassWrap rounded-3xl moreGrayBG p-4 mt-8 w-fit pb-8" title="CLASS CREATED BY Mike Thompson" explain="We base on your recent learning and bookmark">
-        <div class="grid grid-cols-2 gap-4 pt-5 h-52 pr-2 overflow-y-scroll">
+<div class="">
+    <Block key="2" data-index="2" data-direct="vertical" class=" rounded-md moreGrayBG p-4 mt-8 w-fit h-fit pb-8" title="CLASS CREATED BY Mike Thompson" explain="We base on your recent learning and bookmark">
+        <div class="grid grid-cols-2 gap-4 pt-5 2xl:h-80 h-52 pr-2 overflow-y-scroll">
             <CollectionFolder v-for="i in 4"></CollectionFolder>
         </div>
     </Block>
 
-    <Block key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap rounded-3xl moreGrayBG p-4 mt-4 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
-        <div class="grid grid-cols-2 gap-4 pt-5 h-36 pr-2 overflow-y-scroll">
+    <Block key="1" data-index="1" data-direct="vertical" class=" rounded-md moreGrayBG p-4 mt-4 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
+        <div class="grid grid-cols-2 gap-4 pt-5 2xl:h-44 h-36 pr-2 overflow-y-scroll">
           <CourseFolder v-for="i in 6" showStar="true"></CourseFolder>
         </div>
     </Block>

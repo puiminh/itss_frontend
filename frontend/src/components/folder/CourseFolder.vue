@@ -1,5 +1,5 @@
 <template>
-<RouterLink :to="'/course/'+id" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-sm shadow-md bg-white" draggable="true" @dragstart="drag" id="drag1">
+<RouterLink :to="'/course/'+id" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-md shadow-md bg-white" draggable="true" @dragstart="drag" id="drag1">
     <div class="flex justify-between">
         <p class="font-bold text-base">{{title}}</p>
         <div v-if="showStar=='true'" class="flex">
@@ -100,7 +100,8 @@ export default {
 }
 
 .courseFolderWrap {
-    max-width: 18rem;
-    min-width: 14.5rem;
+    max-width: 20rem;
+    min-width: 14rem;
 }
+
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="">
       <div class="flex justify-between">
-        <div class="rounded-full bg-white w-fit py-0.5 px-2 shadow-sm">
+        <div class="rounded-md bg-white w-fit py-0.5 px-2 shadow-sm">
           <span class="font-bold text-sm text-gray-500 ">{{title}}</span>
         </div>
         <button class="custom--border-3" :aria-label="explain" data-cooltipz-dir="top">

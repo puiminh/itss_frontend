@@ -1,12 +1,11 @@
 <template>
-  <div class="flex flex-col -mt-4 -ml-4">
-    <SwitchButton></SwitchButton>
+  <div class="w-full">
     <table-lite
       :is-static-mode="true"
       :grouping-key="table.groupingKey"
       :columns="table.columns"
       :rows="table.rows"
-      :total="table.totalRecordCount"
+      :total="table.rows.length"
       :sortable="table.sortable"
   
       class="!p-0 !mb-6 !ml-0 !mr-6 !mt-2 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
@@ -16,15 +15,14 @@
   </template>
   
   <script>
-  import { defineComponent, reactive, computed } from "vue";
   import TableLite from 'vue3-table-lite'
-import SwitchButton from "../../components/button/SwitchButton.vue";
-  export default defineComponent({
-    name: "App",
-    components: { TableLite, SwitchButton },
-    setup() {
-      // Fake data
-      const data = reactive([]);
+  export default {
+    components: {
+      TableLite,
+    },
+    data() {
+      const data = [];
+      var table = {};
       for (let i = 1; i < 126; i++) {
         data.push({
           id: i,
@@ -32,8 +30,8 @@ import SwitchButton from "../../components/button/SwitchButton.vue";
           email: "test" + i + "@example.com",
         });
       }
-      // Table config
-      const table = reactive({
+
+      table =  {
         columns: [
           {
             label: "ID",
@@ -81,19 +79,18 @@ import SwitchButton from "../../components/button/SwitchButton.vue";
           },
         ],
         rows: data,
-        totalRecordCount: computed(() => {
-          return table.rows.length;
-        }),
         sortable: {
           order: "id",
           sort: "asc",
         },
-      });
+      }      
+
       return {
         table,
-      };
-    },
-  });
+        data,
+      }
+    }
+  }
   </script>
   
   <style scoped>

@@ -1,17 +1,15 @@
 <template>
-  
-  <div class="flex flex-col -mt-4 -ml-4">
-    <SwitchButton></SwitchButton>
+  <div class="w-full">
     <table-lite
-      :is-static-mode="true"
-      :grouping-key="table.groupingKey"
-      :columns="table.columns"
-      :rows="table.rows"
-      :total="table.totalRecordCount"
-      :sortable="table.sortable"
+    :is-static-mode="true"
+    :grouping-key="table.groupingKey"
+    :columns="table.columns"
+    :rows="table.rows"
+    :total="table.totalRecordCount"
+    :sortable="table.sortable"
 
-      class="!p-0 !mb-6 !-ml-0 !mr-6 !mt-2 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
-    ></table-lite>
+    class="!p-0 !m-6 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
+  ></table-lite>
   </div>
 
 </template>
