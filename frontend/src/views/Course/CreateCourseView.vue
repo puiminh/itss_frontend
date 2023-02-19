@@ -4,11 +4,14 @@
     <p class="font-medium text-sm text-gray-600 mt-2">Auto saved</p>
     <div class="flex gap-5">
         <div class="w-4/5">
-            <InputNoBorder title="TITLE" class="mt-8"/>
+            <InputNoBorder title="TITLE" class="mt-8" v-model="title"/>
             <TextAreaNoBorder title="DESCRIPTION" class="mt-8" v-model="desc"></TextAreaNoBorder>
         </div>
         <div class="place-self-end">
-            <GameButton class="!bg-blue-600 !px-3 !py-2">
+            <GameButton 
+                @click="submit"
+                class="!bg-blue-600 !px-3 !py-2"
+            >
                 <p class="text-center pt-2 font-bold text-white">
                     Create
                 </p>
@@ -40,11 +43,12 @@ export default {
     data() {
         return {
             desc: '',
+            title: '',
         }
     },
     methods: {
-        log() {
-            console.log(this.desc);
+        submit() {
+            console.log(this.desc, this.title);
         }
     }
 }

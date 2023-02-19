@@ -8,7 +8,7 @@
       :total="table.rows.length"
       :sortable="table.sortable"
   
-      class="!p-0 !mb-6 !ml-0 !mr-6 !mt-2 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
+      class="!p-0 !mb-6 !m-6 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
     ></table-lite>
   </div>
 
