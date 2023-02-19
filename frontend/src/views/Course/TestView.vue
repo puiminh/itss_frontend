@@ -7,6 +7,7 @@
         :answer = "halfArray[halfArray.length * Math.random() | 0]" 
         :index = "index + 1"
         :total="wordlists.length"
+        ref="truefalses"
     ></TrueFalseCard>
 
     <QuestionCard
@@ -17,7 +18,7 @@
                      halfArray[halfArray.length * Math.random() | 0]]"
         :total="wordlists.length"
         :index = "index + halfArray.length + 1"
-
+        ref="questions"
     >
     </QuestionCard>
 
@@ -26,7 +27,6 @@
             <span class="text-2xl font-bold text-white">Submit</span>
         </button>
     </div>
-
 </div>
 
 
@@ -37,6 +37,8 @@
 import TrueFalseCard from '../../components/card/TrueFalseCard.vue';
 import QuestionCard from '../../components/card/QuestionCard.vue';
 import axios from 'axios';
+import { closeModal, openModal } from 'jenesius-vue-modal';
+import TestResult from '../../components/modal/TestResult.vue';
 
 
 
@@ -44,8 +46,9 @@ import axios from 'axios';
 export default {
     components: {
     TrueFalseCard,
-    QuestionCard
-    },
+    QuestionCard,
+    TestResult
+},
     props: {
 
     }, 
@@ -53,12 +56,41 @@ export default {
         return {
             wordlists: [],
             index: 0,
+            testresults: [],
         }
     },
     methods: {
         randomWord() {
             this.wordlists = this.wordlists.sort(() => 0.5 - Math.random())
         },
+        submitTest() {
+            let checktruefasle = true;
+            let checkquestion = true
+            console.log(this.$refs.truefalses, this.$refs.questions);
+            this.$refs.truefalses.forEach(element => {
+                // console.log(element.term.id,element.testresult);
+                // if (element.truefalse == null) {
+                //     checktruefasle = false;
+                // } else {
+
+                // }
+                this.testresults.push({id: element.term.id, result: element.testresult})
+                element.submit()
+
+            });
+            this.$refs.questions.forEach(element => {
+                // console.log(element.term.id,element.testresult);
+                this.testresults.push({id: element.term.id, result: element.testresult})
+                element.submit()
+                
+            });
+            console.log(this.testresults);
+            let mark = this.testresults.filter(x => x.result).length
+            this.openModalMethod(mark, this.wordlists.length)
+        },
+        openModalMethod(result, total) {
+            openModal(TestResult, {result: result, total: total})
+        }
     },
     computed: {
         halfArray() {
@@ -70,15 +102,12 @@ export default {
         randomTerm() {
             return this.wordlists[this.wordlists.length * Math.random() | 0]
         },
-        submitTest() {
-            
-        }
+
     },
     mounted() {
         axios.get('vocabularys').then((res)=>{
             this.wordlists = res.data
             this.randomWord()
-            console.log(this.halfArray, this.halfEndArray);
         })
     }
 }

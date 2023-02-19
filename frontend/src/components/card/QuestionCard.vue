@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-xl shadow bg-white card_wrap">
+    <div class="rounded-xl shadow bg-white card_wrap border-2" ref="wrap">
         <p class="text-gray-400 font-normal absolute top-6 right-6">{{ index }} of {{ total }}</p>
             <div class="p-9 flex flex-col w-1/2">
                 <p class="text-gray-600 text-base h-12 font-medium">Term</p>
@@ -17,7 +17,7 @@
                             </p>
                 </label> -->
                 <div  v-for="(answer,index) in mixingAnswers">
-                    <input type="radio" :name="'id' + term.id" :id="'id'+ term.id + answer.id + index" value="" class="hidden peer">
+                    <input :disabled="disabled" type="radio" :name="'id' + term.id" :id="'id'+ term.id + answer.id + index" :value="answer" v-model="selectanwser" class="hidden peer">
                     <label :for="'id'+ term.id + answer.id + index" class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div class="block">
                             <div class="w-full text-lg font-semibold">
@@ -38,6 +38,14 @@
 .card_wrap {
     width: 50rem;
 }
+
+.correct {
+    border-color: rgb(14 159 110)
+}
+
+.incorrect {
+    border-color: rgb(240 82 82)
+}
 </style>
 
 <script>
@@ -46,6 +54,13 @@ import GameButton from '../button/GameButton.vue';
 
 export default {
     components: { GameButton },
+    data() {
+        return {
+            selectanwser: null,
+            testresult: null,
+            disabled: false
+        }
+    },
     props: {
         term: {
             default: {
@@ -66,10 +81,28 @@ export default {
             default: 0,
         }
     },
+    methods: {
+        submit() {
+            // this.$refs[this.idfalse]
+            if (this.testresult) {
+                this.$refs.wrap.classList.add("correct")
+            } else {
+                this.$refs.wrap.classList.add("incorrect")
+            }
+
+            this.disabled=true
+        }
+    },
     computed: {
         mixingAnswers() {
             this.answers.push(this.term);
             return this.answers.sort(() => 0.5 - Math.random())
+        }
+    },
+    watch: {
+        selectanwser(newValue, oldValue) {
+            this.testresult = ((this.term.id == newValue.id))
+            console.log(this.term.word, newValue.word, newValue, this.testresult);      
         }
     }
 }
