@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import MainLayout from '../layout/Main.vue'
 import LandingLayout from '../layout/Landing.vue'
 import AdminLayout from '../layout/Admin.vue'
+import { useUserStore } from '../stores/user'
 
 
 const router = createRouter({
@@ -11,26 +12,28 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'n',
+      name: 'Home',
       component: HomeView,
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
-    {
-      path: '/home',
-      name: 'home',
-      component: HomeView,
-      meta: {
-        layout: MainLayout
-      }
-    },
+    // {
+    //   path: '/home',
+    //   name: 'home',
+    //   component: HomeView,
+    //   meta: {
+    //     layout: MainLayout
+    //   }
+    // },
     {
       path: '/testview',
       name: 'testview',
       component: () => import('../views/TestView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: false,
       }
     },
     {
@@ -41,7 +44,8 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: false,
       }
     },
     {
@@ -49,7 +53,8 @@ const router = createRouter({
       name: 'Login',
       component: () => import('../views/User/SignInView.vue'),
       meta: {
-        layout: LandingLayout
+        layout: LandingLayout,
+        needAuth: false,
       }
     },
     {
@@ -57,7 +62,8 @@ const router = createRouter({
       name: 'createcourse',
       component: () => import('../views/Course/CreateCourseView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {
@@ -65,7 +71,8 @@ const router = createRouter({
       name: 'createcollection',
       component: () => import('../views/Collection/CreateCollectionView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     { 
@@ -74,7 +81,8 @@ const router = createRouter({
       props: true,
       component: () => import('../views/Course/CourseView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: false,
       }
     },
     { 
@@ -83,7 +91,8 @@ const router = createRouter({
       props: true,
       component: () => import('../views/Course/FlashCardView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     { 
@@ -92,7 +101,8 @@ const router = createRouter({
       props: true,
       component: () => import('../views/Course/TestView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     { 
@@ -101,7 +111,8 @@ const router = createRouter({
       props: true,
       component: () => import('../views/Collection/CollectionView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: false,
       }
     },
     {
@@ -109,7 +120,8 @@ const router = createRouter({
       component: () => import('../views/Course/QuestionView.vue'),
       props: true,
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {
@@ -117,56 +129,91 @@ const router = createRouter({
       component: () => import('../views/User/Profile.vue'),
       props: true,
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {
       path: '/manager',
       component: ()=> import('../views/Manager/ManagerView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {
       path: '/bookmark',
       component: ()=> import('../views/Bookmark/BookmarkView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {
       path: '/progress',
       component: ()=> import('../views/User/ProgressView.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {
       path: '/course/1/learnword',
       component: ()=> import('../views/Course/LearnWord.vue'),
       meta: {
-        layout: MainLayout
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {
-      path: '/homepage',
+      path: '/landing',
       name: 'Landing',
       component: ()=> import('../views/Landing.vue'),
       meta: {
-        layout: LandingLayout
+        layout: LandingLayout,
+        needAuth: false,
       }
     },
     {
       path: '/admin',
       name: 'Admin',
-      meta: { layout: 'LayoutAdmin' },
       component: ()=> import('../views/Admin/AdminView.vue'),
       meta: {
-        layout: AdminLayout
+        layout: AdminLayout,
+        needAuth: true,
+        needAdmin: true,
       }
     },
-
   ]
+})
+
+router.beforeEach((to, from, next) => {
+
+
+
+  const store = useUserStore();
+  //neu ma chua login (getLogin = false) + den trang can login (needAuth = true) -> false, ve lai landing
+  //neu ma chua Login (getLogin = false) + den trang khong can login  (needAuth = false) -> di tiep
+  //neu ma da Login (getLogin = true) + den trang can login (needAuth = true) -> di tiep
+  
+  console.log(to.meta.needAuth, store.getLogin);
+  if (to.meta.needAuth) {
+    if (store.getLogin) {
+      next()
+    } else {
+      next({name: 'Landing'})
+    }
+  }
+  else {
+    console.log(to);
+    if (to.path.includes('guest')) {
+      next()      
+    } else {
+      next({
+        path: '/guest' + to.path
+      })
+    }
+  }
 })
 
 export default router

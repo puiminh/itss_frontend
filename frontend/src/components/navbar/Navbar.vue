@@ -59,21 +59,21 @@
 <button @click="openPersonal = !openPersonal" id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white truncate" type="button">
     <span class="sr-only">Open user menu</span>
     <img class="w-8 h-8 mr-2 rounded-full" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80" alt="user photo">
-    Bonnie Green
+     {{ getUser.first_name + ' ' + getUser.last_name  }}
     <svg class="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
 </button>
 
 <!-- Dropdown menu -->
 <div v-if="openPersonal" id="dropdownAvatarName" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute right-0  mt-2 overflow-hidden origin-top-right">
     <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-      <div class="font-medium ">User</div>
-      <div class="truncate">name@flowbite.com</div>
+      <div class="font-medium "> {{ isAdmin ? 'Admin' : 'User'}} </div>
+      <div class="truncate"> {{ getUser.email }} </div>
     </div>
     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
       <li>
         <RouterLink to="/user/me" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</RouterLink>
       </li>
-      <li>
+      <li v-if="isAdmin">
         <RouterLink to="/admin" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Admin</RouterLink>
       </li>
       <li>
@@ -83,9 +83,9 @@
         <a @click="handleHideProgress" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ showProgress == 'Hide' ? 'Hide' : 'Show'}} progress</a>
       </li>
     </ul>
-    <RouterLink to="/homepage" class="py-2">
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-    </RouterLink>
+    <!-- <RouterLink to="/homepage" class="py-2"> -->
+      <a @click="signOutMethod" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+    <!-- </RouterLink> -->
 </div>
   </div>
 
@@ -125,8 +125,10 @@
 </style>
 
 <script>
+import { mapActions, mapState } from 'pinia';
 import Breadcumbs from '../breadcumbs/Breadcumbs.vue';
 import SearchButton from '../button/SearchButton.vue';
+import { useUserStore } from '../../stores/user'
 
 export default {
  components: {
@@ -140,7 +142,12 @@ export default {
       showProgress: false,
     }
   },
+  computed: {
+    ...mapState(useUserStore, ['getLogin', 'getUser', 'isAdmin'])
+  },
   methods: {
+    ...mapActions(useUserStore,['signOut']),
+
     handleHideProgress() {
       if (localStorage.getItem('progressHide') == 'Hide') {
         localStorage.setItem('progressHide', 'Show');
@@ -148,6 +155,10 @@ export default {
         localStorage.setItem('progressHide', 'Hide');
       }
       this.showProgress = localStorage.getItem('progressHide'); 
+    },
+    signOutMethod() {
+      this.signOut()
+      this.$router.push('/landing')
     }
   },
   mounted() {

@@ -50,6 +50,11 @@
           </li>
         </ul>
       </div>
+
+      <div>
+        <SearchButton></SearchButton>
+      </div>
+
       <div class="flex items-center lg:ml-auto">
         <button
           @click="openModalMethod" 
@@ -105,7 +110,8 @@
 </template>
 
 <script>
-import { openModal } from 'jenesius-vue-modal';
+import { openModal, closeModal } from 'jenesius-vue-modal';
+import SearchButton from '../components/button/SearchButton.vue';
 import SignInView from './User/SignInView.vue';
 
 export default {
@@ -115,14 +121,21 @@ export default {
       };
     },
     components: {
-    SignInView
+    SignInView,
+    SearchButton
 },
     methods: {
       openModalMethod() {
-        openModal(SignInView)
+        openModal(SignInView)          
       }
+    },
+    mounted() {
+      setTimeout(() => {
+        openModal(SignInView)          
+        }, 1000);
     }
-  };
+  }
+  
 </script>
 
 <style scoped>

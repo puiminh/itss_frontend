@@ -1,32 +1,45 @@
 
 
 <template>
-	<div class="flex justify-center items-center w-full h-full">
+	<div class="flex justify-center items-center relative">
 		<div :class="[isSignUp ? 'right-panel-active' : ''] + ' container'" id="container">
 	<div :class="' form-container sign-up-container'">
-		<form action="#">
+		<form @submit.prevent	="signUpMethod">
 			<h1 class="">Create Account</h1>
-			<input v-model="username" type="text" placeholder="Username" />
-			<input v-model="password" type="password" placeholder="Password" />
-			<input v-model="first_name" type="text" placeholder="First Name" />
-			<input v-model="last_name" type="text" placeholder="Last Name" />
-			<input v-model="email" type="email" placeholder="Email" />
+			<input v-model="userdata.username" type="text" placeholder="Username" required/>
+			<input v-model="userdata.password" type="password" placeholder="Password" required/>
+			<input v-model="userdata.first_name" type="text" placeholder="First Name" required/>
+			<input v-model="userdata.last_name" type="text" placeholder="Last Name" required/>
+			<input v-model="userdata.email" type="email" placeholder="Email" required/>
             <!-- <Datepicker class="mt-1" v-model="birthday" :enable-time-picker="false"/> -->
-			<button @click.prevent="signUp()" class="mt-4">Sign Up</button>
+			<button type="submit" class="mt-4">Sign Up</button>
+
+			<p ref="signupnotfound" class="mt-2 !text-sm text-red-600 dark:text-red-500 !font-normal hidden">
+				<span class="!font-medium">
+					Error!
+				</span> Check your input.
+			</p>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
-		<form action="#">
+		<form @submit.prevent="signInMethod">
 			<h1>Sign in</h1>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="text" placeholder="Username" v-model="username"/>
-			<input type="password" placeholder="Password" v-model="password" />
+			<input type="text" placeholder="Username" v-model="userdata.username" required/>
+			<input type="password" placeholder="Password" v-model="userdata.password"  required/>
 			<a href="#">Forgot your password?</a>
-			<button @click.prevent="signIn()">Sign In</button>
+			<button type="submit">Sign In</button>
+
+
+			<p ref="loginnotfound" class="mt-2 !text-sm text-red-600 dark:text-red-500 !font-normal hidden">
+				<span class="!font-medium">
+					Error!
+				</span> Check your input.
+			</p>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -53,27 +66,62 @@
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import axios from 'axios';
+import { mapActions } from 'pinia';
+import { useUserStore } from '../../stores/user';
+import { openModal, closeModal } from 'jenesius-vue-modal';
 
 export default {
 	data() {
 		return {
 			isSignUp: false,
-			username: '',
-			password: '',
-			first_name: '',
-			last_name: '',
-			email: '',
+			userdata: {
+				username: '',
+				password: '',
+				first_name: '',
+				last_name: '',
+				email: ''
+			}
+
 		}
 	},
 	methods: {
+		...mapActions(useUserStore, ['signUp', 'login']),
 		switchForm() {
 			this.isSignUp = !this.isSignUp
 		},
-		signIn() {
-			console.log(this);
+		async signInMethod() {
+			// console.log(this);
+			const response = await this.login(this.userdata.username, this.userdata.password)
+
+			console.log("res from signin view", response);
+
+			if (response && response.data.length != 0) {
+				closeModal();
+				this.$router.push('/')
+			} else {
+				this.$refs.loginnotfound.classList.remove('hidden');
+				setTimeout(() => {
+					this.$refs.loginnotfound.classList.add('hidden');		
+				}, 2000);
+			}
+			// console.log(response);
+
 		}, 
-		signUp() {
-			console.log(this);
+		async signUpMethod() {
+			// console.log(this);
+			const response = await this.signUp(this.userdata);
+			console.log("res from signin view", response);
+
+			if (response) {
+				closeModal();
+				this.$router.push('/')
+			} else {
+				this.$refs.signupnotfound.classList.remove('hidden');
+				setTimeout(() => {
+					this.$refs.signupnotfound.classList.add('hidden');		
+				}, 2000);
+			}
+			// console.log(response);
 		}
 	}
 }
