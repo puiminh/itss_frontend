@@ -1,9 +1,9 @@
 <template>
 <!-- Container for demo purpose -->
-<div>
+<div class="mb-80">
 
 <!-- Section: Design Block -->
-<section class="mb-40">
+<section class="mb-40 sessionWrap">
   <nav class="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between">
     <div class="px-6 w-full flex flex-wrap items-center justify-between">
       <div class="flex items-center">
@@ -50,11 +50,6 @@
           </li>
         </ul>
       </div>
-
-      <div>
-        <SearchButton></SearchButton>
-      </div>
-
       <div class="flex items-center lg:ml-auto">
         <button
           @click="openModalMethod" 
@@ -90,9 +85,9 @@
     <div class="container mx-auto xl:px-32">
       <div class="grid lg:grid-cols-2 gap-12 flex items-center">
         <div class="mt-12 lg:mt-0">
-          <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">The best offer <br /><span class="text-blue-600">for your business</span></h1>
-          <a class="inline-block px-7 py-3 mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" href="#!" role="button">Get started</a>
-          <a class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" href="#!" role="button">Learn more</a>
+          <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">The easiest way <br /><span class="text-blue-600">for your learning</span></h1>
+          <a @click="openModalMethod" class="inline-block px-7 py-3 mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" href="#!" role="button">Get started</a>
+          <a @click="openModalMethod" class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" href="#!" role="button">Learn more</a>
         </div>
         <div class="mb-12 lg:mb-0">
           <img
@@ -105,13 +100,54 @@
     </div>
   </div>
 </section>
+
+<section class="flex flex-col justify-center sessionWrap mb-20" ref="searchsession">
+  <h1 class="mx-auto text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
+    Learn everything for 
+      <span class="text-blue-600 font-bold">FREE</span></h1>
+  <SearchButton class="mx-auto w-1/2 !border-4 !border-blue-400 !justify-between"></SearchButton>
+
+
+</section>
+
+<section class="w-full sessionWrap">
+  <div class="w-full">
+    <transition-group
+      appear @before-enter="beforeEnterSlideIn" @enter="enterSlideIn"
+      tag="div"
+      class="flex gap-8 justify-between px-32"
+    >
+      <div key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap mt-12 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
+        <h1 class="mx-auto text-4xl font-bold tracking-tight mb-12">
+          Our best
+          <span class="text-blue-600 font-bold">Course</span></h1>
+        <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 pt-5 rounded-md bg-white border-blue-400 border-2 p-4">
+          <CourseFolder v-for="i in 8" showStar="true"></CourseFolder>
+        </div>
+      </div>
+
+      <div key="2" data-index="2" data-direct="vertical" class="recommendClassWrap mt-12 w-fit pb-8" title="OR TAKE A LOOK AT SOME CLASS" explain="We base on your recent learning and bookmark">
+        <h1 class="mx-auto text-4xl font-bold tracking-tight mb-12">
+          Our best
+          <span class="text-blue-600 font-bold">Collection</span></h1>
+        <div class="grid 2xl:grid-cols-2 xl:grid-cols-1 lg:grid-cols-2  gap-4 pt-5 rounded-md bg-white border-blue-400 border-2 p-4">
+            <CollectionFolder v-for="i in 4"></CollectionFolder>
+        </div>
+      </div>
+    </transition-group>
+  </div>
+</section>
 </div>
 
 </template>
 
 <script>
+import gsap from 'gsap';
 import { openModal, closeModal } from 'jenesius-vue-modal';
+import Block from '../components/block/Block.vue';
 import SearchButton from '../components/button/SearchButton.vue';
+import CollectionFolder from '../components/folder/CollectionFolder.vue';
+import CourseFolder from '../components/folder/CourseFolder.vue';
 import SignInView from './User/SignInView.vue';
 
 export default {
@@ -122,11 +158,41 @@ export default {
     },
     components: {
     SignInView,
-    SearchButton
+    SearchButton,
+    CollectionFolder,
+    CourseFolder,
+    Block
 },
     methods: {
       openModalMethod() {
         openModal(SignInView)          
+      },
+      beforeEnterSlideIn(el) {
+        el.style.opacity = 0
+        el.style.transform = (el.dataset.direct == 'vertical') ? 'translateY(100px)' : 'translateX(100px)'
+      },
+      enterSlideIn(el, done) {
+        console.log(el.dataset);
+        if(el.dataset.direct == 'vertical') {
+          gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          onComplete: done,
+          delay: el.dataset.index * 0.2
+          })
+        } else {
+          gsap.to(el, {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          onComplete: done,
+          delay: el.dataset.index * 0.2
+          })
+        }
+      },
+      scrollMethod() {
+        console.log('scroll');
       }
     },
     mounted() {
@@ -140,7 +206,7 @@ export default {
 
 <style scoped>
 .sessionWrap {
-  height: 100vh;
+  height: 60vh;
 }
 </style>
   

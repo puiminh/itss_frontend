@@ -44,3 +44,5 @@ app.use(SmartTable);
 app.use(VueProgressBar, options)
 app.component('QuillEditor', QuillEditor);
 app.mount('#app')
+
+export default app;

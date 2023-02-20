@@ -90,7 +90,6 @@ export default {
         </div>
       </Block>
     </transition-group>
-
   </div>
 
 </div>

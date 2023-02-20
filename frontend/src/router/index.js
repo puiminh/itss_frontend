@@ -7,6 +7,7 @@ import AdminLayout from '../layout/Admin.vue'
 import { useUserStore } from '../stores/user'
 
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -189,8 +190,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-
-
   const store = useUserStore();
   //neu ma chua login (getLogin = false) + den trang can login (needAuth = true) -> false, ve lai landing
   //neu ma chua Login (getLogin = false) + den trang khong can login  (needAuth = false) -> di tiep
@@ -206,13 +205,7 @@ router.beforeEach((to, from, next) => {
   }
   else {
     console.log(to);
-    if (to.path.includes('guest')) {
-      next()      
-    } else {
-      next({
-        path: '/guest' + to.path
-      })
-    }
+    next();
   }
 })
 

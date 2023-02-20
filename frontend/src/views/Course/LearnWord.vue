@@ -7,17 +7,17 @@
         </div>
         <p class="text-green-400 font-semibold text-lg">You have completed this session, do you want to continue studying?</p>
         <div class="flex justify-between w-full px-20 mt-4">
-            <a href="/course/1/learnword">
+            <RouterLink to="/course/1/learnword">
                 <GameButton class=" !bg-gray-200">
                     <p class="font-bold text-slate-500 text-lg">I will take a break</p>
                 </GameButton>
-            </a>
+            </RouterLink>
 
-            <RouterLink to="/course/1">
+            <a to="/course/1" @click="resetLearn">
                 <GameButton class=" !bg-yellow-400 text-lg">
                     <p class="font-bold text-white">Of course, let's go!</p>
                 </GameButton>
-            </RouterLink>
+            </a>
         </div>
     </div>
 </div>
@@ -157,6 +157,16 @@ export default {
             this.index = 0;
             this.term = this.wordlists[0]
         },
+        resetLearn() {
+            axios.get('vocabularys').then((res)=>{
+            this.index = 0;
+            this.wordlists = res.data;
+            this.term = res.data[0];
+            
+            this.learndone=false
+            // this.randomWord()
+        })
+        }
     },
     watch: {
       index(newValue, oldValue) {

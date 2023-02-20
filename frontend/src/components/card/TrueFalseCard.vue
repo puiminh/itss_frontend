@@ -108,19 +108,19 @@ export default {
     },
     watch: {
         truefalse(newValue, oldValue) {
-            this.testresult = ((this.term.id == this.answer.id) == newValue)
+            this.testresult = ((this.term.vocabulary_id == this.answer.vocabulary_id) == newValue)
             console.log(this.term.word, this.answer.word, newValue, this.testresult);      
         }
     },
     computed: {
         idtrue() {
-            return 'idtrue'+ this.term.id
+            return 'idtrue'+ this.term.vocabulary_id
         },
         idfalse() {
-            return 'idfalse'+ this.term.id
+            return 'idfalse'+ this.term.vocabulary_id
         },
         idname() {
-            return 'id'+ this.term.id
+            return 'id'+ this.term.vocabulary_id
         }
     }
 }

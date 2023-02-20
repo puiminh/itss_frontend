@@ -1,18 +1,19 @@
 <template>
 <div class="flex px-8 gap-8">
-	<div class="flex flex-col items-center w-60 h-full text-gray-700 bg-white px-7">
+	<div v-if="isLogin" class="flex flex-col items-center w-60 h-full text-gray-700 bg-white px-7">
 		<div class="fixed">
 			<div class="profile_progress_wrap rounded-md grayBG px-4 py-5 shadow-md">
 				<div class="avatar flex w-52 items-center gap-3 px-3">
-					<img class="inline-block h-8 w-8 rounded-full ring-2 ring-white shadow-md" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+					<img class="inline-block h-8 w-8 rounded-full ring-2 ring-white shadow-md" 
+						src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
 					<div class="flex gap-1 relative">
-						<img class="h-7 w-7 fire" src="../../assets/icons8-fire-48.png" alt="">
-						<p class="font-bold text-sm pt-1">
+						<!-- <img class="h-7 w-7 fire" src="../../assets/icons8-fire-48.png" alt=""> -->
+						<!-- <p class="font-bold text-sm pt-1">
 							<Transition appear @before-enter="beforeCounting" @enter="enterCounting">
 								<span class="font-bold text-base"></span> 
 							</Transition> 
 							days
-						</p>
+						</p> -->
 						<!-- <Celebrate v-if="tweenedDone" class="absolute h-20 w-20 left-24 -top-3"></Celebrate> -->
 					</div>
 				</div>
@@ -30,7 +31,7 @@
 		</div>
 
 	</div>
-	<div class="grayBG rounded-md minWH pt-8 pb-8 flex justify-center">
+	<div :class="['grayBG rounded-md pt-8 pb-8 flex justify-center', isLogin ? 'minWH' : 'w-full px-12']">
 		<slot></slot>
 	</div>
 </div>
@@ -54,6 +55,8 @@ import BookmarkButton from '../button/BookmarkButton.vue';
 import TripButton from '../button/TripButton.vue';
 import { useToast } from "vue-toastification";
 import {openModal} from "jenesius-vue-modal";
+import { mapState } from 'pinia';
+import { useUserStore } from '../../stores/user';
 
 
 export default {
@@ -69,8 +72,10 @@ export default {
 			toast,
 		}
 	},
+	computed: {
+		...mapState(useUserStore, ['isLogin'])
+	},
 	methods: {
-
 		openModalMethod() {
 			openModal(TripButton)
 		}
