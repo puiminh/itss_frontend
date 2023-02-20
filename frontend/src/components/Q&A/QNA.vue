@@ -16,7 +16,7 @@ export default {
     methods: {
         choose(data) {
             console.log(data,"The shuffle: ",this.shuffleArray,"The original: ",this.answers);
-            if (this.shuffleArray[data].vocabulary_id == this.right) {
+            if (this.shuffleArray[data].id == this.right) {
                 console.log("Correct!");
             } else {
                 console.log("Incorrect!");
@@ -27,7 +27,7 @@ export default {
             this.$refs.answerElements[data].querySelector(".answerNumber").style.backgroundColor="#e7696b"
             }
 
-            const found = this.shuffleArray.findIndex(element => element.vocabulary_id == this.right);
+            const found = this.shuffleArray.findIndex(element => element.id == this.right);
 
             this.$refs.answerElements[found].style.backgroundColor="#9de3d3";
             this.$refs.answerElements[found].style.boxShadow= "#00a57a 0px 0.5rem 0px";

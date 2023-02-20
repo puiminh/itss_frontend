@@ -101,7 +101,7 @@ function createCard() {
     axios.post('http://localhost:3000/vocabularys', {
       ...cardData,
         "id": Math.round(Date.now() / 1000),
-        "vocabulary_id": Math.round(Date.now() / 1000),
+        "id": Math.round(Date.now() / 1000),
         "type": 2,
         "course_id": props.id
     })

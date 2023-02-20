@@ -18,7 +18,7 @@ export default {
       default: 
         [
             {
-            "vocabulary_id": 1,
+            "id": 1,
             "word": "Hello",
             "define": "xin chao",
             "link": "",
@@ -54,7 +54,7 @@ export default {
         return this.wordlists[this.testWord].define
     }, 
     right() {
-        return this.wordlists[this.testWord].vocabulary_id
+        return this.wordlists[this.testWord].id
     },
     // testWord() {
     //   return Math.floor(Math.random() * this.learnedIndex)

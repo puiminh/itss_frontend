@@ -1,6 +1,27 @@
 <template>
+<div v-if="learndone" class="py-8 px-32 w-full h-full flex justify-center items-center">
+    <div class="bg-white shadow-md rounded-md py-8 px-16 flex flex-col justify-center items-center gap-4">
+        <p class="text-green-500 font-black text-3xl">Congratulation!</p>
+        <div class="relative w-64 h-40 ml-36">
+            <Celebrate class="absolute w-full h-full self-center"></Celebrate>
+        </div>
+        <p class="text-green-400 font-semibold text-lg">You have completed this session, do you want to continue studying?</p>
+        <div class="flex justify-between w-full px-20 mt-4">
+            <a href="/course/1/learnword">
+                <GameButton class=" !bg-gray-200">
+                    <p class="font-bold text-slate-500 text-lg">I will take a break</p>
+                </GameButton>
+            </a>
 
-<div class="py-8 px-32 w-full">
+            <RouterLink to="/course/1">
+                <GameButton class=" !bg-yellow-400 text-lg">
+                    <p class="font-bold text-white">Of course, let's go!</p>
+                </GameButton>
+            </RouterLink>
+        </div>
+    </div>
+</div>
+<div v-else class="py-8 px-32 w-full">
     <ProgressBar class="" :progress="(index/wordlists.length)*100" color="yellow" thin="no"></ProgressBar>
 
     <div class="flex mt-8">
@@ -68,7 +89,9 @@
                     </svg>                  
                 </GameButton>
             </div>
-        </div>   
+        </div>
+        
+        <!-- Celebrate -->        
     </div>
 </div>
 
@@ -82,12 +105,14 @@ import { VideoPlayer } from '@videojs-player/vue'
 import 'video.js/dist/video-js.css'
 import QuestionView from './QuestionView.vue';
 import axios from 'axios';
+import Celebrate from '../../components/celebrate/Celebrate.vue'
 
 
 export default {
     data() {
         return {
             learnmode: true,
+            learndone: false,
             index: 0,
             questionCount: 0,
             wordlists: [],
@@ -100,7 +125,7 @@ export default {
 
         }
     },
-    components: { ProgressBar, GameButton, VideoPlayer, QuestionView },
+    components: { ProgressBar, GameButton, VideoPlayer, QuestionView, Celebrate },
     methods: {
         playSound (sound) {
             if(sound) {
@@ -114,7 +139,8 @@ export default {
                 if (this.index < this.wordlists.length - 1) {
                     this.index++;
                 } else {
-                    this.index = 0;
+                    // this.index = 0;
+                    this.learndone = true
                 }
             } else {
                 if (this.questionCount < 3) {                 
