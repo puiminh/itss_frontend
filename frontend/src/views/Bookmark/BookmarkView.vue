@@ -8,7 +8,7 @@
       :total="table.rows.length"
       :sortable="table.sortable"
   
-      class="!p-0 !mb-6 !m-6 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
+      class="!p-2 !mb-6 !m-6 bg-white !rounded-xl !border-8 !border-white shadow-md !font-sans"
     ></table-lite>
   </div>
 
@@ -41,14 +41,14 @@
             isKey: true,
           },
           {
-            label: "Course name",
+            label: "Name",
             field: "name",
             width: "5%",
             sortable: true,
           },
           {
-            label: "Author",
-            field: "email",
+            label: "Type",
+            field: "type",
             width: "5%",
             sortable: true,
           },

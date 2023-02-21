@@ -25,12 +25,12 @@
             </div>
         </div>
         <div class="text-center mt-2">
-            <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1" :contenteditable="editing" @input="nameChange">Mike Thompson</h3>
+            <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1" :contenteditable="editing" @input="nameChange">{{ userinfo.first_name }}</h3>
             <div v-if="editing" class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase" aria-label="You can only edit your name, description and avatar" data-cooltipz-dir="bottom">
-                <i class="far fa-at mr-1"></i>volmicrolab@gmail.com
+                <i class="far fa-at mr-1"></i>{{ userinfo.email }}
             </div>
             <div v-else class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase" >
-                <i class="far fa-at mr-1"></i>volmicrolab@gmail.com
+                <i class="far fa-at mr-1"></i>{{ userinfo.email }}
             </div>
         </div>
         <div class="mt-6 py-6 border-t border-slate-200 text-center">
@@ -85,12 +85,14 @@ import Block from '../../components/block/Block.vue';
 import CollectionFolder from '../../components/folder/CollectionFolder.vue';
 import CourseFolder from '../../components/folder/CourseFolder.vue';
 import ImageModal from '../../components/modal/ImageModal.vue';
+import { useUserStore } from '../../stores/user';
 
 
 export default {
     components: { Block, CollectionFolder, CourseFolder, ImageModal },
     data() {
         return {
+            userinfo: null,
             editing: false,
             name: '',
             desc: '',
@@ -128,6 +130,11 @@ export default {
                 }) 
             }
         }    
+    },
+    mounted() {
+        const store = useUserStore()
+        this.userinfo = store.getUser
+        this.name = this.userinfo.first_name
     }
 }
 

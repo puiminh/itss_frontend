@@ -31,21 +31,6 @@ export default defineComponent({
         email: "test" + i + "@example.com",
       });
     }
-    data.push({
-      id: 126,
-      name: "TEST1",
-      email: "test111@example.com",
-    });
-    data.push({
-      id: 127,
-      name: "TEST1",
-      email: "test111111@example.com",
-    });
-    data.push({
-      id: 128,
-      name: "TEST2",
-      email: "test222@example.com",
-    });
     // Table config
     const table = reactive({
       columns: [
@@ -57,14 +42,20 @@ export default defineComponent({
           isKey: true,
         },
         {
-          label: "Course name",
+          label: "Name",
           field: "name",
           width: "10%",
           sortable: true,
         },
         {
-          label: "Email",
-          field: "email",
+          label: "Type",
+          field: "type",
+          width: "5%",
+          sortable: true,
+        },
+        {
+          label: "Created at",
+          field: "date",
           width: "15%",
           sortable: true,
         },

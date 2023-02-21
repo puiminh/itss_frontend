@@ -140,11 +140,15 @@
         </div>
         <div class="flex mt-8 h-96 gap-5">
             <div class="relative w-full">
-                <FlipCard review-component="false" class="" width="100%" height="500px"></FlipCard>
+                <FlipCard :term="wordlist[index]" ref="flipcard" review-component="false" class="" width="100%" height="500px"></FlipCard>
             </div>
             <div class="flex items-end pb-6">
-                <FlashcardButton></FlashcardButton>
-
+                <FlashcardButton  
+                    @nextWord="nextWord"
+                    @backWord="backWord"
+                    @randomWord = "randomWord"
+                    @flipCard = "flipCard"
+                ></FlashcardButton>
             </div>
         </div>
 
@@ -153,15 +157,15 @@
         </div>
 
         <div class="flex w-full justify-between">
-            <p class="font-bold text-lg pt-3">Terms in this set: 50</p>
+            <p class="font-bold text-lg pt-3">Terms in this set: {{ totalword }}</p>
             <div class="flex mr-12">
                 <ProgressBar class="w-64" key="1" name="Your process: " progress="78" color="red"></ProgressBar>
             </div>
         </div>
 
         <div class="grid grid-cols-5 gap-2 mt-8">
-            <button v-for="i in 20" class="w-36 h-12 flex justify-center text-center items-center bg-white shadow-sm rounded-lg">
-                Name {{ i }}
+            <button v-for="i in wordlist" class="w-36 h-12 flex justify-center text-center items-center bg-white shadow-sm rounded-lg">
+                {{ i.word }}
             </button>
         </div>
 
@@ -192,6 +196,7 @@ import BookmarkButton from '../../components/button/BookmarkButton.vue';
 import FlashcardButton from '../../components/button/FlashcardButton.vue';
 import Rating from '../../components/rating/Rating.vue'
 import { closeModal, openModal } from 'jenesius-vue-modal';
+import axios from 'axios';
 
 
 export default {
@@ -206,6 +211,9 @@ export default {
 },
     data() {
         return {
+            wordlist: [],
+            totalword: 0,
+            index: 0,
         }
     },
     methods: {
@@ -214,7 +222,27 @@ export default {
         },
         openRatingSectionMethod() {
             openModal(Rating);
-        }
+        },
+        nextWord() {
+            if (this.index > this.totalword - 1) {
+                this.index = 0;
+            } else {
+                this.index++;
+            }
+        },
+        flipCard() {
+            this.$refs.flipcard.flipDownCard(false);
+        },
+        randomWord() {
+            this.wordlist = this.wordlist.sort(() => 0.5 - Math.random())
+            this.index = 0;
+        },
+    },
+    mounted() {
+        axios.get('/vocabularys').then((res)=>{
+            this.wordlist = res.data;
+            this.totalword = this.wordlist.length
+        })
     }
 }
 
