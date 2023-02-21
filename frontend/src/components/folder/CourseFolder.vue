@@ -57,9 +57,6 @@ export default {
         progress: {
             default: 0,
         },
-        courseImg: {
-            default: "https://incucdep.com/wp-content/uploads/2018/01/in-an-card-visit-ep-kim-min.jpg",
-        },
         showProgress: {
             default: 'false'
         },

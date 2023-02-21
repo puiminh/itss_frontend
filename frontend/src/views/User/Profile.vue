@@ -7,7 +7,7 @@
                 <div class="relative">
                     <img
                         @click="handleClickImage"
-                        :src="imageLink" 
+                        :src="userUpdate.avatar ? userUpdate.avatar : getUser.avatar" 
                         class="object-cover shadow-xl rounded-full align-middle border-none -mt-8 w-40 h-40"/>
                 </div>
             </div>
@@ -24,13 +24,22 @@
                 </div>
             </div>
         </div>
-        <div class="text-center mt-2">
-            <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1" :contenteditable="editing" @input="nameChange">{{ userinfo.first_name }}</h3>
-            <div v-if="editing" class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase" aria-label="You can only edit your name, description and avatar" data-cooltipz-dir="bottom">
-                <i class="far fa-at mr-1"></i>{{ userinfo.email }}
+        <div class="flex flex-col justify-center items-center mt-2 w-full">
+            <div class="flex gap-4">
+                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1" :contenteditable="editing" @input="firstnameChange">
+                    {{ userUpdate.first_name ? userUpdate.first_name : getUser.first_name }}
+                </h3>
+                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1" :contenteditable="editing" @input="lastnameChange">
+                    {{ userUpdate.last_name ? userUpdate.last_name : getUser.last_name }}
+
+                </h3>
             </div>
-            <div v-else class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase" >
-                <i class="far fa-at mr-1"></i>{{ userinfo.email }}
+
+            <div v-if="editing" class="text-xs mt-0 mb-2 text-slate-400 font-bold" aria-label="You can only edit your name, description and avatar" data-cooltipz-dir="bottom">
+                {{ getUser.email }}
+            </div>
+            <div v-else class="text-xs mt-0 mb-2 text-slate-400 font-bold" >
+                {{ getUser.email }}
             </div>
         </div>
         <div class="mt-6 py-6 border-t border-slate-200 text-center">
@@ -81,25 +90,28 @@
 <script>
 import gsap from 'gsap';
 import { openModal } from 'jenesius-vue-modal';
+import { mapActions, mapState } from 'pinia';
 import Block from '../../components/block/Block.vue';
 import CollectionFolder from '../../components/folder/CollectionFolder.vue';
 import CourseFolder from '../../components/folder/CourseFolder.vue';
 import ImageModal from '../../components/modal/ImageModal.vue';
 import { useUserStore } from '../../stores/user';
+import { useToast } from "vue-toastification";
 
 
 export default {
     components: { Block, CollectionFolder, CourseFolder, ImageModal },
     data() {
+        const toast = useToast()
         return {
-            userinfo: null,
             editing: false,
-            name: '',
-            desc: '',
-            imageLink: 'https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true'
+            userUpdate: {},
+            toast,
         }
     },
     methods: {
+        ...mapActions(useUserStore, ['changeInfoUser', 'update']),
+
         changeToEditMode() {
             this.editing = true;
 
@@ -111,30 +123,43 @@ export default {
                 duration: 0.5
             })
         },
-        nameChange(evt) {
-            this.name = evt.target.textContent
+        firstnameChange(evt) {
+            this.userUpdate.first_name = evt.target.textContent
         },
-        descChange(evt) {
-            this.desc = evt.target.textContent;
+        lastnameChange(evt) {
+            this.userUpdate.last_name = evt.target.textContent
         },
-        saveProfile() {
-            console.log(this.name, this.desc, this.imageLink)
+        // descChange(evt) {
+        //     this.desc = evt.target.textContent;
+        // },
+        async saveProfile() {
+            console.log(this.userUpdate, this.getUser)
+            this.userUpdate = {
+                ...this.getUser,
+                ...this.userUpdate,
+            }
+            const response = await this.update(
+                this.getUser.id,
+                this.userUpdate
+            )
+            if (response) {
+                this.toast.success("Update user's info success!", {
+                    timeout: 2000
+                });
+            }
         },
         async handleClickImage() {
             if (this.editing) {
-                const modal = await openModal(ImageModal, {imagePropLink: this.imageLink})
-
+                const modal = await openModal(ImageModal, {imagePropLink: this.getUser.avatar})
                 modal.on('passImageLink', link => {
                     console.log(link);
-                    this.imageLink = link;
+                    this.userUpdate.avatar = link;
                 }) 
             }
         }    
     },
-    mounted() {
-        const store = useUserStore()
-        this.userinfo = store.getUser
-        this.name = this.userinfo.first_name
+    computed: {
+        ...mapState(useUserStore, ['getUser'])
     }
 }
 

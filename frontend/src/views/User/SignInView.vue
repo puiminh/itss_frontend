@@ -6,18 +6,19 @@
 	<div :class="' form-container sign-up-container'">
 		<form @submit.prevent	="signUpMethod">
 			<h1 class="">Create Account</h1>
-			<input v-model="userdata.username" type="text" placeholder="Username" required/>
+			<!-- <input v-model="userdata.username" type="text" placeholder="Username" required/> -->
+			<input v-model="userdata.email" type="email" placeholder="Email" required/>
 			<input v-model="userdata.password" type="password" placeholder="Password" required/>
+			<input v-model="userdata.password_confirmation" type="password" placeholder="Password Confirm" required/>
 			<input v-model="userdata.first_name" type="text" placeholder="First Name" required/>
 			<input v-model="userdata.last_name" type="text" placeholder="Last Name" required/>
-			<input v-model="userdata.email" type="email" placeholder="Email" required/>
             <!-- <Datepicker class="mt-1" v-model="birthday" :enable-time-picker="false"/> -->
 			<button type="submit" class="mt-4">Sign Up</button>
 
 			<p ref="signupnotfound" class="mt-2 !text-sm text-red-600 dark:text-red-500 !font-normal hidden">
 				<span class="!font-medium">
 					Error!
-				</span> Check your input.
+				</span > Something went wrong...
 			</p>
 		</form>
 	</div>
@@ -29,7 +30,7 @@
 				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="text" placeholder="Username" v-model="userdata.username" required/>
+			<input type="email" placeholder="Email" v-model="userdata.email" required/>
 			<input type="password" placeholder="Password" v-model="userdata.password"  required/>
 			<a href="#">Forgot your password?</a>
 			<button type="submit">Sign In</button>
@@ -77,6 +78,7 @@ export default {
 			userdata: {
 				username: '',
 				password: '',
+				password_confirmation: '',
 				first_name: '',
 				last_name: '',
 				email: ''
@@ -91,11 +93,11 @@ export default {
 		},
 		async signInMethod() {
 			// console.log(this);
-			const response = await this.login(this.userdata.username, this.userdata.password)
+			const response = await this.login(this.userdata.email, this.userdata.password)
 
 			console.log("res from signin view", response);
 
-			if (response && response.data.length != 0) {
+			if (response) {
 				closeModal();
 				this.$router.push('/')
 			} else {

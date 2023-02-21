@@ -19,7 +19,17 @@ export const useUserStore = defineStore('user', {
     getters: {
         getUser: (state) => state.user,
         isAdmin: (state) => state.user.role == 0 ? true : false,
-        getLogin: (state) => state.isLogin
+        getLogin: (state) => {
+            let savedUserinfo = JSON.parse(localStorage.getItem('userInfo')) 
+            if (savedUserinfo) {
+                console.log("localstorage",savedUserinfo);
+                state.isLogin = true;
+                state.user = savedUserinfo;
+                return true
+            } else {
+                return state.isLogin
+            }
+        }
     },
     actions: {
         changeInfoUser(userinfo) {
@@ -28,19 +38,20 @@ export const useUserStore = defineStore('user', {
                 ...userinfo, 
             }
         },
-        async login(username, password) {
+        async login(email, password) {
             try {
                 //fake api
-                const response = await axios.get(`/users?${'username='+username + '&password='+ password}`, {
-                    username,
+                const response = await axios.post(`/sessions`, {
+                    email,
                     password
                 })
                 console.log(response);
 
-                this.user = response.data[0]
+                this.user = response.data.user
                 this.isLogin = true
 
-                console.log(this);
+                this.saveUserInfo()
+                console.log(response);
                 return response;
 
             } catch (error) {
@@ -51,23 +62,46 @@ export const useUserStore = defineStore('user', {
         async signUp(userdata) {
             try {
                 const response = await axios.post('/users', {
-                    id: Date.now(),
-                    user_id: Date.now(),
-                    ...userdata
+                    user: userdata
                 })
-                this.user = response.data
+                this.user = response.data.user
+                this.isLogin = true
+
+                this.saveUserInfo()
                 console.log(response);
                 return response
             } catch (error) {
                 console.error(error);
                 return false
-
             }
-
         },
+
+        async update(user_id, userdata) {
+            try {
+                const response = await axios.put('/users/'+user_id, {
+                    ...userdata
+                })
+                this.user = response.data.user
+                this.isLogin = true
+
+                this.saveUserInfo()
+                console.log(response);
+                return response
+            } catch (error) {
+                console.error(error);
+                return false
+            }
+        },
+
         signOut() {
             this.isLogin = false;
             this.user = null;
+            console.log("remove localstorage: ");
+            localStorage.removeItem("userInfo")
+        },
+        saveUserInfo() {
+            console.log("save localstorage: ", this.user);
+            localStorage.setItem("userInfo",JSON.stringify(this.user))
         }
     }
 

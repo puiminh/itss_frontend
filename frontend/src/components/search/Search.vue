@@ -20,31 +20,32 @@
     <div class="hidden opacity-0" ref="searchresult">
         <div class="flex justify-between pr-4">
             <p class="text-md font-semibold text-blue-500 mt-4">
-                {{searchObj}} that match your search:
+                {{capitalizeFirstLetter(searchObj)}} that match your search:
             </p>
-            <SwitchButton @handleSwitch="handleSwitchP"></SwitchButton>
+            <SwitchButton 
+                @handleSwitch="handleSwitchP"></SwitchButton>
         </div>
 
-
         <div v-if="!isLoading" class="grid grid-cols-2 gap-2 mt-2">
-            <CourseFolder v-if="searchObj=='Course'" v-for="i in 6"></CourseFolder>
-            <CollectionFolder v-else v-for="i in 4"></CollectionFolder>
+            <CourseFolder 
+                v-if="searchObj=='course'" 
+                v-for="i in resultList" 
+                :key="i.id"
+                :title="i.title"></CourseFolder>
+
+                
+            <CollectionFolder 
+                v-else 
+                v-for="i in resultList" 
+                :title="i.title"
+                :image="i.image"
+                ></CollectionFolder>
         </div>    
         <div v-else class="grid grid-cols-2 gap-2 mt-2 animate-pulse">
-            <SkeletonCourseFolder v-if="searchObj=='Course'" v-for="i in 6"></SkeletonCourseFolder>
+            <SkeletonCourseFolder v-if="searchObj=='course'" v-for="i in 6"></SkeletonCourseFolder>
             <SkeletonCollectionFolder v-else v-for="i in 4"></SkeletonCollectionFolder>
         </div>
     </div>
-
-
-    {{ testData }}
-    <!-- <p class="text-md font-semibold text-blue-500 mt-4">
-        Class that match your search:
-    </p>
-
-    <div class="grid grid-cols-2 gap-2 mt-2">
-        <CollectionFolder v-for="i in 4" class=""></CollectionFolder>
-    </div> -->
 </div>
 
 </template>
@@ -71,9 +72,9 @@ export default {
     data() {
         return {
             timeOut: null,
-            searchObj: 'Course',
+            searchObj: 'course',
             isLoading: false,
-            testData: '',
+            resultList: [],
             searching: false,
             keyword: '',
         }
@@ -105,17 +106,15 @@ export default {
         },
         callAPI() {
             this.$Progress.start();
-            console.log('call');
-            //'https://www.superheroapi.com/api.php/3264999407146167/'+ Math.floor(Math.random() * 100)
-            axios.get('courses').then((res)=>{
+            axios.get(`/courses_collections/${this.searchObj}/${this.keyword}`).then((res)=>{
                 this.$Progress.finish();
-                console.log(res.data);
-                // this.testData = res.data.name;
+                this.resultList = res.data.data;
+                console.log(this.resultList);
                 this.isLoading = false;
             })
         },
         handleSwitchP(value) {
-            this.searchObj = this.capitalizeFirstLetter(value);
+            this.searchObj = value;
             this.handleInput();
         },
         capitalizeFirstLetter(string) {

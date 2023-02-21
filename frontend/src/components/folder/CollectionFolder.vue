@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="couse_image my-2">
-            <img class="w-56 h-28 rounded-sm" :src="courseImg" alt="">
+            <img class="w-56 h-28 rounded-sm" :src="image" alt="">
         </div>
         <div class="flex lessons_time justify-between mt-1">
             <div class="logo_lessons flex gap-1">
@@ -65,7 +65,7 @@ import StackImage from '../stackimage/StackImage.vue';
         progress: {
             default: 0,
         },
-        courseImg: {
+        image: {
             default: "https://incucdep.com/wp-content/uploads/2018/01/in-an-card-visit-ep-kim-min.jpg",
         },
         showProgress: {
