@@ -122,7 +122,8 @@
           Our best
           <span class="text-blue-600 font-bold">Course</span></h1>
         <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 pt-5 rounded-md bg-white border-blue-400 border-2 p-4">
-          <CourseFolder v-for="i in 8" showStar="true"></CourseFolder>
+          <!-- <CourseFolder v-for="i in getRecommentCourse" showStar="true"></CourseFolder> -->
+          <RenderCourseFolder :datalist="getRecommentCourse" :total="6" :isLoading="isLoadingCourse"></RenderCourseFolder>
         </div>
       </div>
 
@@ -131,9 +132,11 @@
           Our best
           <span class="text-blue-600 font-bold">Collection</span></h1>
         <div class="grid 2xl:grid-cols-2 xl:grid-cols-1 lg:grid-cols-2  gap-4 pt-5 rounded-md bg-white border-blue-400 border-2 p-4">
-            <CollectionFolder v-for="i in 4"></CollectionFolder>
+           <RenderCollectionFolder :datalist="getRecommentCollection" :total="4" :isLoading="isLoadingCollection"></RenderCollectionFolder>
         </div>
       </div>
+
+
     </transition-group>
   </div>
 </section>
@@ -144,16 +147,21 @@
 <script>
 import gsap from 'gsap';
 import { openModal, closeModal } from 'jenesius-vue-modal';
+import { mapState } from 'pinia';
 import Block from '../components/block/Block.vue';
 import SearchButton from '../components/button/SearchButton.vue';
 import CollectionFolder from '../components/folder/CollectionFolder.vue';
 import CourseFolder from '../components/folder/CourseFolder.vue';
+import RenderCollectionFolder from '../components/folder/RenderCollectionFolder.vue';
+import RenderCourseFolder from '../components/folder/RenderCourseFolder.vue';
+import { useCourseCollectionStore } from '../stores/course';
 import SignInView from './User/SignInView.vue';
 
 export default {
     data() {
       return {
-        
+        isLoadingCourse: false,
+        isLoadingCollection: false,
       };
     },
     components: {
@@ -161,8 +169,13 @@ export default {
     SearchButton,
     CollectionFolder,
     CourseFolder,
-    Block
+    Block,
+    RenderCourseFolder,
+    RenderCollectionFolder
 },
+    computed: {
+      ...mapState(useCourseCollectionStore, ['getRecommentCollection', 'getRecommentCourse'])
+    },
     methods: {
       openModalMethod() {
         openModal(SignInView)          
@@ -199,6 +212,16 @@ export default {
       setTimeout(() => {
         openModal(SignInView)          
         }, 1000);
+
+      const courseStore = useCourseCollectionStore();
+      this.isLoadingCourse = true
+      this.isLoadingCollection = true
+      courseStore.getRecommentCollectionAction().then(()=>{
+        this.isLoadingCollection = false
+      });
+      courseStore.getRecommentCourseAction().then(()=> {
+        this.isLoadingCourse = false
+      });
     }
   }
   

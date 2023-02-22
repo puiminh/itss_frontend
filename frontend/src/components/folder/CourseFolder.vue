@@ -1,7 +1,7 @@
 <template>
 <RouterLink :to="'/course/'+id" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-md shadow-md bg-white" draggable="true" @dragstart="drag" id="drag1">
     <div class="flex justify-between">
-        <p class="font-bold text-base">{{title}}</p>
+        <p class="font-bold text-base truncate">{{title}}</p>
         <div v-if="showStar=='true'" class="flex">
             <p class="font-black text-gray-600">4.5</p>
             <p class="font-black text-tiny pt-1.5 text-gray-300">/5</p>
@@ -24,12 +24,12 @@
             <p class="text-slate-500 text-sm font-semibold ml-1 pb-0.5">{{ authorName }}</p>
         </div>
     </div>
-    <div v-if="showProgress=='true'" class="progress  text-sm font-semibold">
+    <!-- <div v-if="showProgress=='true'" class="progress  text-sm font-semibold">
         <p class="text-slate-500 font-thin mb-1"><span class="text-sm font-semibold text-blue-600">{{ progress }} of 20</span> progress</p>
         <div class="w-full bg-gray-200 rounded-full h-1 dark:bg-gray-600">
             <div class="bg-blue-600 h-1 rounded-full" :style="`width: ${progress/numberVocab * 100}%`"></div>
         </div>
-    </div>
+    </div> -->
 </RouterLink>
 </template>
 

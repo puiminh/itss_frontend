@@ -1,7 +1,7 @@
 <template>
     <RouterLink to="/collection/1" class="courseFolderWrap border border-gray-200 px-4 py-3 rounded-md shadow-md bg-white">
         <div class="flex justify-between">
-            <p class="font-bold text-base">{{title}}</p>
+            <p class="font-bold text-base truncate">{{title}}</p>
             <div v-if="showStar=='true'" class="flex">
                 <p class="font-black text-gray-600">4.5</p>
                 <p class="font-black text-tiny pt-1.5 text-gray-300">/5</p>
