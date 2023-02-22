@@ -5,7 +5,7 @@ import GameButton from '../button/GameButton.vue';
 export default {
     props: {
         vertical: {
-            default: false,
+		default: false,
         },
 		reviewComponent: {
 			default: true,
@@ -117,7 +117,10 @@ export default {
 		<div :class="['back shadow-lg flex items-center justify-center', flipClassComputed[1]]">
 			<div>
 				<slot named="back">
-					<h1>{{ term.define }}</h1>
+					<div class="p-12 flex gap-8">
+						<img v-if="term.kind==1" :src="term.link" class="w-1/2 object-cover" alt="">
+						<h1 class="">{{ term.define }}</h1>
+					</div>
 					<!-- <p>Good tools make application development quicker and easier to maintain than if you did everything by hand..</p> -->
 				</slot>
 			</div>

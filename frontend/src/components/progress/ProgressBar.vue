@@ -1,7 +1,7 @@
 <template>
     <div class="my-2">
         <div class="flex justify-between mb-1">
-            <span :class="['text-sm font-medium dark:text-white ',textColor]">{{name}}</span>
+            <span :class="['text-sm font-medium dark:text-white truncate w-36',textColor]">{{name}}</span>
             <Transition appear @before-enter="beforeCounting" @enter="enterCounting">
                 <span :class="['text-sm font-medium dark:text-white ',textColor  ]" ref="processNumber"></span>
             </Transition>
@@ -35,7 +35,7 @@ import gsap from 'gsap';
 export default {
     props: {
         color: {
-            default: 'gray'
+            default: 1
         },
         name: '',
         progress: {
@@ -55,10 +55,28 @@ export default {
     },
     computed: {
         textColor() {
-            return 'text-'+this.color+'-700';
+            return 'text-'+this.getColor+'-700';
         },
         bgColor() {
-            return 'bg-'+this.color+'-700';
+            return 'bg-'+this.getColor+'-700';
+        },
+        getColor() {
+            switch (this.color) {
+                case 0:
+                    return 'blue';
+                    break;
+                case 1:
+                    return'red';
+                    break;
+                case 2:
+                    return 'purple';
+                    break;
+                case 3:
+                    return 'yellow';
+                    break;
+                default:
+                    break;
+            }
         }
     },
     methods: {

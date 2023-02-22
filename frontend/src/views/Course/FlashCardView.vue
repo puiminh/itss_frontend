@@ -49,14 +49,14 @@ export default {
         this.reviewMode = !this.reviewMode
       },
       nextWord() {
-        if (this.index < this.wordlists.length -1) {
+        if (this.index <= this.wordlists.length -1) {
          this.index++;
         } else {
           this.index = 0;
         }
       },
       backWord() {
-        if (this.index > 0) {
+        if (this.index >= 0) {
          this.index--;
         } else {
           this.index = this.wordlists.length -1;

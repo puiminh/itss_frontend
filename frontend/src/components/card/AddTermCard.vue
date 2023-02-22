@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-md flex flex-col divide-y">
+    <div ref="wrap" :class="['bg-white rounded-md flex flex-col divide-y ', errorTerm ? ' border-4 border-red-600': '']">
         <div class="flex justify-between pt-4 px-8 pb-2">
             <p class="font-black text-gray-400">
                 1
@@ -12,8 +12,9 @@
         </div>
 
         <div class="flex p-8 gap-6 items-center">
-            <InputNoBorder class="w-2/3 !text-gray-400" title="TERM"></InputNoBorder>
-            <TextAreaNoBorder class="w-2/3" title="DEFINITION" placeholder="none"></TextAreaNoBorder>
+            <InputNoBorder class="w-2/3 !text-gray-400" title="TERM" v-model="vocab.word"></InputNoBorder>
+            <InputNoBorder class="w-2/3 !text-gray-400" title="TERM" v-model="vocab.define"></InputNoBorder>
+            <!-- <TextAreaNoBorder class="w-2/3" title="DEFINITION" placeholder="none"></TextAreaNoBorder> -->
             <div class="flex items-center justify-center">
                 <div @click="openImageModal" for="dropzone-file" class="flex flex-col items-center w-16 h-16 justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:text-blue-600">
                     <svg v-if="!imageLink" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -54,15 +55,25 @@ import TextAreaNoBorder from '../input/TextAreaNoBorder.vue';
 import ImageModal from '../../components/modal/ImageModal.vue'
 import { openModal } from 'jenesius-vue-modal';
 import RecordModal from '../modal/RecordModal.vue';
+import gsap from 'gsap';
 
 export default {
     components: { InputNoBorder, TextAreaNoBorder, ImageModal, RecordModal },
     data() {
         return {
+            vocab: {
+                word: '',
+                define: '',
+                link: '',
+                kind: 0,
+            },
             imageLink: '',
             recordLink: '',
+            errorTerm: false,
         }
     },
+    emits: ['addVocabFromParent']
+    ,
     methods: {
         async openImageModal() {
             const modal = await openModal(ImageModal, {imagePropLink: this.imageLink})
@@ -70,6 +81,8 @@ export default {
             modal.on('passImageLink', link => {
                 console.log(link);
                 this.imageLink = link;
+                this.vocab.link = link;
+                this.vocab.kind = 1;
             }) 
         },
         async openRecordModal() {
@@ -78,8 +91,24 @@ export default {
             modal.on('passRecordLink', link => {
                 console.log(link);
                 this.recordLink = link;
+                this.vocab.link = link;
+                this.vocab.kind = 3;
             }) 
         },
+        addVocabFromChildren() {
+            if (this.vocab.word && this.vocab.define) {
+                this.$emit('addVocabFromParent', this.vocab)
+            } else {
+                this.errorTerm = true;
+                gsap.to(this.$refs.wrap,{
+                    duration: 0.5,
+                    right: '500px',
+                    opacity: 0,
+                    display: 'none',
+                    ease: 'power3.inOut',
+                })
+            }
+        }
     },
 }
 </script>

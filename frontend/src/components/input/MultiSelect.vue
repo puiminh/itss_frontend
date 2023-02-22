@@ -2,14 +2,13 @@
     <div>
       <VueMultiselect
         v-model="taggingSelected"
-        :options="taggingOptions"
+        :options="data"
         :multiple="true"
         :taggable="true"
-        @tag="addTag"
         tag-placeholder="Add this as new tag"
         placeholder="Type to search or add courses"
-        label="name"
-        track-by="code">
+        label="title"
+        track-by="id">
       </VueMultiselect>
     </div>
   </template>
@@ -21,25 +20,24 @@
     data () {
       return {
         taggingSelected: null,
-        taggingOptions: [
-        { name: 'Vue.js', code: 'vu' },
-        { name: 'Javascript', code: 'js' },
-        { name: 'Open Source', code: 'os' },
-        { name: 'Open Source1', code: 'os1' },
-        { name: 'Open Source2', code: 'os2' },
-
-      ]
+        // taggingOptions: [
+        // { name: 'Vue.js', code: 'vu' },
+        // { name: 'Javascript', code: 'js' },
+        // { name: 'Open Source', code: 'os' },
+        // { name: 'Open Source1', code: 'os1' },
+        // { name: 'Open Source2', code: 'os2' },
+        // ]
       }
     },
+    props: {
+      data: {
+        type: Array,
+        required: true
+      }
+    },
+    computed: {
+    },
     methods: {
-        addTag (newTag) {
-            const tag = {
-                name: newTag,
-                code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-            }
-            this.taggingOptions.push(tag)
-            this.taggingSelected.push(tag)
-        },
     }
   }
   </script>

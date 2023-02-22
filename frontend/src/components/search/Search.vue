@@ -31,12 +31,14 @@
                 v-if="searchObj=='course'" 
                 v-for="i in resultList" 
                 :key="i.id"
+                :id="i.id"
                 :title="i.title"></CourseFolder>
 
                 
             <CollectionFolder 
                 v-else 
                 v-for="i in resultList" 
+                :id="i.id"
                 :title="i.title"
                 :image="i.image"
                 ></CollectionFolder>

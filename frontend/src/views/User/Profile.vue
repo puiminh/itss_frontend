@@ -78,7 +78,9 @@
 
     <Block key="1" data-index="1" data-direct="vertical" class=" rounded-md moreGrayBG p-4 mt-4 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
         <div class="grid grid-cols-2 gap-4 pt-5 2xl:h-44 h-36 pr-2 overflow-y-scroll">
-          <CourseFolder v-for="i in 6" showStar="true"></CourseFolder>
+          <CourseFolder 
+            v-for="i in 6" 
+            showStar="true"></CourseFolder>
         </div>
     </Block>
 </div>

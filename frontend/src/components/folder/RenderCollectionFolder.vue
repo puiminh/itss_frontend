@@ -2,6 +2,7 @@
     <CollectionFolder 
         v-if="!isLoading"
         v-for="i in datalist" 
+        :id="i.collection.id"
         :key="i.collection.id"
         :title="i.collection.title"
         :image="i.collection.image"

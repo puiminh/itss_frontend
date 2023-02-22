@@ -1,11 +1,11 @@
 <template>
 <div class="flex px-8 gap-8">
-	<div v-if="isLogin" class="flex flex-col items-center w-60 h-full text-gray-700 bg-white px-7">
+	<div v-if="getLogin" class="flex flex-col items-center w-60 h-full text-gray-700 bg-white px-7">
 		<div class="fixed">
 			<div class="profile_progress_wrap rounded-md grayBG px-4 py-5 shadow-md">
 				<div class="avatar flex w-52 items-center gap-3 px-3">
 					<img class="inline-block h-8 w-8 rounded-full ring-2 ring-white shadow-md" 
-						src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+						:src="getUser.avatar" alt=""/>
 					<div class="flex gap-1 relative">
 						<!-- <img class="h-7 w-7 fire" src="../../assets/icons8-fire-48.png" alt=""> -->
 						<!-- <p class="font-bold text-sm pt-1">
@@ -15,12 +15,23 @@
 							days
 						</p> -->
 						<!-- <Celebrate v-if="tweenedDone" class="absolute h-20 w-20 left-24 -top-3"></Celebrate> -->
+						<p class="font-bold text-lg pt-1">
+							{{ getUser.first_name }} {{ getUser.last_name }}
+						</p>
 					</div>
 				</div>
 				<div class="some_bar py-4 px-2">
-					<ProgressBar key="1" name="English Cooking" progress="78" color="red"></ProgressBar>
+					<!-- <ProgressBar key="1" name="English Cooking" progress="78" color="red"></ProgressBar>
 					<ProgressBar key="2" name="2000 Basic Words" progress="33" color="green"></ProgressBar>
-					<ProgressBar key="3" name="English Animal" progress="28" color="blue"></ProgressBar>
+					<ProgressBar key="3" name="English Animal" progress="28" color="blue"></ProgressBar> -->
+
+					<ProgressBar 
+						v-for="(i,index) in getAllProgress.slice(0,3)" 
+						key="4"
+						:name="i.course.title"
+						:progress="i.progress * 100"
+                        :color="index%4"
+                    ></ProgressBar>
 				</div>
 				<div class="px-2 justify-center text-center">
 					<RouterLink to="/progress" class="font-bold text-md text-gray-800 hover:underline">My progress</RouterLink>
@@ -31,7 +42,7 @@
 		</div>
 
 	</div>
-	<div :class="['grayBG rounded-md pt-8 pb-8 flex justify-center', isLogin ? 'minWH' : 'w-full px-12']">
+	<div :class="['grayBG rounded-md pt-8 pb-8 flex justify-center', getLogin ? 'minWH' : 'w-full px-12']">
 		<slot></slot>
 	</div>
 </div>
@@ -57,6 +68,8 @@ import { useToast } from "vue-toastification";
 import {openModal} from "jenesius-vue-modal";
 import { mapState } from 'pinia';
 import { useUserStore } from '../../stores/user';
+import { useCourseCollectionStore } from '../../stores/course';
+
 
 
 export default {
@@ -73,7 +86,8 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(useUserStore, ['isLogin'])
+		...mapState(useUserStore, ['getLogin','getUser']),
+		...mapState(useCourseCollectionStore, ['getCourse','getCourseCollection','getAllProgress']),
 	},
 	methods: {
 		openModalMethod() {
@@ -118,6 +132,10 @@ export default {
         }
 	}, 
 	mounted() {
+		const courseStore = useCourseCollectionStore();
+		courseStore.getAllProgressAction().then(() => {
+
+		})
 	}
 }
 

@@ -93,13 +93,12 @@ export default {
 
           <div
             class="grid 2xl:grid-cols-6 xl:grid-cols-3 md:grid-cols-3 gap-4 pt-5  "
-            v-if="getRecentCourse.length == 0"
           >
-          <!-- <RenderCourseFolder :datalist="getRecentCourse" :total="6" :isLoading="isLoadingRecent"></RenderCourseFolder>     -->
-          <CourseFolder v-for="i in 6" :data-index="i" :key="i" showProgress="true"></CourseFolder>
+          <RenderCourseFolder :datalist="getRecentCourse" :total="6" :isLoading="isLoadingRecent"></RenderCourseFolder>    
+          <!-- <CourseFolder v-for="i in 6" :data-index="i" :key="i" showProgress="true"></CourseFolder> -->
           </div>
 
-          <div v-else class="flex justify-center  pt-5 px-8">
+          <div v-if="getRecentCourse.length == 0 && !isLoadingRecent" class="flex justify-center  pt-5 px-8">
             <p class="text-2xl font-semibold text-center mx-auto text-slate-600">You haven't start learning yet!</p>
           </div>
 

@@ -3,16 +3,17 @@
     <div class="ml-3 rounded-md flex flex-col content-center ">
         <div class="flex justify-between pr-16"> 
             <div class="flex gap-2">
-                <h1 class="font-black text-4xl">English Cooking</h1>
+                <h1 class="font-black text-4xl">{{ course.title }}</h1>
                 <div class="flex items-center pt-2">
                     <BookmarkButton/>
                 </div>
             </div>
             <div class="flex gap-2 absolute right-24 top-12">
-                <img class="w-8 h-8 border-2 border-white dark:border-gray-800" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                <img class="w-8 h-8 border-2 border-white dark:border-gray-800" 
+                    :src="author.avatar" alt="">
                 <div>
                     <p class="text-gray-500 pr-24 text-xs">Create by</p>
-                    <p class="font-bold text-sm">Thomas John</p>
+                    <p class="font-bold text-sm">{{ author.first_name + ' ' + author.last_name }}</p>
                 </div>
             </div>
         </div>
@@ -23,7 +24,7 @@
                 <path d="M28 12V4L8 14V42L20 36" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
                 <path d="M20 16L40 6V34L20 44V16Z" fill="#2F88FF" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
                 </svg>
-                    <p class="text-slate-500 text-sm font-semibold">30 terms</p>
+                    <p class="text-slate-500 text-sm font-semibold">{{ totalword }} terms</p>
             </div>
             <div class="flex cursor-pointer hover:underline underline-offset-2" @click="openRatingSectionMethod">
                 <svg class="h-5" fill="#FFDF00" stroke="#FDCC0D" stroke-width="0.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -197,6 +198,8 @@ import FlashcardButton from '../../components/button/FlashcardButton.vue';
 import Rating from '../../components/rating/Rating.vue'
 import { closeModal, openModal } from 'jenesius-vue-modal';
 import axios from 'axios';
+import { useCourseCollectionStore } from '../../stores/course';
+import { mapState } from 'pinia';
 
 
 export default {
@@ -208,14 +211,31 @@ export default {
     GameButton,
     BookmarkButton,
     FlashcardButton
-},
+    },
+    props: ['id'],
     data() {
         return {
-            wordlist: [],
-            totalword: 0,
+            // wordlist: [],
+            // totalword: 0,
             index: 0,
         }
     },
+    computed: {
+        ...mapState(useCourseCollectionStore, ['getCourseInfo']),
+        wordlist() {
+            return this.getCourseInfo?.vocabularies? this.getCourseInfo.vocabularies : []
+        },
+        author() {
+            return this.getCourseInfo?.author
+        },
+        totalword() {
+            return this.getCourseInfo?.vocabularies?.length
+        },
+        course() {
+            return this.getCourseInfo?.course
+        }
+    }
+    ,
     methods: {
         openCommentSectionMethod() {
             openModal(CommentSection)
@@ -224,10 +244,17 @@ export default {
             openModal(Rating);
         },
         nextWord() {
-            if (this.index > this.totalword - 1) {
+            if (this.index >= this.totalword - 1) {
                 this.index = 0;
             } else {
                 this.index++;
+            }
+        },
+        backWord() {
+            if (this.index <= 0) {
+                this.index = this.totalword - 1;
+            } else {
+                this.index--;
             }
         },
         flipCard() {
@@ -238,11 +265,19 @@ export default {
             this.index = 0;
         },
     },
-    mounted() {
-        axios.get('/vocabularys').then((res)=>{
-            this.wordlist = res.data;
-            this.totalword = this.wordlist.length
+
+    beforeRouteEnter(to, from, next) {
+        const courseStore = useCourseCollectionStore()
+        console.log(to);
+        courseStore.getCourseInfoAction(to.params.id).then((res)=>{
+            // this.wordlist = res.data;
+            // this.totalword = this.wordlist.length
+            console.log('getCourseInfo:', courseStore.getCourseInfo);
+            next();
         })
+    },
+    mounted() {
+
     }
 }
 

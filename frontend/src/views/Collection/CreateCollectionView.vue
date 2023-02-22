@@ -3,8 +3,8 @@
         <p class="font-bold text-2xl">Create a collection</p>
         <div class="flex gap-5">
             <div class="w-4/5">
-                <InputNoBorder title="TITLE" class="mt-8" v-model="title"/>
-                <TextAreaNoBorder title="DESCRIPTION" class="mt-8" v-model="desc"></TextAreaNoBorder>
+                <InputNoBorder title="TITLE" class="mt-8" v-model="collection.title"/>
+                <InputNoBorder title="DESCRIPTION" class="mt-8" v-model="collection.desc"></InputNoBorder>
             </div>
             <div class="place-self-end">
                 <GameButton class="!bg-yellow-400 !px-3 !py-2" @click="submit">
@@ -21,7 +21,7 @@
             </div>
             <div class="w-full mr-64">
                 <p class="text-gray-600 font-semibold text-sm uppercase">Add some courses</p>
-                <MultiSelect class="mt-3 w-full" ref="multiselect"></MultiSelect>
+                <MultiSelect :data="getCreatedCourse" class="mt-3 w-full" ref="multiselect"></MultiSelect>
             </div>
         </div>
     </div>
@@ -33,22 +33,55 @@
     import TextAreaNoBorder from '../../components/input/TextAreaNoBorder.vue';
     import ImageModal from '../../components/modal/ImageModal.vue';
     import MultiSelect from '../../components/input/MultiSelect.vue'
+import { useCourseCollectionStore } from '../../stores/course';
+import { mapState } from 'pinia';
+import { useUserStore } from '../../stores/user';
+import axios from 'axios';
     
     
     export default {
         components: { InputNoBorder, GameButton, TextAreaNoBorder, ImageModal,  MultiSelect},
         data() {
             return {
-                desc: '',
-                courseList: [],
-                title: '',
+                collection: {
+                    desc: '',
+                    courseList: [],
+                    title: '',
+                    image: '',
+                    author_id: 0,
+                }
             }
         },
+        computed: {
+            ...mapState(useCourseCollectionStore, ['getCreatedCollection','getCreatedCourse']),
+            ...mapState(useUserStore, ['getUser']),
+        },
         methods: {
-            submit() {
-                console.log(this.desc, this.title, this.$refs.multiselect.taggingSelected, this.$refs.image.imageLink);
+            async submit() {
+
+                this.collection.author_id = this.getUser.id
+                this.collection.image = this.$refs.image.imageLink
+
+                console.log(this.collection, this.$refs.multiselect.taggingSelected, this.$refs.image.imageLink);
+
+
+                const response = await axios.post('/collections/courses', {
+                    collection: this.collection,
+                    courses: this.$refs.multiselect.taggingSelected
+                })
+
+                console.log(response);
+
+                this.$router.push(`/collection/${response.data.data.id}`)
             }
-        }
+        },
+        beforeRouteEnter(to, from, next) {
+            const courseStore = useCourseCollectionStore()
+            console.log(to);
+            courseStore.getCreatedCourseCollectionAction().then((res)=>{
+                next();
+            })
+        },
     }
     </script>
     

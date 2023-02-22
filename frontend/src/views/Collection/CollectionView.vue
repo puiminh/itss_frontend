@@ -4,10 +4,10 @@ import StackImage from '../../components/stackimage/StackImage.vue';
 <template>
 <div class="pt-12">
     <div class="flex gap-6 w-fit px-8">
-        <img class="w-1/6 rounded-md border-2 border-black " src="https://static.memrise.com/img/400sqf/from/uploads/immersion/JA0.jpg" alt="">
+        <img class="w-1/6 rounded-md border-2 border-black " :src="collection.image" alt="">
         <div class="w-4/6 pt-3">
             <div class="flex gap-2">
-                <h1 class="font-bold text-3xl">English Cooking</h1>
+                <h1 class="font-bold text-3xl">{{ collection.title }}</h1>
                 <BookmarkButton class="mt-2"></BookmarkButton>
             </div>
 
@@ -20,7 +20,7 @@ import StackImage from '../../components/stackimage/StackImage.vue';
                     <path style="fill:#F4B459;" d="M19.329,91.814h270.609c10.67,0,19.329,8.65,19.329,19.329l-19.329,164.298   c0,10.67-8.659,19.329-19.329,19.329H38.658c-10.67,0-19.329-8.659-19.329-19.329L0,111.143C0,100.463,8.659,91.814,19.329,91.814z   "/>
                 </g>
                 </svg>
-                <p class="text-slate-500 text-sm font-semibold"> 30 Courses</p>
+                <p class="text-slate-500 text-sm font-semibold"> {{ courses.length }} Courses</p>
             </div>
             
             <div class="flex gap-1">
@@ -30,14 +30,17 @@ import StackImage from '../../components/stackimage/StackImage.vue';
 
             </div>
 
-            <p class="pt-4 text-base text-gray-800">An introduction to Japanese scripts – the symbols and characters that make up the written language – and how to read them.</p>
+            <p class="pt-4 text-base text-gray-800">
+                {{ collection.desc }}
+            </p>
         </div>
         <div class="w-1/6 flex gap-2 pt-4 flex-col">
             <div>
                 <p class="text-gray-500">Create by</p>
-                <p class="font-bold text-gray-600">Thomas John</p>
+                <p class="font-bold text-gray-600">{{ author.first_name + ' ' + author.last_name }}</p>
             </div>
-            <img class="w-10 h-10 border-2 border-white dark:border-gray-800" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+            <img class="w-10 h-10 border-2 border-white dark:border-gray-800" 
+                :src="author.avatar" alt="">
         </div>
     </div>
 
@@ -45,7 +48,12 @@ import StackImage from '../../components/stackimage/StackImage.vue';
     <div class="moreGrayBG p-6 rounded-2xl mt-12">
         <Block title="All courses in this class" class="">
             <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-3 gap-3 py-4">
-                <CourseFolder class="mr-4" v-for="course in 24" showProgress="true"></CourseFolder>
+                <CourseFolder 
+                    class="mr-4" v-for="i in courses"
+                    :key="i.id"
+                    :id="i.id"
+                    :title="i.title" 
+                    showProgress="true"></CourseFolder>
 
             </div>
         </Block>
@@ -57,15 +65,40 @@ import StackImage from '../../components/stackimage/StackImage.vue';
 </template>
 
 <script>
+import { mapState } from 'pinia';
 import Block from '../../components/block/Block.vue';
 import BookmarkButton from '../../components/button/BookmarkButton.vue';
 import CourseFolder from '../../components/folder/CourseFolder.vue';
 import ProgressBar from '../../components/progress/ProgressBar.vue';
 import StackImage from '../../components/stackimage/StackImage.vue';
+import { useCourseCollectionStore } from '../../stores/course';
 
 
 export default {
-    components: { StackImage, ProgressBar, CourseFolder, Block, BookmarkButton }
+    components: { StackImage, ProgressBar, CourseFolder, Block, BookmarkButton },
+    computed: {
+        ...mapState(useCourseCollectionStore, ['getCollectionInfo']),
+        collection() {
+            return this.getCollectionInfo.collection;
+        },
+        courses() {
+            return this.getCollectionInfo.courses;
+        },
+        author() {
+            return this.getCollectionInfo.author;
+        }
+    },
+
+    beforeRouteEnter(to, from, next) {
+        const courseStore = useCourseCollectionStore()
+        console.log(to);
+        courseStore.getCollectionInfoAction(to.params.id).then((res)=>{
+            // this.wordlist = res.data;
+            // this.totalword = this.wordlist.length
+            console.log('getCollectionInfo:', courseStore.getCollectionInfo);
+            next();
+        })
+    },
 }
 
 </script>

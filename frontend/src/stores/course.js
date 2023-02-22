@@ -10,6 +10,9 @@ export const useCourseCollectionStore = defineStore('course_collection', {
             recommendCollection: [],
             createdCourse: [],
             createdCollection: [],
+            allProgress: [],
+            courseInfo: null,
+            collectionInfo: null,
         }
     },
     getters: {
@@ -17,7 +20,10 @@ export const useCourseCollectionStore = defineStore('course_collection', {
         getRecommentCourse: (state) => state.recommendCourse,
         getRecommentCollection: (state) => state.recommendCollection,
         getCreatedCourse: (state) => state.createdCourse,
-        getCreatedCollection: (state) => state.createdCollection
+        getCreatedCollection: (state) => state.createdCollection,
+        getAllProgress: (state) => state.allProgress,
+        getCourseInfo: (state) => state.courseInfo,
+        getCollectionInfo: (state) => state.collectionInfo,
     },
     actions: {
         async getRecentCourseAction() {
@@ -85,10 +91,51 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                     return false;
                 }                
             }
-
-
         },
 
+        async getAllProgressAction() {
+            const userStore = useUserStore();
+            if (this.allProgress.length == 0) {
+                try {
+                    const response = await axios.get(`/progress/${userStore.getUser.id}`)
+                    this.allProgress = response.data;
+                    console.log(response.data);
+                    return response;
+    
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }                
+            }
+        },
+        async getCourseInfoAction(id) {
+            // if (!this.collectionInfo) {
+                try {
+                    const response = await axios.get(`/courses/${id}`)
+                    this.courseInfo = response.data;
+                    console.log(response.data);
+                    return response;
+    
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }                
+            // }
+        },
+        async getCollectionInfoAction(id) {
+            // if (!this.collectionInfo) {
+                try {
+                    const response = await axios.get(`/collections/${id}`)
+                    this.collectionInfo = response.data;
+                    console.log(response.data);
+                    return response;
+    
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }                
+            // }
+        },
     }
 
 })

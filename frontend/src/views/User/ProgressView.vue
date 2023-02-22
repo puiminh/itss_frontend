@@ -13,6 +13,8 @@
   <script>
   import { Bar } from 'vue-chartjs'
   import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { mapActions, mapState } from 'pinia'
+import { useCourseCollectionStore } from '../../stores/course'
   
   ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
   
@@ -21,23 +23,6 @@
     components: { Bar },
     data() {
       return {
-        chartData: {
-          labels: [ 'Course 1', 'Course 2', 'Course 3','Course 1', 'Course 2', 'Course 3','Course 1', 'Course 2', 'Course 3', 'Course 1', 'Course 2', 'Course 3','Course 1', 'Course 2', 'Course 3','Course 1', 'Course 2', 'Course 3' ],
-          datasets: [{ 
-                data: [40, 20, 12,40, 20, 12,40, 20, 12,40, 20, 12,40, 20, 12,40, 20, 12,40, 20, 12,40, 20, 12], 
-                backgroundColor: [
-                'rgba(255, 99, 132)',
-                'rgba(255, 159, 64)',
-                'rgba(255, 205, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(54, 162, 235)',
-                'rgba(153, 102, 255)',
-                'rgba(201, 203, 207)'
-                ],
-                label: '',
-                barPercentage: 0.5,
-                }],
-        },
         chartOptions: {
           indexAxis: 'y',
           responsive: true,
@@ -59,9 +44,45 @@
         }
       }
     },
+    computed: {
+      ...mapState(useCourseCollectionStore, ['getAllProgress']),
+      label() {
+        return this.getAllProgress.map(item => item.course.title)
+      },
+      data() {
+        return this.getAllProgress.map(item => item.progress)
+      },
+      chartData() {
+        return  {          
+          labels: this.label,
+          datasets: [
+            { 
+                data: this.data, 
+                backgroundColor: [
+                'rgba(255, 99, 132)',
+                'rgba(255, 159, 64)',
+                'rgba(255, 205, 86)',
+                'rgba(75, 192, 192)',
+                'rgba(54, 162, 235)',
+                'rgba(153, 102, 255)',
+                'rgba(201, 203, 207)'
+                ],
+                label: '',
+                barPercentage: 0.5,
+            }
+          ]}
+      }
+    },
 
     methods: {
-        
+        ...mapActions(useCourseCollectionStore,['getAllProgressAction'])
+    },
+    mounted() {
+        const courseStore = useCourseCollectionStore();
+        courseStore.getAllProgressAction().then(()=>{
+          // this.chartData.datasets[0].data = courseStore.getAllProgress.map(item => item.progress);
+          // this.chartData.labels = courseStore.allProgress.map(item => item.course.title);
+        });
     }
   }
   </script>
