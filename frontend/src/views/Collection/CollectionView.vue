@@ -53,6 +53,8 @@ import StackImage from '../../components/stackimage/StackImage.vue';
                     :key="i.id"
                     :id="i.id"
                     :title="i.title" 
+                    :author="author"
+                    :contain="i.contain"
                     showProgress="true"></CourseFolder>
 
             </div>

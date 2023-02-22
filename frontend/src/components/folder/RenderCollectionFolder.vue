@@ -6,6 +6,8 @@
         :key="i.collection.id"
         :title="i.collection.title"
         :image="i.collection.image"
+        :author="i.author"
+        :contain="i.contain"
     ></CollectionFolder>
 
     <SkeletonCollectionFolder v-else class="animate-pulse" v-for="i in total"></SkeletonCollectionFolder>

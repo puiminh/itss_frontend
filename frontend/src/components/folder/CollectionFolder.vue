@@ -22,23 +22,23 @@
                     <path style="fill:#F4B459;" d="M19.329,91.814h270.609c10.67,0,19.329,8.65,19.329,19.329l-19.329,164.298   c0,10.67-8.659,19.329-19.329,19.329H38.658c-10.67,0-19.329-8.659-19.329-19.329L0,111.143C0,100.463,8.659,91.814,19.329,91.814z   "/>
                 </g>
                 </svg>
-                <p class="text-slate-500 text-sm font-semibold">{{ numberVocab }} Courses</p>
+                <p class="text-slate-500 text-sm font-semibold">{{ contain }} Courses</p>
             </div>
             <div class="flex avatar_name items-center">
-                <img class="inline-block h-5 w-5 rounded-full ring-2 ring-white shadow-lg" :src="authorAvatar" alt=""/>
-                <p class="text-slate-500 text-sm font-semibold ml-1 pb-0.5">{{ authorName }}</p>
+                <img class="inline-block h-5 w-5 rounded-full ring-2 ring-white shadow-lg" :src="author?.avatar" alt=""/>
+                <p class="text-slate-500 text-sm font-semibold ml-1 pb-0.5">{{ author?.first_name + ' ' + author?.last_name }}</p>
             </div>
         </div>
-        <div v-if="showProgress=='true'" class="progress  text-sm font-semibold">
+        <!-- <div v-if="showProgress=='true'" class="progress  text-sm font-semibold">
             <p class="text-slate-500 font-thin mb-1"><span class="text-sm font-semibold text-blue-600">{{ progress }} of 20</span> progress</p>
             <div class="w-full bg-gray-200 rounded-full h-1 dark:bg-gray-600">
-                <div class="bg-blue-600 h-1 rounded-full" :style="`width: ${progress/numberVocab * 100}%`"></div>
+                <div class="bg-blue-600 h-1 rounded-full" :style="`width: ${progress/contain * 100}%`"></div>
             </div>
         </div>
         <div v-if="showBookmark=='true'" class="flex gap-1.5 mt-1">
             <StackImage></StackImage>
             <span class="pt-1.5 text-sm font-semibold">has <a class="font-bold text-red-700 cursor-pointer">bookmark</a> this class</span>
-        </div>
+        </div> -->
     </RouterLink>
     </template>
     
@@ -51,17 +51,16 @@ import StackImage from '../stackimage/StackImage.vue';
         id: {
             default: 1,
         },
-        authorName: {
-            default: "Max Miliam",
-        },
-        authorAvatar: {
-            default: "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        author: {
+            first_name: '',
+            last_name: '',
+            avatar: '',
         },
         title: {
             default: "Course"
         },
         desc: "",
-        numberVocab: {
+        contain: {
             default: 50,
         },
         time: "",

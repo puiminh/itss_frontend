@@ -5,6 +5,8 @@
                 :key="i.course.id"
                 :id="i.course.id"
                 :title="i.course.title"
+                :author="i.author"
+                :contain="i.contain"
                 ></CourseFolder>
     
             <SkeletonCourseFolder v-else class="animate-pulse" v-for="i in total"></SkeletonCourseFolder>

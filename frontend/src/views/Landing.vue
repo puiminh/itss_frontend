@@ -122,7 +122,6 @@
           Our best
           <span class="text-blue-600 font-bold">Course</span></h1>
         <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 pt-5 rounded-md bg-white border-blue-400 border-2 p-4">
-          <!-- <CourseFolder v-for="i in getRecommentCourse" showStar="true"></CourseFolder> -->
           <RenderCourseFolder :datalist="getRecommentCourse" :total="6" :isLoading="isLoadingCourse"></RenderCourseFolder>
         </div>
       </div>

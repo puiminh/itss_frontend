@@ -29,18 +29,24 @@
         <div v-if="!isLoading" class="grid grid-cols-2 gap-2 mt-2">
             <CourseFolder 
                 v-if="searchObj=='course'" 
-                v-for="i in resultList" 
-                :key="i.id"
-                :id="i.id"
-                :title="i.title"></CourseFolder>
+                v-for="i in resultList.data" 
+                :key="i.course.id"
+                :id="i.course.id"
+                :title="i.course.title"
+                :author="i.author"
+                :contain="i.contain"
+                ></CourseFolder>
 
                 
             <CollectionFolder 
                 v-else 
-                v-for="i in resultList" 
-                :id="i.id"
-                :title="i.title"
-                :image="i.image"
+                v-for="i in resultList.data" 
+                :id="i.collection.id"
+                :key="i.collection.id"
+                :title="i.collection.title"
+                :image="i.collection.image"
+                :author="i.author"
+                :contain="i.contain"
                 ></CollectionFolder>
         </div>    
         <div v-else class="grid grid-cols-2 gap-2 mt-2 animate-pulse">
@@ -110,7 +116,7 @@ export default {
             this.$Progress.start();
             axios.get(`/courses_collections/${this.searchObj}/${this.keyword}`).then((res)=>{
                 this.$Progress.finish();
-                this.resultList = res.data.data;
+                this.resultList = res.data;
                 console.log(this.resultList);
                 this.isLoading = false;
             })

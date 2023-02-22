@@ -95,7 +95,6 @@ export default {
             class="grid 2xl:grid-cols-6 xl:grid-cols-3 md:grid-cols-3 gap-4 pt-5  "
           >
           <RenderCourseFolder :datalist="getRecentCourse" :total="6" :isLoading="isLoadingRecent"></RenderCourseFolder>    
-          <!-- <CourseFolder v-for="i in 6" :data-index="i" :key="i" showProgress="true"></CourseFolder> -->
           </div>
 
           <div v-if="getRecentCourse.length == 0 && !isLoadingRecent" class="flex justify-center  pt-5 px-8">
@@ -116,14 +115,12 @@ export default {
           <Block key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap rounded-md moreGrayBG p-4 mt-12 2xl:w-1/2 xl:w-full lg:w-full md:w-full h-fit pb-8" title="Recommend Course" explain="We base on your recent learning and bookmark">
             <div class="grid 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-3 gap-4 pt-5">
               <RenderCourseFolder :datalist="getRecommentCourse" :total="6" :isLoading="isLoadingCourse"></RenderCourseFolder>
-              <!-- <CourseFolder v-for="i in 6" showStar="true"></CourseFolder> -->
             </div>
           </Block>
 
           <Block key="2" data-index="2" data-direct="vertical" class="recommendClassWrap rounded-md moreGrayBG p-4 mt-12 2xl:w-fit xl:w-1/2 lg:w-fit md:w-fit pb-8" title="Recommend Collection" explain="We base on your recent learning and bookmark">
             <div class="grid 2xl:grid-cols-2 xl:grid-cols-1 lg:grid-cols-2  gap-4 pt-5">
               <RenderCollectionFolder :datalist="getRecommentCollection" :total="4" :isLoading="isLoadingCollection"></RenderCollectionFolder>  
-              <!-- <CollectionFolder v-for="i in 4"></CollectionFolder> -->
             </div>
           </Block>
         </transition-group>

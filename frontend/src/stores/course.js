@@ -33,7 +33,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                     const response = await axios.get(`/courses/recent/${userStore.getUser.id}`)
     
                     this.recentCourse = response.data.data
-                    console.log(response.data.data);
+                    console.log("recent: ",response.data.data);
                     return response;
     
                 } catch (error) {
@@ -51,7 +51,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                     this.createdCourse = response.data.courses;
                     this.createdCollection = response.data.collections;
     
-                    console.log(response);
+                    console.log("created: ",response);
                     return response;
     
                 } catch (error) {
@@ -67,7 +67,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                 try {
                     const response = await axios.get(`/courses/recommended`)
                     this.recommendCourse = response.data.data
-                    console.log(response.data.data);
+                    console.log("recommendcourse: ",response.data.data);
                     return response;
     
                 } catch (error) {
@@ -83,7 +83,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                 try {
                     const response = await axios.get(`/collections/recommended`)
                     this.recommendCollection = response.data.data
-                    console.log(response.data.data);
+                    console.log("recommentcollection: ",response.data.data);
                     return response;
     
                 } catch (error) {
@@ -99,7 +99,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                 try {
                     const response = await axios.get(`/progress/${userStore.getUser.id}`)
                     this.allProgress = response.data;
-                    console.log(response.data);
+                    console.log("progress: ",response.data);
                     return response;
     
                 } catch (error) {
@@ -113,7 +113,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                 try {
                     const response = await axios.get(`/courses/${id}`)
                     this.courseInfo = response.data;
-                    console.log(response.data);
+                    console.log("courseinfo: ",response.data);
                     return response;
     
                 } catch (error) {
@@ -127,7 +127,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                 try {
                     const response = await axios.get(`/collections/${id}`)
                     this.collectionInfo = response.data;
-                    console.log(response.data);
+                    console.log("collectioninfo: ",response.data);
                     return response;
     
                 } catch (error) {
