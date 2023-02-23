@@ -17,8 +17,8 @@
                             </p>
                 </label> -->
                 <div  v-for="(answer,index) in mixingAnswers">
-                    <input :disabled="disabled" type="radio" :name="'id' + term.vocabulary_id" :id="'id'+ term.vocabulary_id + answer.vocabulary_id + index" :value="answer" v-model="selectanwser" class="hidden peer">
-                    <label :for="'id'+ term.vocabulary_id + answer.vocabulary_id + index" class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <input :disabled="disabled" type="radio" :name="'id' + term.id" :id="'id'+ term.id + answer.id + index" :value="answer" v-model="selectanwser" class="hidden peer">
+                    <label :for="'id'+ term.id + answer.id + index" class="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div class="block">
                             <div class="w-full text-lg font-semibold">
                                 {{ answer.define }}
@@ -101,7 +101,7 @@ export default {
     },
     watch: {
         selectanwser(newValue, oldValue) {
-            this.testresult = ((this.term.vocabulary_id == newValue.vocabulary_id))
+            this.testresult = ((this.term.id == newValue.id))
             console.log(this.term.word, newValue.word, newValue, this.testresult);      
         }
     }

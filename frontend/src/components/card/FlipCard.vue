@@ -15,12 +15,13 @@ export default {
 				word: 'Hello',
 				define: 'Xin chào'
 			}
-		}
+		},
     },
     data() {
         return {
             flip: false,
             flipClass: ["", ""],
+			point: 2,
         };
     },
     computed: {
@@ -136,19 +137,19 @@ export default {
 
 				<div key="2" class="flex gap-5 justify-center">
 					<GameButton 
-					@click="hideReviewMethod"
+					@click="point=0"
 					 class="!bg-red-500 !text-white">
 						<i class="fa fa-frown-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">BAD</p> 
 					</GameButton>
 					<GameButton 
-					@click="hideReviewMethod"
+					@click="point=2"
 					 class="!bg-yellow-400 !text-white">
 						<i class="fa fa-meh-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">NOT REALLY</p> 
 					</GameButton>
 					<GameButton 
-					@click="hideReviewMethod"
+					@click="point=3"
 					 class="!bg-green-400 !text-white">
 						<i class="fa fa-smile-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">GOOD</p> 

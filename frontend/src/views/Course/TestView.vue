@@ -68,19 +68,19 @@ export default {
             let checkquestion = true
             console.log(this.$refs.truefalses, this.$refs.questions);
             this.$refs.truefalses.forEach(element => {
-                // console.log(element.term.vocabulary_id,element.testresult);
+                // console.log(element.term.id,element.testresult);
                 // if (element.truefalse == null) {
                 //     checktruefasle = false;
                 // } else {
 
                 // }
-                this.testresults.push({id: element.term.vocabulary_id, result: element.testresult})
+                this.testresults.push({id: element.term.id, result: element.testresult})
                 element.submit()
 
             });
             this.$refs.questions.forEach(element => {
-                // console.log(element.term.vocabulary_id,element.testresult);
-                this.testresults.push({id: element.term.vocabulary_id, result: element.testresult})
+                // console.log(element.term.id,element.testresult);
+                this.testresults.push({id: element.term.id, result: element.testresult})
                 element.submit()
                 
             });
@@ -105,9 +105,10 @@ export default {
 
     },
     mounted() {
-        axios.get('vocabularys').then((res)=>{
-            this.wordlists = res.data
-            this.randomWord()
+        axios.get(`/courses/${this.$route.params.id}/random_list_word`).then((res)=>{
+            this.wordlists = res.data.vocabularies;
+            this.randomWord();
+            // console.log(res.data, this.term);
         })
     }
 }

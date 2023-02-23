@@ -8,15 +8,15 @@
   <div class="container -mt-4">
     <div class="feedback">
       <div class="rating">
-        <input type="radio" name="rating" id="rating-5">
+        <input type="radio" name="rating" v-model="star" :value="5" id="rating-5">
         <label for="rating-5"></label>
-        <input type="radio" name="rating" id="rating-4">
+        <input type="radio" name="rating" v-model="star" :value="4" id="rating-4">
         <label for="rating-4"></label>
-        <input type="radio" name="rating" id="rating-3">
+        <input type="radio" name="rating" v-model="star" :value="3" id="rating-3">
         <label for="rating-3"></label>
-        <input type="radio" name="rating" id="rating-2">
+        <input type="radio" name="rating" v-model="star" :value="2" id="rating-2">
         <label for="rating-2"></label>
-        <input type="radio" name="rating" id="rating-1">
+        <input type="radio" name="rating" v-model="star" :value="1" id="rating-1">
         <label for="rating-1"></label>
         <div class="emoji-wrapper">
           <div class="emoji">
@@ -109,7 +109,7 @@
     </div>
   </div>
 
-  <button class=" bg-yellow-400 text-white py-2 px-4 w-fit self-center rounded-lg uppercase text-sm font-mono font-bold">
+  <button @click="submit" class=" bg-yellow-400 text-white py-2 px-4 w-fit self-center rounded-lg uppercase text-sm font-mono font-bold">
     Rate
   </button>
 </div>
@@ -118,10 +118,32 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { closeModal, openModal } from 'jenesius-vue-modal';
+
 // import 'https://kit.fontawesome.com/5ea815c1d0.js'
 export default {
+    props: ['user_id', 'course_id'],
     components: {
+    },
+    data() {
+      return {
+        star: 0,
+      }
+    },
+    methods: {
+      async submit() {
+        console.log('submit', this.star)
+        const response = await axios.post('/ratings', { 
+          star: this.star,
+          user_id: this.user_id,
+          course_id: this.course_id 
+        });
+
+        closeModal()
+      }
     }
+
 }
 
 </script>

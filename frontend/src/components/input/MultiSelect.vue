@@ -47,7 +47,7 @@
     methods: {
     },
     mounted() {
-      if (this.predata.courses?.length) {
+      if (this.predata?.courses?.length) {
         const pre = this.predata.courses.map((e)=>{ return { title: e.title, id: e.id } })
         console.log("pre: ",pre);
         this.taggingSelected = pre

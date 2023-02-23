@@ -172,8 +172,9 @@ export default {
       this.showProgress = localStorage.getItem('progressHide'); 
     },
     signOutMethod() {
-      this.$router.push('/landing')
-      this.signOut();
+      this.signOut().then(()=>{
+        this.$router.replace("/landing")
+      })
     },
     openModalMethod() {
       openModal(SignInView)

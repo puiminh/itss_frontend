@@ -106,6 +106,15 @@ const router = createRouter({
         needAuth: true,
       }
     },
+    {
+      path: '/course/:id/learnword',
+      component: ()=> import('../views/Course/LearnWord.vue'),
+      props: true,
+      meta: {
+        layout: MainLayout,
+        needAuth: true,
+      }
+    },
     { 
       path: '/course/:id/test',
       name: 'testview',
@@ -178,14 +187,7 @@ const router = createRouter({
         needAuth: true,
       }
     },
-    {
-      path: '/course/1/learnword',
-      component: ()=> import('../views/Course/LearnWord.vue'),
-      meta: {
-        layout: MainLayout,
-        needAuth: true,
-      }
-    },
+
     {
       path: '/landing',
       name: 'Landing',

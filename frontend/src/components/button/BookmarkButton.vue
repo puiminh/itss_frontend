@@ -1,10 +1,24 @@
 <template>
 
 <div class="anim-icon anim-icon-sm bookmark">
-    <input type="checkbox" id="bookmark2" />
-    <label for="bookmark2"></label>
+    <input :checked="checked" type="checkbox" id="bookmark2" hidden />
+    <label></label>
 </div>
 </template>
+
+<script>
+export default {
+	emits: ['bookmarkFromParent'],
+	data() {
+        return {
+			checked: false
+        }
+    },
+	methods: {
+    }
+}
+
+</script>
 
 <style scoped>
 
@@ -136,34 +150,3 @@
 }
  
 </style>
-
-<script>
-
-export default {
-    mounted() {
-function demo() {
-  /***
-    Add your demo script here...
-    In this demo, click my button after 1000 milliseconds 
-    You have approx three seconds to show off your stuff.
-  ***/
-
-  demointerval = setInterval(function() {
-    var chkbox = document.querySelector('input[type="checkbox"]:not([checked])');
-    if (chkbox) {
-      chkbox.click();
-      chkbox.setAttribute('checked', 'checked');
-    } else {
-      clearInterval(demointerval);
-    }
-  }, 600);
-}
-// Run demo if in searchresult preview frame
-// https://codepen.io/jesperkc/post/trigger-animation-in-preview-frame
-if (document.location.pathname.indexOf('fullcpgrid') > -1) {
-  demo();
-}
-    }
-}
-
-</script>

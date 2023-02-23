@@ -1,6 +1,7 @@
 <template>
     <article class="commentWrap relative p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
         <button
+          
             @click="saveComment"
             ref="savebtn"
             class="absolute opacity-0 hidden bottom-0 right-0
@@ -11,12 +12,13 @@
             <div class="flex items-center">
                 <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
                         class="mr-2 w-6 h-6 rounded-full"
-                        src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                        alt="Michael Gough">Michael Gough</p>
+                        :src="data.user.avatar"
+                        alt="author">{{ data.user.first_name + ' ' + data.user.last_name }}</p>
                 <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"
-                        title="February 8th, 2022">Feb. 8, 2022</time></p>
+                        title="February 8th, 2022">{{data.comment.updated_at}}</time></p>
             </div>
             <button
+            v-if="getUser.id == data.user.id"  
                 class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 type="button"
 
@@ -50,24 +52,39 @@
             :contenteditable="editing" @input="commentChange"
             class="text-gray-500 dark:text-gray-400 focus:outline-none focus:border-yellow-500 focus:ring-yellow-500 focus:ring-2"
         >
-            Very straight-to-point article. Really worth time reading. Thank you! But tools are just the
-            instruments for the UX designers. The knowledge of the design tools are as important as the
-            creation of the design strategy.
+            {{ data.comment.content}}
         </p>
     </article>
 </template>
 
 <script>
+import axios from 'axios';
 import gsap from 'gsap';
+import { mapState } from 'pinia';
+import { closeModal } from 'jenesius-vue-modal';
+
+import { useUserStore } from '../../stores/user';
 
 
 export default {
+    props: {
+        data: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
             openCommentSetting: false,
             editing: false,
-            comment: '',
+            comment: {
+                content: ''
+            }
         }
+    },
+    computed: {
+        ...mapState(useUserStore, ['getUser']),
+
     },
     methods: {
         changeToEditMode() {
@@ -81,8 +98,12 @@ export default {
                 duration: 0.5
             })
         },
-        saveComment() {
-            console.log(this.comment);
+        async saveComment() {
+            console.log(this.comment.content);
+
+            await axios.put('/comments/'+this.comment.id, 
+                this.comment
+            )
 
             gsap.to(this.$refs.savebtn, {
                 right: '0rem',
@@ -91,10 +112,15 @@ export default {
                 ease: 'ease-out',
                 duration: 0.5
             })
+
+            closeModal()
         },
         commentChange(evt) {
-            this.comment = evt.target.textContent;
+            this.comment.content = evt.target.textContent;
         },        
+    },
+    mounted() {
+        this.comment = this.data.comment;
     }
 }
 

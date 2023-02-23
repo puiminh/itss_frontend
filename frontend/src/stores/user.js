@@ -93,7 +93,7 @@ export const useUserStore = defineStore('user', {
             }
         },
 
-        signOut() {
+        async signOut() {
             this.isLogin = false;
             this.user = null;
             console.log("remove localstorage: ");

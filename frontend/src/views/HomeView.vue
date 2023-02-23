@@ -84,7 +84,7 @@ export default {
 
 <template>
   <div class="w-full flex justify-center">
-    <div class="">
+    <div class="px-12">
       <!-- <div class="">
           <h1 class="text-3xl font-semibold font-sans">Back to learning</h1>
       </div> -->

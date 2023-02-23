@@ -14,6 +14,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
             courseInfo: null,
             collectionInfo: null,
             bookmarkCollectionCourse: null,
+            totalComment: 0,
         }
     },
     getters: {
@@ -26,6 +27,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
         getCourseInfo: (state) => state.courseInfo,
         getCollectionInfo: (state) => state.collectionInfo,
         getBookmarkCollectionCourse: (state) => state.bookmarkCollectionCourse,
+        getTotalComment: (state) => state.totalComment,
     },
     actions: {
         async getRecentCourseAction() {
@@ -139,7 +141,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
 
         async getBookmarkCollectionCourseAction(id) {
             const userStore = useUserStore();
-            // if (!this.collectionInfo) {
+            // if (!this.getBookmarkCollectionCourse) {
                 try {
                     const response = await axios.get(`/users/bookmarked/courses_collections/${userStore.getUser.id}`)
                     this.bookmarkCollectionCourse = response.data;
@@ -152,6 +154,26 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                 }                
             // }
         },
+
+        addBookmarkCourse(course, bookmark) {
+            this.bookmarkCollectionCourse.bookmark_courses.push({
+                bookmark: bookmark,
+                course: course
+            })
+        },
+
+        // async getTotalCommentAction(id) {
+        //     try {
+        //         const response = await axios.get(`/comments/course//${id}`)
+        //         this.totalComment = response.data.total;
+        //         console.log("comment: ",response.data);
+        //         return response;
+
+        //     } catch (error) {
+        //         console.error(error);
+        //         return false;
+        //     }       
+        // }
     }
 
 })

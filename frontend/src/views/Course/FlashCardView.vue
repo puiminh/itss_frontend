@@ -1,7 +1,7 @@
 <template>
   <div class="h-full flex pb-16 gap-5 w-full px-8">
     <div class="w-5/6 ">
-     <ProgressBar class="px-8" :progress="(index/wordlists.length)*100" color="gray" thin="no"></ProgressBar>
+     <ProgressBar class="px-8" :progress="(index/wordlists.length)*100" :color="1" thin="no"></ProgressBar>
      <FlipCard 
         class="w-full overflow-x-hidden overflow-y-hidden" 
         :reviewComponent="reviewMode"
@@ -30,6 +30,8 @@ import FlashcardButton from '../../components/button/FlashcardButton.vue';
 import ProgressBar from '../../components/progress/ProgressBar.vue';
 import axios from 'axios';
 import { toRaw } from 'vue';
+import { mapState } from 'pinia';
+import { useUserStore } from '../../stores/user';
 
 export default {
     components: { FlipCard, GameButton, FlashcardButton, ProgressBar },
@@ -42,21 +44,38 @@ export default {
           define: 'Kiểm tra'
         },
         index: 0,
+        point: 2,
       }
+    },
+    computed: {
+      ...mapState(useUserStore, ['getUser'])
     },
     methods: {
       reviewModeSwitch() {
         this.reviewMode = !this.reviewMode
       },
-      nextWord() {
-        if (this.index <= this.wordlists.length -1) {
+      async nextWord() {
+
+        
+        this.point = this.$refs.flipcard.point;
+        const response = await axios.post('/progress/update',{
+          user_id: this.getUser.id,
+          course_id: this.$route.params.id,
+          vocabulary_id: this.wordlists[this.index].id,
+          point: this.point,
+        })
+        this.point = 2;
+        
+        
+        if (this.index < this.wordlists.length - 1) {
          this.index++;
         } else {
           this.index = 0;
         }
+        console.log(this.index, this.wordlists[this.index]);
       },
       backWord() {
-        if (this.index >= 0) {
+        if (this.index > 0) {
          this.index--;
         } else {
           this.index = this.wordlists.length -1;
@@ -67,7 +86,7 @@ export default {
         this.index = 0;
         this.term = this.wordlists[0]
       },
-      flipCard() {
+      async flipCard() {
         this.$refs.flipcard.flipDownCard(false);
       }
     },
@@ -78,12 +97,12 @@ export default {
       }
     },
     mounted() {
-      axios.get('vocabularys').then((res)=> {
-        this.wordlists = res.data;
-        this.term = res.data[0];
+      axios.get(`/courses/${this.$route.params.id}/random_list_word`).then((res)=>{
+        this.wordlists = res.data.vocabularies;
+        this.term = this.wordlists[0];
         // console.log(res.data, this.term);
       })
-    }
+    },
 }
 
 </script>

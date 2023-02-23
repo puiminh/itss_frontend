@@ -98,8 +98,8 @@ export default {
 }
 
 .courseFolderWrap {
-    max-width: 20rem;
-    min-width: 14rem;
+    max-width: 16rem;
+    min-width: 12rem;
 }
 
 </style>

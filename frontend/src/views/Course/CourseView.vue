@@ -5,7 +5,7 @@
             <div class="flex gap-2">
                 <h1 class="font-black text-4xl">{{ course.title }}</h1>
                 <div class="flex items-center pt-2">
-                    <BookmarkButton/>
+                    <BookmarkButton ref="bookmark" @click="bookmarkCourse"/>
                 </div>
             </div>
             <div class="flex gap-2 absolute right-24 top-12">
@@ -30,7 +30,7 @@
                 <svg class="h-5" fill="#FFDF00" stroke="#FDCC0D" stroke-width="0.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                 </svg>
-                <p class="font-black text-gray-600">4.5</p>
+                <p class="font-black text-gray-600">{{ average_ratings }}</p>
                 <p class="font-bold  text-gray-300">/5</p>
             </div>
             <div class="flex gap-1 cursor-pointer" @click="openCommentSectionMethod">
@@ -43,13 +43,13 @@
 <g id="SVGRepo_iconCarrier"> <g id="Home"/> <g id="Print"/> <g id="Mail"/> <g id="Camera"/> <g id="Video"/> <g id="Film"/> <g id="Message"> <path d="M24,1h-7.9H8C4.1,1,1,4.1,1,8v10c0,3.5,2.6,6.4,6,6.9V30c0,0.4,0.2,0.7,0.5,0.9C7.7,31,7.8,31,8,31 c0.2,0,0.4-0.1,0.6-0.2l7.5-5.6l0.3-0.2H24c3.9,0,7-3.1,7-7V8C31,4.1,27.9,1,24,1z" fill="#1cc45d"/> <path d="M16.1,7v2H8C7.5,9,7,8.5,7,8s0.5-1,1-1H16.1z" fill="#ffffff"/> <path d="M16.1,13v2H8c-0.5,0-1-0.5-1-1s0.5-1,1-1H16.1z" fill="#ffffff"/> <g> <path d="M8,9h8.1H24c0.5,0,1-0.5,1-1s-0.5-1-1-1h-7.9H8C7.5,7,7,7.5,7,8S7.5,9,8,9z" fill="#ffffff"/> <path d="M24,13h-7.9H8c-0.5,0-1,0.5-1,1s0.5,1,1,1h8.1H24c0.5,0,1-0.5,1-1S24.5,13,24,13z" fill="#ffffff"/> </g> </g> </g>
 
                 </svg>
-                <p class=" text-slate-500 text-sm font-semibold hover:underline underline-offset-2"> 50 comment</p>
+                <p class=" text-slate-500 text-sm font-semibold hover:underline underline-offset-2"> {{ total_comment }} comments</p>
 
             </div>
         </div>
 
         <div class="flex mt-8 gap-10">
-            <RouterLink to="/course/1/flashcard" class="shadow-md-gray-50 rounded-md bg-white w-64 2xl:w-80 h-20 flex items-center justify-center gap-3 shadow-md">
+            <RouterLink :to="`/course/${getCourseInfo.course.id}/flashcard`" class="shadow-md-gray-50 rounded-md bg-white w-64 2xl:w-80 h-20 flex items-center justify-center gap-3 shadow-md">
                 <svg class="" width="32px" height="32px" viewBox="0 -3 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
                     <path d="M28 12V4L8 14V42L20 36" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
@@ -59,13 +59,13 @@
                     Flashcard
                 </p>
             </RouterLink>
-            <RouterLink to="/course/1/learnword" class="shadow-md-gray-50 rounded-md bg-white w-64 2xl:w-80 h-20 flex items-center justify-center gap-3 shadow-md">
+            <RouterLink :to="`/course/${getCourseInfo.course.id}/learnword`" class="shadow-md-gray-50 rounded-md bg-white w-64 2xl:w-80 h-20 flex items-center justify-center gap-3 shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="0 0 512 512" aria-hidden="true" role="img" class="iconify iconify--fxemoji" preserveAspectRatio="xMidYMid meet"><path fill="#FF6F1F" d="M55.187 73h83.541v104.705H55.187z"/><circle fill="#FF6F1F" cx="129.088" cy="77.691" r="73.9"/><path fill="#FF6F1F" d="M439.814 427.451H142.152c-20.544 0-37.199-16.654-37.199-37.199V41.24c0-20.544 1.004-37.199 21.549-37.199h301.431c27.106 0 49.08 21.974 49.08 49.08v337.131c0 20.545-16.655 37.199-37.199 37.199z"/><path fill="#DCE2E2" d="M455.931 67.945c0-21.992-20.75-39.972-46.96-41.336v-.093H129.088c-20.407 0-36.95 12.668-36.95 28.294s16.543 28.294 36.95 28.294v.485H331.89v390.972l73.882 8.673c28.693 0 50.159-56.776 50.159-84.813V69.915h-.06c.037-.653.06-1.309.06-1.97z"/><path fill="#F2A74E" d="M390.578 507H91.857c-20.252 0-36.669-16.417-36.669-36.669V120.259c0-20.252 53.649-36.669 73.9-36.669h261.49c20.252 0 36.669 16.417 36.669 36.669V470.33c0 20.253-16.417 36.67-36.669 36.67z"/><path fill="#FF6F1F" d="M131.234 507H90.601c-19.558 0-35.414-15.855-35.414-35.414V83.59h76.046V507z"/><path fill="#2B3B47" d="M333.49 240.399H200.546c-7.953 0-14.4-6.447-14.4-14.4v-50.115c0-7.953 6.447-14.4 14.4-14.4H333.49c7.953 0 14.4 6.447 14.4 14.4v50.115c0 7.953-6.447 14.4-14.4 14.4z"/></svg>
                 <p class="font-bold text-lg">
                     Learn
                 </p>
             </RouterLink>
-            <RouterLink to="/course/1/test" class="shadow-md-gray-50 rounded-md bg-white w-64 h-20 2xl:w-80 flex items-center justify-center gap-3 shadow-md">
+            <RouterLink :to="`/course/${getCourseInfo.course.id}/test`" class="shadow-md-gray-50 rounded-md bg-white w-64 h-20 2xl:w-80 flex items-center justify-center gap-3 shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="32px" width="32px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xml:space="preserve">
                     <g>
                         <g>
@@ -159,9 +159,9 @@
 
         <div class="flex w-full justify-between">
             <p class="font-bold text-lg pt-3">Terms in this set: {{ totalword }}</p>
-            <div class="flex mr-12">
+            <!-- <div class="flex mr-12">
                 <ProgressBar class="w-64" key="1" name="Your process: " progress="78" color="red"></ProgressBar>
-            </div>
+            </div> -->
         </div>
 
         <div class="grid grid-cols-5 gap-2 mt-8">
@@ -199,7 +199,8 @@ import Rating from '../../components/rating/Rating.vue'
 import { closeModal, openModal } from 'jenesius-vue-modal';
 import axios from 'axios';
 import { useCourseCollectionStore } from '../../stores/course';
-import { mapState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
+import { useUserStore } from '../../stores/user';
 
 
 export default {
@@ -218,10 +219,14 @@ export default {
             // wordlist: [],
             // totalword: 0,
             index: 0,
+            total_ratings: 5,
+            average_ratings: 0,
+            total_comment: 0,
         }
     },
     computed: {
-        ...mapState(useCourseCollectionStore, ['getCourseInfo']),
+        ...mapState(useCourseCollectionStore, ['getCourseInfo','getBookmarkCollectionCourse']),
+        ...mapState(useUserStore, ['getUser']),
         wordlist() {
             return this.getCourseInfo?.vocabularies? this.getCourseInfo.vocabularies : []
         },
@@ -237,11 +242,18 @@ export default {
     }
     ,
     methods: {
+        ...mapActions(useCourseCollectionStore,['addBookmarkCourse','getBookmarkCollectionCourseAction']),
         openCommentSectionMethod() {
-            openModal(CommentSection)
+            openModal(CommentSection, {
+                user_id: this.getUser.id,
+                course_id: this.getCourseInfo.course.id
+            })
         },
         openRatingSectionMethod() {
-            openModal(Rating);
+            openModal(Rating, {
+                user_id: this.getUser.id,
+                course_id: this.getCourseInfo.course.id
+            });
         },
         nextWord() {
             if (this.index >= this.totalword - 1) {
@@ -264,20 +276,50 @@ export default {
             this.wordlist = this.wordlist.sort(() => 0.5 - Math.random())
             this.index = 0;
         },
+        async bookmarkCourse() {
+            console.log('/bookmark_courses', this.getCourseInfo.course.id, this.getUser);
+            const response = await axios.post('/bookmark_courses', {
+                course_id: this.getCourseInfo.course.id,
+                user_id: this.getUser.id
+            })
+            this.$refs.bookmark.checked = !this.$refs.bookmark.checked
+            // this.addBookmarkCourse(this.getCourseInfo.course, response.data.bookmark)
+
+            await this.getBookmarkCollectionCourseAction()
+
+        }
     },
 
     beforeRouteEnter(to, from, next) {
         const courseStore = useCourseCollectionStore()
         console.log(to);
         courseStore.getCourseInfoAction(to.params.id).then((res)=>{
-            // this.wordlist = res.data;
-            // this.totalword = this.wordlist.length
-            console.log('getCourseInfo:', courseStore.getCourseInfo);
-            next();
+            courseStore.getBookmarkCollectionCourseAction().then((res)=>{
+                console.log('getCourseInfo:', courseStore.getCourseInfo);
+                console.log('getBookmark:', courseStore.getBookmarkCollectionCourse);
+                next();
+            })
         })
     },
     mounted() {
+        const found = this.getBookmarkCollectionCourse.bookmark_courses.findIndex((e)=> this.getCourseInfo.course.id == e.course.id)
+        console.log(found);
+        if (found != -1) {
+            this.$refs.bookmark.checked = true;
+        } else {
+            this.$refs.bookmark.checked = false
+        }
 
+        axios.get('/ratings/course/'+ this.getCourseInfo.course.id).then((res)=>{
+            this.total_ratings = res.data.total_ratings;
+            this.average_ratings = res.data.average_ratings;
+        })
+
+        axios.get('/comments/course/'+ this.getCourseInfo.course.id).then((res)=>{
+            this.total_comment = res.data.total;
+        })
+
+        
     }
 }
 

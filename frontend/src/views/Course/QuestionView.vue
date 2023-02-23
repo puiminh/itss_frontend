@@ -54,7 +54,7 @@ export default {
         return this.wordlists[this.testWord].define
     }, 
     right() {
-        return this.wordlists[this.testWord].vocabulary_id
+        return this.wordlists[this.testWord].id
     },
     // testWord() {
     //   return Math.floor(Math.random() * this.learnedIndex)

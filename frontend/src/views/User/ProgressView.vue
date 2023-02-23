@@ -38,7 +38,7 @@ import { useCourseCollectionStore } from '../../stores/course'
           scales: {
             x: {
                 min: 0,
-                max: 100,
+                max: 1,
             }
           }
         }

@@ -22,17 +22,17 @@
     </div>
 </div>
 <div v-else class="py-8 px-32 w-full">
-    <ProgressBar class="" :progress="(index/wordlists.length)*100" color="yellow" thin="no"></ProgressBar>
+    <ProgressBar class="" :progress="(index/wordlists.length)*100" :color="2" thin="no"></ProgressBar>
 
     <div class="flex mt-8">
 
         <!-- LEARN WORD -->
 
-        <video v-if="(term.type == 2) && (learnmode== true)" controls autoplay class="bg-gray-200 rounded-lg w-64 h-64 mr-8 my-auto shadow-lg">
+        <video v-if="(term.kind == 2) && (learnmode== true)" controls autoplay class="bg-gray-200 rounded-lg w-64 h-64 mr-8 my-auto shadow-lg">
             <source :src="term.link" type="video/mp4">
         </video>
 
-        <img v-if="(term.type == 1) && (learnmode== true)"
+        <img v-if="(term.kind == 1) && (learnmode== true)"
             class="object-cover w-80 h-80 mr-8 my-auto shadow-lg" 
             :src="term.link" 
             alt="">
@@ -51,6 +51,7 @@
                 </div>
             </div>
             <div class="">
+                <audio v-if="term.kind==3" :src="term.link" ref="audio"></audio>
                 <p class="text-xs text-gray-600 font-semibold mt-6">AUDIO</p>
                 <button class="bg-gray-300 w-fit p-2 rounded-xl mt-2" @click="playSound(term.word)"  aria-label="Listen to the audio" data-cooltipz-dir="right">
                     <svg  class="w-10 h-10" fill="none" stroke="black" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -106,6 +107,9 @@ import 'video.js/dist/video-js.css'
 import QuestionView from './QuestionView.vue';
 import axios from 'axios';
 import Celebrate from '../../components/celebrate/Celebrate.vue'
+import { mapState } from 'pinia';
+import { useUserStore } from '../../stores/user';
+
 
 
 export default {
@@ -121,21 +125,37 @@ export default {
                 define: 'Kiem tra',
                 link: 'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
                 type: 0,
-            }
+            },
+            point: 2,
 
         }
     },
     components: { ProgressBar, GameButton, VideoPlayer, QuestionView, Celebrate },
+    computed: {
+      ...mapState(useUserStore, ['getUser'])
+    },
     methods: {
         playSound (sound) {
-            if(sound) {
-                var foo = new p5.Speech(); // speech synthesis object
-                foo.speak(sound); // say something
+            if (this.term.kind == 3) {
+                this.$refs.audio.play();
+            } else {
+                if(sound) {
+                    var foo = new p5.Speech(); // speech synthesis object
+                    foo.speak(sound); // say something
+                }
             }
         },
-        nextWord() {
+        async nextWord() {
 
             if (this.learnmode) { //LEARN MODE -> next word
+
+                const response = await axios.post('/progress/update',{
+                    user_id: this.getUser.id,
+                    course_id: this.$route.params.id,
+                    vocabulary_id: this.wordlists[this.index].id,
+                    point: this.point,
+                })
+
                 if (this.index < this.wordlists.length - 1) {
                     this.index++;
                 } else {
@@ -158,10 +178,10 @@ export default {
             this.term = this.wordlists[0]
         },
         resetLearn() {
-            axios.get('vocabularys').then((res)=>{
+            axios.get(`/courses/${this.$route.params.id}/random_list_word`).then((res)=>{
             this.index = 0;
-            this.wordlists = res.data;
-            this.term = res.data[0];
+            this.wordlists = res.data.vocabularies;
+            this.term = this.wordlists[0];
             
             this.learndone=false
             // this.randomWord()
@@ -179,10 +199,10 @@ export default {
       }
     },
     mounted() {
-        axios.get('vocabularys').then((res)=>{
-            this.wordlists = res.data
-            this.term = res.data[0]
-            // this.randomWord()
+        axios.get(`/courses/${this.$route.params.id}/random_list_word`).then((res)=>{
+            this.wordlists = res.data.vocabularies;
+            this.term = this.wordlists[0];
+            // console.log(res.data, this.term);
         })
     }
 }
