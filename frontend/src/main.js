@@ -19,6 +19,8 @@ import SmartTable from 'vuejs-smart-table'
 import './api-axios'
 
 import VueProgressBar from "@aacassandra/vue3-progressbar";
+import { useCourseCollectionStore } from './stores/course';
+import { useUserStore } from './stores/user';
 
 const options = {
   color: "#000",
@@ -37,6 +39,9 @@ const options = {
 const app = createApp(App)
 
 app.use(createPinia())
+// const userStore = useUserStore()
+// const courseStore = useCourseCollectionStore()
+// app.use(userStore,courseStore)
 app.use(router)
 app.use(plugin, defaultConfig)
 app.use(Toast, options);

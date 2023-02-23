@@ -87,6 +87,16 @@ const router = createRouter({
       }
     },
     { 
+      path: '/course/:id/edit',
+      name: 'courseedit',
+      props: true,
+      component: () => import('../views/Course/EditCourseView.vue'),
+      meta: {
+        layout: MainLayout,
+        needAuth: true,
+      }
+    },
+    { 
       path: '/course/:id/flashcard',
       name: 'flashcardview',
       props: true,
@@ -114,6 +124,16 @@ const router = createRouter({
       meta: {
         layout: MainLayout,
         needAuth: false,
+      }
+    },
+    { 
+      path: '/collection/:id/edit',
+      name: 'collectionedit',
+      props: true,
+      component: () => import('../views/Collection/EditCollectionView.vue'),
+      meta: {
+        layout: MainLayout,
+        needAuth: true,
       }
     },
     {

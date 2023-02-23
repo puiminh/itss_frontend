@@ -14,11 +14,11 @@
             <div class="w-full text-center mt-2">
                 <div class="flex justify-center lg:pt-4 pt-8 pb-0">
                     <div class="p-3 text-center">
-                        <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">20</span>
+                        <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">{{ getCreatedCourse?.length }}</span>
                         <span class="text-sm text-slate-400">Course</span>
                     </div>
                     <div class="p-3 text-center">
-                        <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">5</span>
+                        <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">{{ getCreatedCollection?.length }}</span>
                         <span class="text-sm text-slate-400">Collection</span>
                     </div>
                 </div>
@@ -70,17 +70,31 @@
 </div>
 
 <div class="">
-    <Block key="2" data-index="2" data-direct="vertical" class=" rounded-md moreGrayBG p-4 mt-8 w-fit h-fit pb-8" title="CLASS CREATED BY Mike Thompson" explain="We base on your recent learning and bookmark">
+    <Block key="2" data-index="2" data-direct="vertical" class=" rounded-md moreGrayBG p-4 mt-8 w-fit h-fit pb-8" title="Collection" explain="">
         <div class="grid grid-cols-2 gap-4 pt-5 2xl:h-80 h-52 pr-2 overflow-y-scroll">
-            <CollectionFolder v-for="i in 4"></CollectionFolder>
+            <CollectionFolder 
+                v-for="i in getCreatedCollection"
+                :id="i.collection.id"
+                :key="i.collection.id"
+                :title="i.collection.title"
+                :image="i.collection.image"
+                :author="getUser"
+                :contain="i.contain"
+            >
+            </CollectionFolder>
         </div>
     </Block>
 
-    <Block key="1" data-index="1" data-direct="vertical" class=" rounded-md moreGrayBG p-4 mt-4 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
+    <Block key="1" data-index="1" data-direct="vertical" class=" rounded-md moreGrayBG p-4 mt-4 w-fit h-fit pb-8" title="Course" explain="">
         <div class="grid grid-cols-2 gap-4 pt-5 2xl:h-44 h-36 pr-2 overflow-y-scroll">
           <CourseFolder 
-            v-for="i in 6" 
-            showStar="true"></CourseFolder>
+            v-for="i in getCreatedCourse" 
+            :key="i.course.id"
+            :id="i.course.id" 
+            :title="i.course.title" 
+            :author="getUser"
+            :contain="i.contain"
+            ></CourseFolder>
         </div>
     </Block>
 </div>
@@ -99,6 +113,7 @@ import CourseFolder from '../../components/folder/CourseFolder.vue';
 import ImageModal from '../../components/modal/ImageModal.vue';
 import { useUserStore } from '../../stores/user';
 import { useToast } from "vue-toastification";
+import { useCourseCollectionStore } from '../../stores/course';
 
 
 export default {
@@ -161,8 +176,17 @@ export default {
         }    
     },
     computed: {
-        ...mapState(useUserStore, ['getUser'])
-    }
+        ...mapState(useUserStore, ['getUser']),
+        ...mapState(useCourseCollectionStore, ['getCreatedCollection','getCreatedCourse'])
+    },
+    beforeRouteEnter(to, from, next) {
+        const courseStore = useCourseCollectionStore();
+        console.log(to);
+        courseStore.getCreatedCourseCollectionAction().then((e)=> {
+            console.log('getCourseInfo (created):', courseStore.getCreatedCourse, courseStore.getCreatedCollection);
+            next();
+        })
+    },
 }
 
 </script>

@@ -2,7 +2,7 @@
     <div>
       <VueMultiselect
         v-model="taggingSelected"
-        :options="data"
+        :options="taggingOptions"
         :multiple="true"
         :taggable="true"
         tag-placeholder="Add this as new tag"
@@ -32,12 +32,26 @@
     props: {
       data: {
         type: Array,
-        required: true
+      },
+      predata: {
+        type: Array,
       }
     },
     computed: {
+      taggingOptions () {
+        return this.data.map((e)=>{
+          return { title: e.course.title, id: e.course.id }
+        })
+      }
     },
     methods: {
+    },
+    mounted() {
+      if (this.predata.courses?.length) {
+        const pre = this.predata.courses.map((e)=>{ return { title: e.title, id: e.id } })
+        console.log("pre: ",pre);
+        this.taggingSelected = pre
+      }
     }
   }
   </script>

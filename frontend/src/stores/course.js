@@ -13,6 +13,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
             allProgress: [],
             courseInfo: null,
             collectionInfo: null,
+            bookmarkCollectionCourse: null,
         }
     },
     getters: {
@@ -24,6 +25,7 @@ export const useCourseCollectionStore = defineStore('course_collection', {
         getAllProgress: (state) => state.allProgress,
         getCourseInfo: (state) => state.courseInfo,
         getCollectionInfo: (state) => state.collectionInfo,
+        getBookmarkCollectionCourse: (state) => state.bookmarkCollectionCourse,
     },
     actions: {
         async getRecentCourseAction() {
@@ -42,11 +44,10 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                 }            
 
         },
-        async getCreatedCourseCollectionAction() {
-            if (this.getCreatedCourseCollectionAction.length == 0  && this.getCreatedCollection == 0) {
+        async getCreatedCourseCollectionAction(id = -1) {
                 try {
                     const userStore = useUserStore()
-                    const response = await axios.get(`/users/created/courses_collections/${userStore.getUser.id}`)
+                    const response = await axios.get(`/users/created/courses_collections/${id==-1 ? userStore.getUser.id : id}`)
     
                     this.createdCourse = response.data.courses;
                     this.createdCollection = response.data.collections;
@@ -58,7 +59,6 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                     console.error(error);
                     return false;
                 }     
-            }
 
         },
 
@@ -128,6 +128,22 @@ export const useCourseCollectionStore = defineStore('course_collection', {
                     const response = await axios.get(`/collections/${id}`)
                     this.collectionInfo = response.data;
                     console.log("collectioninfo: ",response.data);
+                    return response;
+    
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }                
+            // }
+        },
+
+        async getBookmarkCollectionCourseAction(id) {
+            const userStore = useUserStore();
+            // if (!this.collectionInfo) {
+                try {
+                    const response = await axios.get(`/users/bookmarked/courses_collections/${userStore.getUser.id}`)
+                    this.bookmarkCollectionCourse = response.data;
+                    console.log("bookmark: ",response.data);
                     return response;
     
                 } catch (error) {

@@ -64,10 +64,10 @@ import axios from 'axios';
 
                 console.log(this.collection, this.$refs.multiselect.taggingSelected, this.$refs.image.imageLink);
 
-
+                let course_list = this.$refs.multiselect.taggingSelected.map((e)=> e.id)
                 const response = await axios.post('/collections/courses', {
                     collection: this.collection,
-                    courses: this.$refs.multiselect.taggingSelected
+                    courses: course_list
                 })
 
                 console.log(response);
@@ -79,6 +79,7 @@ import axios from 'axios';
             const courseStore = useCourseCollectionStore()
             console.log(to);
             courseStore.getCreatedCourseCollectionAction().then((res)=>{
+                console.log(courseStore.createdCourse);
                 next();
             })
         },
