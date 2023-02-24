@@ -110,7 +110,8 @@
                 class="!p-0 !w-full bg-white !rounded-md !border-8 !border-white shadow-md !font-sans"
                 ></table-lite>
             </div>  -->
-            <CourseManagerTable v-if="select=='course'"></CourseManagerTable>
+            <!-- <CourseManagerTable v-if="select=='course'"></CourseManagerTable> -->
+            <CourseTable v-if="select=='course'"></CourseTable>
             <CollectionManagerTable v-if="select=='collection'"></CollectionManagerTable>
             <UserManagerTable v-if="select=='user'"></UserManagerTable>
             <CommentManagerTable v-if="select=='comment'"></CommentManagerTable>
@@ -132,6 +133,7 @@ import CourseManagerTable from '../../components/table/CourseManagerTable.vue';
 import CollectionManagerTable from '../../components/table/CollectionManagerTable.vue';
 import UserManagerTable from '../../components/table/UserManagerTable.vue';
 import CommentManagerTable from '../../components/table/CommentManagerTable.vue';
+import CourseTable from '../../components/table/CourseTable.vue';
 
 
 
@@ -142,7 +144,8 @@ export default {
     CourseManagerTable,
     CollectionManagerTable,
     UserManagerTable,
-    CommentManagerTable
+    CommentManagerTable,
+    CourseTable
 },
     data() {    
         return {
