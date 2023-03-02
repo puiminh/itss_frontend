@@ -1,0 +1,142 @@
+<template>
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-12">
+      <div class="pb-4 bg-white dark:bg-gray-900 p-4">
+          <label for="table-search" class="sr-only">Search</label>
+          <div class="relative mt-1">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 z-10">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+  
+              </div>
+              <input
+                  v-model="keyword" 
+                  type="text" id="table-search" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+          </div>
+      </div>
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                  <th @click="sort('id')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'id' ? 'border-green-700' : '']">
+                      Id
+                  </th>
+                  <th @click="sort('first_name')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'first_name' ? 'border-green-700' : '']">
+                      First Name
+                  </th>
+                  <th @click="sort('last_name')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'last_name' ? 'border-green-700' : '']">
+                      Last Name
+                  </th>
+                  <th @click="sort('avatar')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'avatar' ? 'border-green-700' : '']">
+                      Avatar
+                  </th>
+                  <th @click="sort('role')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'role' ? 'border-green-700' : '']">
+                      Role
+                  </th>
+                  <th @click="sort('updated_at')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'updated_at' ? 'border-green-700' : '']">
+                      Updated At
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Action
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr v-for="i in sortedData" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ i.id }}
+                  </th>
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ i.first_name }}
+                  </th>
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ i.last_name }}
+                  </th>
+                  <th scope="row" class="px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <img class="w-10 h-10 object-cover" :src="i.avatar" alt="">
+                  </th>
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ i.role == 1 ? "Admin" : "User" }}
+                  </th>
+                  <td class="px-6 py-4">
+                      {{ i.updated_at }}
+                  </td>
+                  <td class="px-6 py-4 flex gap-4">
+                      <RouterLink :to="`/collection/${i.id}`" type="button" data-id="' + row.id + '" class="hover:text-yellow-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"></path>
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                      </RouterLink>
+    
+                      <RouterLink :to="`/collection/${i.id}/edit`" data-id="' + row.id + '" class="editButton hover:text-green-500">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                      </RouterLink>
+    
+                      <button @click="deleteMethod(i)" type="button" data-id="' + row.id + '" class="hover:text-red-500">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+    
+                      </button>  
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
+      data() {
+          return {
+              keyword: '',
+              currentSort:'id',
+              currentSortDir:'asc',
+              data: []
+          };
+      },
+      methods: {
+          deleteMethod(data) {
+              console.log(data);
+          },
+          sort:function(s) {
+              if(s === this.currentSort) {
+              this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+              }
+              this.currentSort = s;
+          }
+      },
+      computed:{
+          sortedData:function() {
+              let array = []
+              if (this.keyword) {
+                  array = this.data.filter((e)=> {
+                    let fullname = e.first_name + e.last_name
+                    if (!fullname) fullname = ' ';
+                    return fullname?.toLowerCase().includes(this.keyword.toLowerCase())
+                  })
+              } else {
+                  array = this.data.sort((a,b) => {
+                      let modifier = 1;
+                      if(this.currentSortDir === 'desc') modifier = -1;
+                      if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                      if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                      return 0;
+                  });
+              }
+              return array
+          }
+      },
+      mounted() {
+        axios.get('/users').then((res)=>{
+
+            this.data = res.data.data
+        })
+      }
+  }
+  </script>

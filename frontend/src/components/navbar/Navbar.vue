@@ -173,7 +173,7 @@ export default {
     },
     signOutMethod() {
       this.signOut().then(()=>{
-        this.$router.replace("/landing")
+        this.$router.go()
       })
     },
     openModalMethod() {

@@ -111,10 +111,12 @@
                 ></table-lite>
             </div>  -->
             <!-- <CourseManagerTable v-if="select=='course'"></CourseManagerTable> -->
-            <CourseTable v-if="select=='course'"></CourseTable>
-            <CollectionManagerTable v-if="select=='collection'"></CollectionManagerTable>
-            <UserManagerTable v-if="select=='user'"></UserManagerTable>
-            <CommentManagerTable v-if="select=='comment'"></CommentManagerTable>
+            <Transition name="table" mode="out-in">
+                <CourseTableAdmin v-if="select=='course'"></CourseTableAdmin>
+                <CollectionTableAdmin v-else-if="select=='collection'"></CollectionTableAdmin>
+                <UserTable v-else-if="select=='user'"></UserTable>
+                <CommentTableAdmin v-else-if="select=='comment'"></CommentTableAdmin>
+            </Transition>"
           </div>
 
         </div>
@@ -131,9 +133,13 @@ import { useCourseCollectionStore } from '../../stores/course';
 import { mapState } from 'pinia';
 import CourseManagerTable from '../../components/table/CourseManagerTable.vue';
 import CollectionManagerTable from '../../components/table/CollectionManagerTable.vue';
-import UserManagerTable from '../../components/table/UserManagerTable.vue';
+import UserTable from '../../components/table/UserTableAdmin.vue';
 import CommentManagerTable from '../../components/table/CommentManagerTable.vue';
 import CourseTable from '../../components/table/CourseTable.vue';
+import CourseTableAdmin from '../../components/table/CourseTableAdmin.vue';
+import CollectionTableAdmin from '../../components/table/CollectionTableAdmin.vue';
+import CommentTableAdmin from '../../components/table/CommentTableAdmin.vue';
+
 
 
 
@@ -143,9 +149,12 @@ export default {
     TableLite,
     CourseManagerTable,
     CollectionManagerTable,
-    UserManagerTable,
+    UserTable,
     CommentManagerTable,
-    CourseTable
+    CourseTable,
+    CourseTableAdmin,
+    CollectionTableAdmin,
+    CommentTableAdmin
 },
     data() {    
         return {
@@ -184,3 +193,17 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.table-enter-active,
+.table-leave-active {
+  transition: all 0.2s ease;
+}
+
+.table-enter-from,
+.table-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
+
+}
+</style>
