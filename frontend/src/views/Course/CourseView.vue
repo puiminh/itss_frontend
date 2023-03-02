@@ -290,21 +290,25 @@ export default {
         }
     },
 
+
+    
     beforeRouteEnter(to, from, next) {
         const courseStore = useCourseCollectionStore()
         console.log(to);
         courseStore.getCourseInfoAction(to.params.id).then((res)=>{
             courseStore.getBookmarkCollectionCourseAction().then((res)=>{
-                console.log('getCourseInfo:', courseStore.getCourseInfo);
-                console.log('getBookmark:', courseStore.getBookmarkCollectionCourse);
+                if (res) {
+                    console.log('getCourseInfo:', courseStore.getCourseInfo);
+                    console.log('getBookmark:', courseStore.getBookmarkCollectionCourse);                    
+                }
                 next();
             })
         })
     },
     mounted() {
-        const found = this.getBookmarkCollectionCourse.bookmark_courses.findIndex((e)=> this.getCourseInfo.course.id == e.course.id)
+        const found = this.getBookmarkCollectionCourse?.bookmark_courses.findIndex((e)=> this.getCourseInfo.course.id == e.course.id)
         console.log(found);
-        if (found != -1) {
+        if ((found != -1) && (found)) {
             this.$refs.bookmark.checked = true;
         } else {
             this.$refs.bookmark.checked = false

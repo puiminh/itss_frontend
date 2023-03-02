@@ -127,14 +127,10 @@
 
 <script>
 import DashboardDataBlock from '../../components/block/DashboardDataBlock.vue';
-import TableLite from 'vue3-table-lite'
 import gsap from 'gsap';
 import { useCourseCollectionStore } from '../../stores/course';
 import { mapState } from 'pinia';
-import CourseManagerTable from '../../components/table/CourseManagerTable.vue';
-import CollectionManagerTable from '../../components/table/CollectionManagerTable.vue';
 import UserTable from '../../components/table/UserTableAdmin.vue';
-import CommentManagerTable from '../../components/table/CommentManagerTable.vue';
 import CourseTable from '../../components/table/CourseTable.vue';
 import CourseTableAdmin from '../../components/table/CourseTableAdmin.vue';
 import CollectionTableAdmin from '../../components/table/CollectionTableAdmin.vue';
@@ -146,11 +142,7 @@ import CommentTableAdmin from '../../components/table/CommentTableAdmin.vue';
 export default {
     components: {
     DashboardDataBlock,
-    TableLite,
-    CourseManagerTable,
-    CollectionManagerTable,
     UserTable,
-    CommentManagerTable,
     CourseTable,
     CourseTableAdmin,
     CollectionTableAdmin,

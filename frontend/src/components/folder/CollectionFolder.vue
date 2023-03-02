@@ -26,7 +26,7 @@
             </div>
             <div class="flex avatar_name items-center">
                 <img class="inline-block h-5 w-5 rounded-full ring-2 ring-white shadow-lg" :src="author?.avatar" alt=""/>
-                <p class="text-slate-500 text-sm font-semibold ml-1 pb-0.5">{{ author?.first_name + ' ' + author?.last_name }}</p>
+                <p class="text-slate-500 text-sm font-semibold ml-1 pb-0.5 truncate w-16">{{ author?.first_name + ' ' + author?.last_name }}</p>
             </div>
         </div>
         <!-- <div v-if="showProgress=='true'" class="progress  text-sm font-semibold">

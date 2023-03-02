@@ -97,6 +97,9 @@ export const useCourseCollectionStore = defineStore('course_collection', {
 
         async getAllProgressAction() {
             const userStore = useUserStore();
+            if (!userStore.getLogin) {
+                return false;
+            }
             if (this.allProgress.length == 0) {
                 try {
                     const response = await axios.get(`/progress/${userStore.getUser.id}`)
@@ -141,6 +144,9 @@ export const useCourseCollectionStore = defineStore('course_collection', {
 
         async getBookmarkCollectionCourseAction(id) {
             const userStore = useUserStore();
+            if (!userStore.getLogin) {
+                return false
+            }
             // if (!this.getBookmarkCollectionCourse) {
                 try {
                     const response = await axios.get(`/users/bookmarked/courses_collections/${userStore.getUser.id}`)
