@@ -92,15 +92,21 @@ export default {
 			this.isSignUp = !this.isSignUp
 		},
 		async signInMethod() {
-			// console.log(this);
+			// console.log(this)
+
+			this.$Progress.start()
+
 			const response = await this.login(this.userdata.email, this.userdata.password)
 
 			console.log("res from signin view", response);
-
 			if (response) {
+
+				this.$Progress.finish()
+				
 				closeModal();
 				this.$router.push('/')
 			} else {
+				this.$Progress.fail()
 				this.$refs.loginnotfound.classList.remove('hidden');
 				setTimeout(() => {
 					this.$refs.loginnotfound.classList.add('hidden');		
@@ -111,6 +117,7 @@ export default {
 		}, 
 		async signUpMethod() {
 			// console.log(this);
+			
 			const response = await this.signUp(this.userdata);
 			console.log("res from signin view", response);
 

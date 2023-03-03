@@ -46,7 +46,6 @@ export const useUserStore = defineStore('user', {
         },
         async login(email, password) {
             try {
-                //fake api
                 const response = await axios.post(`/sessions`, {
                     email,
                     password

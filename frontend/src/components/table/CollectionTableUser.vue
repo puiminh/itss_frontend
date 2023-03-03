@@ -1,6 +1,6 @@
 <template>
 
-    <CourseTable :data="data"></CourseTable>    
+    <CollectionTable :data="data"></CollectionTable>    
 
     </template>
     
@@ -8,7 +8,7 @@
     import axios from 'axios';
     import { mapState } from 'pinia';
     import { useUserStore } from '../../stores/user';
-    import CourseTable from './CourseTable.vue';
+    import CollectionTable from './CollectionTable.vue';
     
     export default {
     data() {
@@ -26,10 +26,10 @@
         }
     },
     mounted() {
-        axios.get("/courses/created/"+ this.getUser.id).then((res) => {
+        axios.get("/collections/created/"+ this.getUser.id).then((res) => {
             this.data = res.data.data;
         });
     },
-    components: { CourseTable }
+    components: { CollectionTable }
 }
     </script>

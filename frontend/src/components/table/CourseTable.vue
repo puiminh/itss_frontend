@@ -14,7 +14,7 @@
                 type="text" id="table-search" class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
         </div>
     </div>
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-hidden">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th @click="sort('id')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'id' ? 'border-green-700' : '']">
@@ -34,8 +34,8 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-            <tr v-for="i in sortedData" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <TransitionGroup appear name="list" tag="tbody"  mode="out-in">
+            <tr v-for="i in sortedData" :key="i.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ i.id }}
                 </th>
@@ -70,7 +70,7 @@
                     </button>  
                 </td>
             </tr>
-        </tbody>
+        </TransitionGroup>
     </table>
 </div>
 
@@ -84,14 +84,23 @@ export default {
         return {
             keyword: '',
             currentSort:'id',
-            currentSortDir:'asc'
+            currentSortDir:'asc',
+            dataChildren: [],
         };
     },
     props: ["data"],
     methods: {
         deleteMethod(data) {
-            console.log(data);
+            axios.delete(`/courses/${data.id}`)
+              .then(response => {
+                    this.dataChildren = this.dataChildren.filter(child => child.id != data.id);
+                    console.log(response);
+                })
+              .catch(error => {
+                    console.log(error);
+                });
         },
+
         sort:function(s) {
             if(s === this.currentSort) {
             this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
@@ -103,9 +112,9 @@ export default {
         sortedData:function() {
             let array = []
             if (this.keyword) {
-                array = this.data.filter((e)=> e.title?.toLowerCase().includes(this.keyword.toLowerCase()))
+                array = this.dataChildren.filter((e)=> e.title?.toLowerCase().includes(this.keyword.toLowerCase()))
             } else {
-                array = this.data.sort((a,b) => {
+                array = this.dataChildren.sort((a,b) => {
                     let modifier = 1;
                     if(this.currentSortDir === 'desc') modifier = -1;
                     if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
@@ -116,7 +125,14 @@ export default {
             return array
         }
     },
-    mounted() {
+    watch: {
+        data() {
+            this.dataChildren = this.data;
+        }
     }
 }
 </script>
+
+<style>
+
+</style>

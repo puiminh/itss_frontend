@@ -6,8 +6,8 @@
     ></SwitchButton>
   </div>
   <Transition name="course" mode="out-in">
-    <CourseTable key="1"  v-if="searchObj == 'course'" :data="dataCourse" ref="coursetable"></CourseTable>    
-    <CollectionTable key="2"  v-else :data="dataCollection" ref="collectiontable"></CollectionTable>
+    <CourseTableUser key="1"  v-if="searchObj == 'course'" ref="coursetable"></CourseTableUser>    
+    <CollectionTableUser key="2"  v-else ref="collectiontable"></CollectionTableUser>
   </Transition>
   <Transition name="collection">
   </Transition>
@@ -22,6 +22,8 @@
   import CollectionTable from '../../components/table/CollectionTable.vue';
 
   import { useCourseCollectionStore } from '../../stores/course';
+import CourseTableUser from '../../components/table/CourseTableUser.vue';
+import CollectionTableUser from '../../components/table/CollectionTableUser.vue';
   
   export default {
   data() {
@@ -43,19 +45,7 @@
             this.searchObj = value;
       },
   },
-  mounted() {
-    this.dataCourse = this.getCreatedCourse.map((e)=> e.course)
-    this.dataCollection = this.getCreatedCollection.map((e)=> e.collection)
-  },
-  beforeRouteEnter(to, from, next) {
-    const courseStore = useCourseCollectionStore();
-    console.log(to);
-    courseStore.getCreatedCourseCollectionAction().then((res)=>{
-      console.log('getCreated:');
-      next();
-    })
-  },
-  components: { CourseTable, CourseTable, SwitchButton, CollectionTable }
+  components: { CourseTable, CourseTable, SwitchButton, CollectionTable, CourseTableUser, CollectionTableUser }
 }
   </script>
 
