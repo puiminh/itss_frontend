@@ -50,7 +50,7 @@ export default {
 <template>
     <Navbar></Navbar>
     <Sidebar>
-      <RouterView> 
+      <RouterView :key="$route.path"> 
       </RouterView>
       <vue-progress-bar></vue-progress-bar>
       <widget-container-modal />
