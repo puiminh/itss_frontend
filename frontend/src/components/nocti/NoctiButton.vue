@@ -10,40 +10,39 @@
     </button>
 
     <div v-if="openNotifi"
-                    class="absolute right-0 z-20 w-64 mt-2 overflow-hidden origin-top-right bg-white rounded-md shadow-lg sm:w-80 dark:bg-gray-800"
+                    class="absolute right-0 z-20 w-96 overflow-hidden mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800"
                 >
                     <div class="py-2">
-                        <a href="#" class="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
-                            <img class="flex-shrink-0 object-cover w-8 h-8 mx-1 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="avatar" />
-                            <p class="mx-2 text-sm text-gray-600 dark:text-white"><span class="font-bold" href="#">Sara Salah</span> replied on the <span class="text-blue-500 hover:underline" href="#">Upload Image</span> artical . 2m</p>
-                        </a>
-                        <a href="#" class="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
-                            <img class="flex-shrink-0 object-cover w-8 h-8 mx-1 rounded-full" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" alt="avatar" />
-                            <p class="mx-2 text-sm text-gray-600 dark:text-white"><span class="font-bold" href="#">Slick Net</span> start following you . 45m</p>
-                        </a>
-                        <a href="#" class="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
-                            <img class="flex-shrink-0 object-cover w-8 h-8 mx-1 rounded-full" src="https://images.unsplash.com/photo-1450297350677-623de575f31c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="avatar" />
-                            <p class="mx-2 text-sm text-gray-600 dark:text-white"><span class="font-bold" href="#">Jane Doe</span> Like Your reply on <span class="text-blue-500 hover:underline" href="#">Test with TDD</span> artical . 1h</p>
-                        </a>
-                        <a href="#" class="flex items-center px-4 py-3 -mx-2 transition-colors duration-300 transform hover:bg-gray-100 dark:hover:bg-gray-700">
-                            <img class="flex-shrink-0 object-cover w-8 h-8 mx-1 rounded-full" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80" alt="avatar" />
-                            <p class="mx-2 text-sm text-gray-600 dark:text-white"><span class="font-bold" href="#">Abigail Bennett</span> start following you . 3h</p>
+                        <a v-for="i in noctilist.slice().reverse().slice(0,all)" href="#" class="flex items-center px-6 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
+                            <img class="object-cover w-8 h-8 mx-1 rounded-full" 
+                                :src="i.user.avatar" alt="avatar" />
+                            <p class="mx-2 text-sm text-gray-600 dark:text-white">
+                                <!-- <span class="font-bold" href="#">{{ i.user.first_name + ' ' + i.user.last_name }}</span>  -->
+                                {{ i.notice.message }}
+                            </p>
+                            <p class="text-sm text-gray-400 font-semibold w-1/4">
+                                {{ moment(i.notice.created_at).startOf('hour').fromNow() }}
+                            </p>
                         </a>
                     </div>
-                    {{ messages }}
-                  <a href="#" class="block py-2 font-bold text-center text-white bg-gray-800 dark:bg-gray-700 hover:underline">See all notifications</a>
+                  <a @click="all=10" class="block py-2 font-bold text-center text-white bg-gray-800 hover:underline hover:text-black">See all notifications</a>
               </div>
 </template>
 <script>
+import axios from 'axios'
 import { mapState } from 'pinia'
 import Pusher from 'pusher-js'
 import { useUserStore } from '../../stores/user'
+import moment from 'moment'
 export default {
     data() {
         return {
             openNotifi: false,
             messages: [],
-            newMess: false
+            newMess: false,
+            noctilist: [],
+            moment: null,
+            all: 3,
         }
     },
 
@@ -56,19 +55,26 @@ export default {
             let pusher = new Pusher('86cbd0ad0b7f0ee7471e', { cluster: 'ap1' })
             pusher.subscribe('user'+this.getUser.id)
             pusher.bind('nocti', data => {
-                this.messages.push(data)
                 this.newMess = true
             })
         },
-        openNotifiMethod() {
+        async openNotifiMethod() {            
+            await axios.get('/notices/user/'+ this.getUser.id).then((res)=>{
+                this.noctilist = res.data.notices
+            })
+
             this.openNotifi = !this.openNotifi
             this.newMess = false
             
         }
     },
     mounted() {
+        this.moment = moment;
         this.subscribe()
         Pusher.logToConsole = true;
+        axios.get('/notices/user/'+ this.getUser.id).then((res)=>{
+            this.noctilist = res.data.notices
+        })
     }
 }
 

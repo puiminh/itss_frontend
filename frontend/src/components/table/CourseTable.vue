@@ -79,6 +79,8 @@
 <script>
 import axios from 'axios';
 import { openModal, closeModal } from 'jenesius-vue-modal';
+import { mapState } from 'pinia';
+import { useUserStore } from '../../stores/user';
 import DeleteConfirm from '../modal/DeleteConfirm.vue';
 
 export default {
@@ -103,7 +105,7 @@ export default {
             })
         },
         deleteMethod(data) {
-            axios.delete(`/courses/${data.id}`)
+            axios.delete(`/courses/${data.id}/${this.getUser.id}`)
                 .then(response => {
                 this.dataChildren = this.dataChildren.filter(child => child.id != data.id);
                 console.log(response);
@@ -120,6 +122,7 @@ export default {
         }
     },
     computed: {
+        ...mapState(useUserStore,['getUser']),
         sortedData: function () {
             let array = [];
             if (this.keyword) {

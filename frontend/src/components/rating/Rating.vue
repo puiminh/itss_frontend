@@ -139,7 +139,7 @@ export default {
           user_id: this.user_id,
           course_id: this.course_id 
         });
-
+        this.$emit('close',1)
         closeModal()
       }
     }

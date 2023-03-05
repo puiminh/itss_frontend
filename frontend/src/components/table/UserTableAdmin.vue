@@ -91,6 +91,8 @@
   <script>
   import axios from 'axios';
   import { openModal, closeModal } from 'jenesius-vue-modal';
+import { mapState } from 'pinia';
+import { useUserStore } from '../../stores/user';
 import DeleteConfirm from '../modal/DeleteConfirm.vue';
   export default {
       data() {
@@ -131,6 +133,7 @@ import DeleteConfirm from '../modal/DeleteConfirm.vue';
           }
       },
       computed:{
+          ...mapState(useUserStore,['getUser']),
           sortedData:function() {
               let array = []
               if (this.keyword) {

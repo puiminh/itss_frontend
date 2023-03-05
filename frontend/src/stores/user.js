@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', {
                 return state.user
             }
         },
-        isAdmin: (state) => state.user.role == 0 ? true : false,
+        isAdmin: (state) => state.user.role == 1 ? true : false,
         getLogin: (state) => {
             let savedUserinfo = JSON.parse(localStorage.getItem('userInfo')) 
             if (savedUserinfo) {

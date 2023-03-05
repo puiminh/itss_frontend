@@ -218,8 +218,14 @@ router.beforeEach((to, from, next) => {
   //neu ma da Login (getLogin = true) + den trang can login (needAuth = true) -> di tiep
   
   console.log(to.meta.needAuth, store.getLogin);
-  if (to.meta.needAuth) {
+  if (to.meta.needAuth && !to.meta.needAdmin) {
     if (store.getLogin) {
+      next()
+    } else {
+      next({name: 'Landing'})
+    }
+  } else if (to.meta.needAdmin) {
+    if (store.getLogin && store.isAdmin) {
       next()
     } else {
       next({name: 'Landing'})

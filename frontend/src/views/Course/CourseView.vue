@@ -250,17 +250,24 @@ export default {
     ,
     methods: {
         ...mapActions(useCourseCollectionStore,['addBookmarkCourse','getBookmarkCollectionCourseAction']),
-        openCommentSectionMethod() {
-            openModal(CommentSection, {
+        async openCommentSectionMethod() {
+            const commentModal = await openModal(CommentSection, {
                 user_id: this.getUser.id,
                 course_id: this.getCourseInfo.course.id
             })
+            commentModal.on('close', v =>{
+                this.getTotalComment();
+            })
         },
-        openRatingSectionMethod() {
-            openModal(Rating, {
+        async openRatingSectionMethod() {
+            const ratingModal = await openModal(Rating, {
                 user_id: this.getUser.id,
                 course_id: this.getCourseInfo.course.id
             });
+
+            ratingModal.on('close', v =>{
+                this.getTotalRating();
+            })
         },
         openCopyConfirm() {
             openModal(CopyConfirm, {
@@ -301,6 +308,17 @@ export default {
 
             await this.getBookmarkCollectionCourseAction()
 
+        }, 
+        getTotalComment() {
+            axios.get('/comments/course/'+ this.getCourseInfo.course.id).then((res)=>{
+                this.total_comment = res.data.total;
+            })
+        },
+        getTotalRating() {
+            axios.get('/ratings/course/'+ this.getCourseInfo.course.id).then((res)=>{
+                this.total_ratings = res.data.total_ratings;
+                this.average_ratings = res.data.average_ratings;
+            })
         }
     },
 
@@ -322,22 +340,14 @@ export default {
     mounted() {
         const found = this.getBookmarkCollectionCourse?.bookmark_courses.findIndex((e)=> this.getCourseInfo.course.id == e.course.id)
         console.log(found);
-        if ((found != -1) && (found)) {
+        if ((found != -1) && (found != undefined)) {
             this.$refs.bookmark.checked = true;
         } else {
             this.$refs.bookmark.checked = false
         }
 
-        axios.get('/ratings/course/'+ this.getCourseInfo.course.id).then((res)=>{
-            this.total_ratings = res.data.total_ratings;
-            this.average_ratings = res.data.average_ratings;
-        })
-
-        axios.get('/comments/course/'+ this.getCourseInfo.course.id).then((res)=>{
-            this.total_comment = res.data.total;
-        })
-
-        
+        this.getTotalComment();
+        this.getTotalRating();    
     }
 }
 

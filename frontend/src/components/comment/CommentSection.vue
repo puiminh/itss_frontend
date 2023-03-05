@@ -55,6 +55,7 @@ export default {
                 course_id: this.course_id,
                 content: this.new_comment,
             })
+            this.$emit('close',1)
             closeModal()
         },
     },
