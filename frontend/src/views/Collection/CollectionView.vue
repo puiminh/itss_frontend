@@ -8,7 +8,6 @@ import StackImage from '../../components/stackimage/StackImage.vue';
         <div class="w-4/6 pt-3">
             <div class="flex gap-2">
                 <h1 class="font-bold text-3xl">{{ collection.title }}</h1>
-                <BookmarkButton class="mt-2"></BookmarkButton>
             </div>
 
             <div class="flex w-full mt-5 gap-8">
@@ -37,7 +36,7 @@ import StackImage from '../../components/stackimage/StackImage.vue';
         <div class="w-1/6 flex gap-2 pt-4 flex-col">
             <div>
                 <p class="text-gray-500">Create by</p>
-                <p class="font-bold text-gray-600">{{ author.first_name + ' ' + author.last_name }}</p>
+                <RouterLink :to="'/user/view/'+author.id" class="font-bold text-gray-600">{{ author.first_name + ' ' + author.last_name }}</RouterLink>
             </div>
             <img class="w-10 h-10 border-2 border-white dark:border-gray-800" 
                 :src="author.avatar" alt="">
@@ -46,15 +45,15 @@ import StackImage from '../../components/stackimage/StackImage.vue';
 
 
     <div class="moreGrayBG p-6 rounded-2xl mt-12">
-        <Block title="All courses in this class" class="">
+        <Block title="All courses in this collection" explain="This collection contain this courses" class="">
             <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-3 gap-3 py-4">
                 <CourseFolder 
                     class="mr-4" v-for="i in courses"
-                    :key="i.id"
-                    :id="i.id"
-                    :title="i.title" 
+                    :key="i.course.id"
+                    :id="i.course.id"
+                    :title="i.course.title" 
                     :author="author"
-                    :contain="i.contain"
+                    :contain="i.total_vocabularies"
                     showProgress="true"></CourseFolder>
 
             </div>

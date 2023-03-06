@@ -13,7 +13,7 @@
                     :src="author.avatar" alt="">
                 <div>
                     <p class="text-gray-500 pr-24 text-xs">Create by</p>
-                    <p class="font-bold text-sm">{{ author.first_name + ' ' + author.last_name }}</p>
+                    <RouterLink :to="'/user/view/'+author.id" class="font-bold text-gray-600">{{ author.first_name + ' ' + author.last_name }}</RouterLink>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                 <svg class="h-5" fill="#FFDF00" stroke="#FDCC0D" stroke-width="0.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                 </svg>
-                <p class="font-black text-gray-600">{{ average_ratings }}</p>
+                <p class="font-black text-gray-600">{{ Math.round(average_ratings * 10) / 10 }}</p>
                 <p class="font-bold  text-gray-300">/5</p>
             </div>
             <div class="flex gap-1 cursor-pointer" @click="openCommentSectionMethod">
@@ -165,9 +165,6 @@
 
         <div class="flex w-full justify-between">
             <p class="font-bold text-lg pt-3">Terms in this set: {{ totalword }}</p>
-            <!-- <div class="flex mr-12">
-                <ProgressBar class="w-64" key="1" name="Your process: " progress="78" color="red"></ProgressBar>
-            </div> -->
         </div>
 
         <div class="grid grid-cols-5 gap-2 mt-8">
@@ -208,6 +205,8 @@ import axios from 'axios';
 import { useCourseCollectionStore } from '../../stores/course';
 import { mapActions, mapState } from 'pinia';
 import { useUserStore } from '../../stores/user';
+import { useToast } from "vue-toastification";
+
 
 
 export default {
@@ -222,6 +221,7 @@ export default {
     },
     props: ['id'],
     data() {
+        const toast = useToast()
         return {
             // wordlist: [],
             // totalword: 0,
@@ -229,6 +229,7 @@ export default {
             total_ratings: 5,
             average_ratings: 0,
             total_comment: 0,
+            toast,
         }
     },
     computed: {
@@ -256,6 +257,9 @@ export default {
                 course_id: this.getCourseInfo.course.id
             })
             commentModal.on('close', v =>{
+                this.toast.success("Comment succeeded!", {
+                    timeout: 2000
+                });
                 this.getTotalComment();
             })
         },
@@ -266,6 +270,9 @@ export default {
             });
 
             ratingModal.on('close', v =>{
+                this.toast.success("Rating succeeded!", {
+                    timeout: 2000
+                });
                 this.getTotalRating();
             })
         },
@@ -328,13 +335,17 @@ export default {
         const courseStore = useCourseCollectionStore()
         console.log(to);
         courseStore.getCourseInfoAction(to.params.id).then((res)=>{
-            courseStore.getBookmarkCollectionCourseAction().then((res)=>{
-                if (res) {
-                    console.log('getCourseInfo:', courseStore.getCourseInfo);
-                    console.log('getBookmark:', courseStore.getBookmarkCollectionCourse);                    
-                }
-                next();
-            })
+            if (res) {
+                courseStore.getBookmarkCollectionCourseAction().then((res)=>{
+                    if (res) {
+                        console.log('getCourseInfo:', courseStore.getCourseInfo);
+                        console.log('getBookmark:', courseStore.getBookmarkCollectionCourse);                    
+                    }
+                    next();
+                })   
+            } else {
+                next({name: 'Home'})
+            }
         })
     },
     mounted() {

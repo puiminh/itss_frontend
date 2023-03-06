@@ -21,16 +21,13 @@
 					</div>
 				</div>
 				<div class="some_bar py-4 px-2">
-					<!-- <ProgressBar key="1" name="English Cooking" progress="78" color="red"></ProgressBar>
-					<ProgressBar key="2" name="2000 Basic Words" progress="33" color="green"></ProgressBar>
-					<ProgressBar key="3" name="English Animal" progress="28" color="blue"></ProgressBar> -->
-
 					<ProgressBar 
 						v-for="(i,index) in getAllProgress.slice(0,3)" 
 						key="4"
 						:name="i.course.title"
 						:progress="i.progress * 100"
                         :color="index%4"
+						:link="'/course/'+i.course.id"
                     ></ProgressBar>
 				</div>
 				<div class="px-2 justify-center text-center">

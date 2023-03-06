@@ -65,13 +65,14 @@
                     class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 mt-3"
                     > -->
                     <div
-                    class="grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 mt-3"
+                    
+                    :class="['grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 mt-3 ', isLoading ? 'animate-pulse' : '' ]"
                     >
                     <Transition appear @before-enter="beforeEnterSlideIn" @enter="enterSlideIn">
-                        <DashboardDataBlock key="1" data-index="1" color="bg-green-600" :total="userTotal" :new="userNew" data="user" :select="select=='user'" @click="selectMethod('user')"></DashboardDataBlock>
+                        <DashboardDataBlock key="1" data-index="1" color="bg-green-600" :total="userTotal" :new="userLastWeek" data="user" :select="select=='user'" @click="selectMethod('user')"></DashboardDataBlock>
                     </Transition>
                     <Transition appear @before-enter="beforeEnterSlideIn" @enter="enterSlideIn">
-                        <DashboardDataBlock key="2" data-index="2" color="bg-blue-600" :total="courseTotal" :new="courseNew" data="course" :select="select=='course'" @click="selectMethod('course')">
+                        <DashboardDataBlock key="2" data-index="2" color="bg-blue-600" :total="courseTotal" :new="courseLastWeek" data="course" :select="select=='course'" @click="selectMethod('course')">
                             <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M4.5 3.75a3 3 0 00-3 3v.75h21v-.75a3 3 0 00-3-3h-15z"></path>
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 003 3h15a3 3 0 003-3v-7.5zm-18 3.75a.75.75 0 01.75-.75h6a.75.75 0 010 1.5h-6a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"></path>
@@ -79,14 +80,14 @@
                         </DashboardDataBlock>
                     </Transition>
                     <Transition appear @before-enter="beforeEnterSlideIn" @enter="enterSlideIn">
-                        <DashboardDataBlock key="3" data-index="3" color="bg-yellow-600" :total="collectionTotal" :new="collectionNew" data="collection" :select="select=='collection'" @click="selectMethod('collection')">
+                        <DashboardDataBlock key="3" data-index="3" color="bg-yellow-600" :total="collectionTotal" :new="collectionLastWeek" data="collection" :select="select=='collection'" @click="selectMethod('collection')">
                             <svg class="w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z"></path>
                             </svg>
                         </DashboardDataBlock>
                     </Transition>
                     <Transition appear @before-enter="beforeEnterSlideIn" @enter="enterSlideIn">
-                        <DashboardDataBlock key="4" data-index="4" color="bg-pink-600" :total="commentTotal" :new="commentNew" data="comment" :select="select=='comment'" @click="selectMethod('comment')">
+                        <DashboardDataBlock key="4" data-index="4" color="bg-pink-600" :total="commentTotal" :new="commentLastWeek" data="comment" :select="select=='comment'" @click="selectMethod('comment')">
                             <svg class="w-4 h-4 text-pink-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path clip-rule="evenodd" fill-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"></path>
                             </svg>
@@ -135,6 +136,7 @@ import CourseTable from '../../components/table/CourseTable.vue';
 import CourseTableAdmin from '../../components/table/CourseTableAdmin.vue';
 import CollectionTableAdmin from '../../components/table/CollectionTableAdmin.vue';
 import CommentTableAdmin from '../../components/table/CommentTableAdmin.vue';
+import axios from 'axios';
 
 
 
@@ -150,15 +152,16 @@ export default {
 },
     data() {    
         return {
-            userTotal: 120,
-            userNew: 20,
-            courseTotal: 200,
-            courseNew: 30,
-            collectionTotal: 30,
-            collectionNew: 2,
-            commentTotal: 300,
-            commentNew: 50,
+            userTotal: 0,
+            userLastWeek: 0,
+            courseTotal: 0,
+            courseLastWeek: 0,
+            collectionTotal: 0,
+            collectionLastWeek: 0,
+            commentTotal: 0,
+            commentLastWeek: 0,
             select: 'user', 
+            isLoading: true,
         }
     }, 
     methods: {
@@ -181,6 +184,33 @@ export default {
             delay: (el.dataset.index - 1) * 0.2
             })
         },
+    },
+    async created() {
+
+        
+
+        const userTotal = await axios.get('users/total')
+        const courseTotal = await axios.get('/courses/total')
+        const collectionTotal = await axios.get('/collections/total')
+        const commentTotal = await axios.get('/comments/total')
+        const commentLastWeek = await axios.get('/comments/last_week')
+        const collectionLastWeek = await axios.get('/collections/last_week')
+        const courseLastWeek = await axios.get('/courses/last_week')
+        const userLastWeek = await axios.get('/users/last_week')
+
+        this.userTotal = userTotal.data.total
+        this.courseTotal = courseTotal.data.total
+        this.collectionTotal = collectionTotal.data.total
+        this.commentTotal = commentTotal.data.total
+
+        this.userLastWeek = userLastWeek.data.length
+        this.courseLastWeek = courseLastWeek.data.length
+        this.collectionLastWeek = collectionLastWeek.data.length
+        this.commentLastWeek = commentLastWeek.data.length
+        console.log(this);
+
+        this.isLoading = false
+        
     }
 }
 

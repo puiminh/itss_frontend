@@ -19,7 +19,7 @@
                 {{ total }}
             </h3>
             <h3 class=" text-lg mt-2 text-gray-200 ">
-                {{ new }} new {{data}}s this month
+                {{ new }} new {{data}}s this week
             </h3>
         </div>
         </div>

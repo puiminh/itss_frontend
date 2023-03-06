@@ -187,6 +187,15 @@ const router = createRouter({
         needAuth: true,
       }
     },
+    {
+      path: '/user/view/:user_id',
+      component: ()=> import('../views/User/UserProfile.vue'),
+      props: true,
+      meta: {
+        layout: MainLayout,
+        needAuth: false,
+      }
+    },
 
     {
       path: '/landing',
@@ -207,7 +216,7 @@ const router = createRouter({
         needAdmin: true,
       }
     },
-  ]
+]
 })
 
 router.beforeEach((to, from, next) => {

@@ -14,9 +14,9 @@
                 >
                     <div class="py-2">
                         <a v-for="i in noctilist.slice().reverse().slice(0,all)" href="#" class="flex items-center px-6 py-3 -mx-2 transition-colors duration-300 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700">
-                            <img class="object-cover w-8 h-8 mx-1 rounded-full" 
+                            <img class="object-cover w-1/6 mx-1 rounded-full" 
                                 :src="i.user.avatar" alt="avatar" />
-                            <p class="mx-2 text-sm text-gray-600 dark:text-white">
+                            <p class="mx-2 text-sm text-gray-600 dark:text-white w-3/4">
                                 <!-- <span class="font-bold" href="#">{{ i.user.first_name + ' ' + i.user.last_name }}</span>  -->
                                 {{ i.notice.message }}
                             </p>
@@ -59,12 +59,12 @@ export default {
             })
         },
         async openNotifiMethod() {            
+            this.openNotifi = !this.openNotifi
+            this.newMess = false
+
             await axios.get('/notices/user/'+ this.getUser.id).then((res)=>{
                 this.noctilist = res.data.notices
             })
-
-            this.openNotifi = !this.openNotifi
-            this.newMess = false
             
         }
     },

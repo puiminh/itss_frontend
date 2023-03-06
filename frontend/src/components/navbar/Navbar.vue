@@ -50,9 +50,9 @@
               <li>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
               </li>
-              <li>
+              <!-- <li>
                 <a @click="handleHideProgress" href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ showProgress == 'Hide' ? 'Hide' : 'Show'}} progress</a>
-              </li>
+              </li> -->
             </ul>
             <!-- <RouterLink to="/homepage" class="py-2"> -->
               <a @click="signOutMethod" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
@@ -135,12 +135,12 @@ export default {
     ...mapActions(useUserStore,['signOut']),
 
     handleHideProgress() {
-      if (localStorage.getItem('progressHide') == 'Hide') {
-        localStorage.setItem('progressHide', 'Show');
-      } else {
-        localStorage.setItem('progressHide', 'Hide');
-      }
-      this.showProgress = localStorage.getItem('progressHide'); 
+      // if (localStorage.getItem('progressHide') == 'Hide') {
+      //   localStorage.setItem('progressHide', 'Show');
+      // } else {
+      //   localStorage.setItem('progressHide', 'Hide');
+      // }
+      // this.showProgress = localStorage.getItem('progressHide'); 
     },
     signOutMethod() {
       this.signOut().then(()=>{

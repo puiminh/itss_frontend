@@ -1,11 +1,11 @@
 <template>
     <div class="my-2">
-        <div class="flex justify-between mb-1">
+        <RouterLink :to="link" class="flex justify-between mb-1">
             <span :class="['text-sm font-medium dark:text-white truncate w-36',textColor]">{{name}}</span>
             <Transition appear @before-enter="beforeCounting" @enter="enterCounting">
                 <span :class="['text-sm font-medium dark:text-white ',textColor  ]" ref="processNumber"></span>
             </Transition>
-        </div>
+        </RouterLink>
             <div  v-if="thin=='true'" class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
 
             <Transition appear @before-enter="beforeRuning" @enter="enterRuning">
@@ -21,7 +21,7 @@
             </Transition>
 
             </div>
-    </div>
+        </div>
 
     <!-- Weird way to make dynamic class -->
     <!-- <div class="text-red-700 text-blue-700 text-purple-700 bg-blue-700 bg-red-700 bg-purple-700"></div> -->
@@ -44,6 +44,9 @@ export default {
         thin: {
             default: 'true'
         },
+        link: {
+            default: '/#'
+        }
     }, 
     data() {
         return {

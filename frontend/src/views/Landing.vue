@@ -115,7 +115,7 @@
     <transition-group
       appear @before-enter="beforeEnterSlideIn" @enter="enterSlideIn"
       tag="div"
-      class="flex gap-8 justify-between px-32"
+      class="flex gap-8 justify-between px-52"
     >
       <div key="1" data-index="1" data-direct="vertical" class="recommendCourseWrap mt-12 w-fit h-fit pb-8" title="MAY BE YOU WILL LIKE THIS" explain="We base on your recent learning and bookmark">
         <h1 class="mx-auto text-4xl font-bold tracking-tight mb-12">
