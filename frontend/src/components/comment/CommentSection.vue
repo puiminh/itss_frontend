@@ -22,7 +22,7 @@
         </button>
     </form>
 
-    <Comment v-for="i in comments" :data="i"></Comment>
+    <Comment v-for="i in comments" :data="i" @close="closeThing"></Comment>
 
     <div class="w-full h-6 flex justify-center items-center">
         <p class="cursor-pointer font-semibold hover:text-gray-400">See more</p>
@@ -55,9 +55,12 @@ export default {
                 course_id: this.course_id,
                 content: this.new_comment,
             })
-            this.$emit('close',1)
+            this.closeThing()
             closeModal()
         },
+        closeThing() {
+            this.$emit('close',1)
+        }
     },
     mounted() {
         axios.get('/comments/course/'+ this.course_id).then((res)=>{

@@ -23,7 +23,7 @@
                     <th @click="sort('title')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'title' ? 'border-green-700' : '']">
                         Title
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th @click="sort('author_id')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'author_id' ? 'border-green-700' : '']">
                         Author
                     </th>
                     <th @click="sort('updated_at')" scope="col" :class="['px-6 py-3 cursor-pointer hover:underline border-b-2 border-transparent ',currentSort == 'updated_at' ? 'border-green-700' : '']">
@@ -42,8 +42,9 @@
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ i.title }}
                     </th>
-                    <td class="px-6 py-4">
-                        {{ i.author_id }}
+                    <td class="px-6 pt-4 flex items-center text-center gap-2">
+                        <img :src="i.author.avatar" alt="" class="h-6">
+                        <p class="self-center">{{ i.author.first_name + ' ' + i.author.last_name }}</p>                      
                     </td>
                     <td class="px-6 py-4">
                         {{ i.updated_at }}
@@ -145,7 +146,13 @@ import { useUserStore } from '../../stores/user';
         },
         watch: {
             data() {
-                this.dataChildren = this.data;
+                this.dataChildren = this.data.map((e)=>{
+                    return {
+                        ...e.collection,
+                        contain: e.contain,
+                        author: e.author
+                    }
+                });
             }
         },
         components: { DeleteConfirm }

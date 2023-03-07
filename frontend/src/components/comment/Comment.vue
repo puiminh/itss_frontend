@@ -42,7 +42,7 @@
                             class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a @click="deleteComment"
                             class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove</a>
                     </li>
                 </ul>
@@ -73,6 +73,7 @@ export default {
             required: true
         }
     },
+    emits: ['close'],
     data() {
         return {
             openCommentSetting: false,
@@ -112,12 +113,19 @@ export default {
                 ease: 'ease-out',
                 duration: 0.5
             })
-
+            this.$emit('close',1)
             closeModal()
         },
         commentChange(evt) {
             this.comment.content = evt.target.textContent;
-        },        
+        },      
+        async deleteComment() {
+            const res = await axios.delete('/comments/'+this.comment.id+'/'+this.getUser.id)
+            if (res.status) {
+                this.$emit('close',this.comment.id)
+                closeModal()
+            }
+        }  
     },
     mounted() {
         this.comment = this.data.comment;

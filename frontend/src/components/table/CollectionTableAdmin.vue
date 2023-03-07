@@ -20,7 +20,7 @@
         }
     },
     mounted() {
-        axios.get("/collections").then((res) => {
+        axios.get("/collections/all_collection").then((res) => {
             this.data = res.data.data;
         });
     },

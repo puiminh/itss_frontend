@@ -69,10 +69,10 @@
         </button>
     </div>
 
-    <div class="mt-8 skeletonWhenRemove">
+    <div class="mt-8 skeletonWhenRemove w-1/3">
             <SwitchButton
                 @handleSwitch="handleSwitchP"></SwitchButton>
-            <Transition name="listTop">
+            <Transition name="listTop" mode="out-in">
                 <div v-if="searchObj == 'collection'" class="grid grid-cols-2 gap-4 pt-5 h-52 pr-2">
                 <CollectionFolder 
                     v-for="i in getCreatedCollection"

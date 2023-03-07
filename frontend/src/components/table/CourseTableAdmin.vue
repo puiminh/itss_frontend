@@ -20,7 +20,7 @@
         }
     },
     mounted() {
-        axios.get("/courses").then((res) => {
+        axios.get("/courses/all_course").then((res) => {
             this.data = res.data.data;
         });
     },

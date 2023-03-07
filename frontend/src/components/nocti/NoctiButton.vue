@@ -17,7 +17,7 @@
                             <img class="object-cover w-1/6 mx-1 rounded-full" 
                                 :src="i.user.avatar" alt="avatar" />
                             <p class="mx-2 text-sm text-gray-600 dark:text-white w-3/4">
-                                <!-- <span class="font-bold" href="#">{{ i.user.first_name + ' ' + i.user.last_name }}</span>  -->
+                                <span class="font-bold" href="#">{{ i.user.first_name + ' ' + i.user.last_name }}</span> 
                                 {{ i.notice.message }}
                             </p>
                             <p class="text-sm text-gray-400 font-semibold w-1/4">

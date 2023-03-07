@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center gap-12 w-full">
+    <div :class="['flex justify-center gap-12 w-full ', isLoading ? 'animate-pulse' : '']">
         <div class="relative break-words bg-white mb-6 rounded-md mt-20 w-1/3 h-fit shadow-md">
             <div class="px-6">
                 <div class="flex flex-wrap justify-center">
@@ -49,10 +49,10 @@
             </div>
         </div>
     
-        <div class="mt-8 skeletonWhenRemove">
+        <div class="mt-8 skeletonWhenRemove w-1/3">
                 <SwitchButton
                     @handleSwitch="handleSwitchP"></SwitchButton>
-                <Transition name="listTop">
+                <Transition name="listTop" mode="out-in">
                     <div v-if="searchObj == 'collection'" class="grid grid-cols-2 gap-4 pt-5 h-52 pr-2">
                     <CollectionFolder 
                         v-for="i in getCreatedCollection"
@@ -107,7 +107,11 @@ import axios from 'axios';
                 searchObj: 'course',
                 getCreatedCollection: [],
                 getCreatedCourse: [],
-                getUser: {}
+                getUser: {
+                    first_name: 'User',
+                    last_name: 'User'
+                },
+                isLoading: true
                 
             }
         },
@@ -125,8 +129,9 @@ import axios from 'axios';
             const user = await axios.get('/users/'+this.user_id)
             this.getCreatedCollection = collection.data.data
             this.getCreatedCourse = course.data.data
-            this.getUser = user.data.data.user
+            this.getUser = user.data.data
             console.log(this.getCreatedCollection, this.getCreatedCourse, this.getUser);
+            this.isLoading = false;
         }
     }
     

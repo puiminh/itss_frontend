@@ -46,12 +46,13 @@
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ i.content }}
                     </th>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ i.user_id }}
-                    </th>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ i.course_id }}
-                    </th>
+                    <td class="px-6 pt-4 flex items-center text-center gap-2">
+                        <img :src="i.author.avatar" alt="" class="h-6">
+                        <p class="self-center">{{ i.author.first_name + ' ' + i.author.last_name }}</p>                      
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ i.course.title }}                     
+                    </td>
                     <td class="px-6 py-4">
                         {{ i.updated_at }}
                     </td>
@@ -147,8 +148,14 @@ import DeleteConfirm from '../modal/DeleteConfirm.vue';
             }
         },
         mounted() {
-          axios.get('/comments').then((res)=>{
-              this.data = res.data.data
+          axios.get('/comments/all_comment').then((res)=>{
+              this.data = res.data.data.map((e)=>{
+                return {
+                    ...e.comment,
+                    course: e.course,
+                    author: e.author
+                }
+              })
           })
         }
     }
