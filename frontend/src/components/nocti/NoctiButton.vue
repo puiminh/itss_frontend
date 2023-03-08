@@ -20,8 +20,8 @@
                                 <span class="font-bold" href="#">{{ i.user.first_name + ' ' + i.user.last_name }}</span> 
                                 {{ i.notice.message }}
                             </p>
-                            <p class="text-sm text-gray-400 font-semibold w-1/4">
-                                {{ moment(i.notice.created_at).startOf('hour').fromNow() }}
+                            <p :class="['text-sm font-semibold w-1/4 ', i.notice.seen == -1 ? 'text-blue-800' : 'text-gray-400' ]">
+                                {{ moment(i.notice.created_at).fromNow() }}
                             </p>
                         </a>
                     </div>
@@ -65,6 +65,9 @@ export default {
             await axios.get('/notices/user/'+ this.getUser.id).then((res)=>{
                 this.noctilist = res.data.notices
             })
+
+            await axios.put('/notices/user/'+this.getUser.id).then((res)=>{
+            })
             
         }
     },
@@ -73,7 +76,13 @@ export default {
         this.subscribe()
         Pusher.logToConsole = true;
         axios.get('/notices/user/'+ this.getUser.id).then((res)=>{
+            console.log("getNoti: ",res);
             this.noctilist = res.data.notices
+            this.noctilist.forEach(e=> {
+                if (e.notice.seen == -1) {
+                    this.newMess = true;
+                }
+            })
         })
     }
 }

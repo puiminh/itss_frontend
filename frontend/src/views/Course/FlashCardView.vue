@@ -1,6 +1,9 @@
 <template>
   <div class="h-full flex pb-16 gap-5 w-full px-8">
     <div class="w-5/6 ">
+      <GameButton class="!absolute z-10" @click="backURL" v-if="turnBack">
+        Back
+      </GameButton>
      <ProgressBar class="px-8" :progress="(index/wordlists.length)*100" :color="1" thin="no"></ProgressBar>
      <FlipCard 
         class="w-full overflow-x-hidden overflow-y-hidden" 
@@ -45,6 +48,7 @@ export default {
         },
         index: 0,
         point: 2,
+        turnBack: false,
       }
     },
     computed: {
@@ -70,6 +74,7 @@ export default {
         if (this.index < this.wordlists.length - 1) {
          this.index++;
         } else {
+          this.turnBack = true;
           this.index = 0;
         }
         console.log(this.index, this.wordlists[this.index]);
@@ -88,6 +93,10 @@ export default {
       },
       async flipCard() {
         this.$refs.flipcard.flipDownCard(false);
+      },
+
+      backURL() {
+        this.$router.back()
       }
     },
     watch: {

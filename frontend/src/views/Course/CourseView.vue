@@ -250,7 +250,7 @@ export default {
     }
     ,
     methods: {
-        ...mapActions(useCourseCollectionStore,['addBookmarkCourse','getBookmarkCollectionCourseAction']),
+        ...mapActions(useCourseCollectionStore,['addBookmarkCourse','getBookmarkCollectionCourseAction', 'getCourseInfoAction']),
         async openCommentSectionMethod() {
             const commentModal = await openModal(CommentSection, {
                 user_id: this.getUser.id,
