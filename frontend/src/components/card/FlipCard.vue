@@ -87,6 +87,10 @@ export default {
 				opacity: 0,
 				duration: 0.3,
 			})
+		},
+		changePoint(point) {
+			this.point = point;
+			this.flipDownCard()
 		}
 
     },
@@ -137,19 +141,19 @@ export default {
 
 				<div key="2" class="flex gap-5 justify-center">
 					<GameButton 
-					@click="point=0"
+					@click="changePoint(0)"
 					 class="!bg-red-500 !text-white">
 						<i class="fa fa-frown-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">BAD</p> 
 					</GameButton>
 					<GameButton 
-					@click="point=2"
+					@click="changePoint(2)"
 					 class="!bg-yellow-400 !text-white">
 						<i class="fa fa-meh-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">NOT REALLY</p> 
 					</GameButton>
 					<GameButton 
-					@click="point=3"
+					@click="changePoint(3)"
 					 class="!bg-green-400 !text-white">
 						<i class="fa fa-smile-o" aria-hidden="true"></i>
 						<p class="text-xs font-semibold">GOOD</p> 
