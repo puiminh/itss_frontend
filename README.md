@@ -10,6 +10,10 @@
 
 ## Website's preview:
 
+### preview:
+![image](https://user-images.githubusercontent.com/86037720/230868476-83f5b4d7-ac5d-4b4f-a201-6f4de9bba501.png)
+
+
 ### Landing - Login screen:
 ![image](https://user-images.githubusercontent.com/86037720/229504491-2d86cf9f-456f-4a1e-804d-6741a612e149.png)
 
